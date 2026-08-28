@@ -591,18 +591,31 @@ button {
   margin-top: 22px;
   padding-top: 18px;
 }
-
+/* ========================================================Phần giao diện Freelancer =====================================================*/
 .avatar,
-.profile-avatar {
+.profile-avatar { 
   display: grid;
   place-items: center;
   background: #eef0ff;
   border-radius: 50%;
+  overflow: hidden;
 }
 
 .avatar {
   width: 44px;
   height: 44px;
+}
+
+.profile-avatar {
+  width: 84px;
+  height: 84px;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .seller-box span {
@@ -611,7 +624,6 @@ button {
   font-size: 12px;
   margin-top: 3px;
 }
-
 .auth-page {
   min-height: 100vh;
   display: grid;
