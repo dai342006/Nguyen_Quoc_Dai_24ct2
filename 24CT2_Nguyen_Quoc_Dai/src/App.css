@@ -1,9 +1,9 @@
-* {
+* {/* Đặt box-sizing cho tất cả các phần tử để tính toán kích thước hộp bao gồm cả padding và border */
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
+/* Định nghĩa các biến và thiết lập các thuộc tính chung cho toàn bộ ứng dụng */
 :root {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #172033;

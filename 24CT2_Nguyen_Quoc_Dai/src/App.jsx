@@ -1,7 +1,9 @@
-import { useState } from "react";
-import avatar from "./assets/avatar1.jpg";
-import "./App.css";
+import { useState } from "react";// Import useState để quản lý trạng thái (state) trong React
+import avatar from "./assets/avatar1.jpg";// Import hình ảnh avatar từ thư mục assets
+import "./App.css";// Import file CSS để thiết kế giao diện
+// DANH SÁCH CÁC DỊCH VỤ
 
+// Mảng services chứa thông tin các dịch vụ trên SkillHub
 const services = [
   {
     id: 1,
@@ -58,7 +60,14 @@ const services = [
     icon: "🚀",
   },
 ];
+// ==============================
+// COMPONENT HEADER
+// ==============================
 
+// Header là phần đầu trang của website
+// Nhận vào:
+// - page: trang hiện tại
+// - setPage: hàm dùng để chuyển trang
 function Header({ page, setPage }) {
   return (
     <header className="header">
@@ -90,7 +99,12 @@ function Header({ page, setPage }) {
     </header>
   );
 }
+// ==============================
+// COMPONENT FOOTER
+// ==============================
 
+// Footer là phần cuối của website
+// Nhận setPage để chuyển sang các trang khác
 function Footer({ setPage }) {
   return (
     <footer className="footer">
@@ -119,7 +133,7 @@ function Footer({ setPage }) {
     </footer>
   );
 }
-
+//======================================================phần home ============================================
 function Home({ setPage, setSelectedService }) {
   const categories = [
     ["💻", "Lập trình"],
@@ -222,7 +236,7 @@ function Home({ setPage, setSelectedService }) {
     </>
   );
 }
-
+// =============================================================================COMPONENT HIỂN THỊ DỊCH VỤ========================
 function ServiceCard({ service, onClick }) {
   return (
     <button className="service-card" onClick={onClick}>
@@ -336,7 +350,7 @@ function ServiceDetail({ service, setPage }) {
     </main>
   );
 }
-
+//==============================================================phần login ============================================
 function Login({ setPage }) {
   return (
     <main className="auth-page">
@@ -358,7 +372,7 @@ function Login({ setPage }) {
     </main>
   );
 }
-
+//==============================================================phần register ============================================
 function Register({ setPage }) {
   return (
     <main className="auth-page">
@@ -379,7 +393,7 @@ function Register({ setPage }) {
     </main>
   );
 }
-
+//============================================================== muc Freelancer =================================
 function Freelancer({ setPage }) {
   return (
     <main className="page">
@@ -458,7 +472,7 @@ function Freelancer({ setPage }) {
     </main>
   );
 }
-
+//============================================================== muc Orders =================================
 function Orders({ setPage }) {
   return (
     <main className="page">
@@ -492,7 +506,7 @@ function Orders({ setPage }) {
     </main>
   );
 }
-
+//============================================================== APP =================================
 export default function App() {
   const [page, setPage] = useState("home");
   const [selectedService, setSelectedService] = useState(services[0]);
