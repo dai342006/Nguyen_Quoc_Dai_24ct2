@@ -12,15 +12,14 @@ const config = {
 
 async function connectDB() {
   try {
-    await sql.connect(config);
+    const pool = await sql.connect(config);
     console.log("Kết nối SQL Server thành công!");
+    return pool;
   } catch (error) {
     console.log("Kết nối SQL Server thất bại!");
     console.log(error.message);
+    throw error;
   }
 }
 
-module.exports = {
-  sql,
-  connectDB,
-};
+module.exports = { sql, connectDB };

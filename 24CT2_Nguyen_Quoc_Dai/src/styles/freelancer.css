@@ -1,0 +1,280 @@
+.profile-layout{display:grid;grid-template-columns:1.5fr .7fr;gap:24px}.profile-card,.side-card{background:#fff;border:1px solid #e5e9f0;border-radius:18px;padding:26px}.profile-top{display:flex;gap:18px;align-items:center}.profile-avatar{width:84px;height:84px;display:grid;place-items:center;background:#eef0ff;border-radius:50%;overflow:hidden;flex-shrink:0}.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}.profile-card h2{font-size:28px;letter-spacing:-.03em}.profile-card p{color:#6f7888;line-height:1.7;margin:16px 0}.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.profile-stats div{background:#f6f7fb;padding:15px;border-radius:12px;text-align:center}.profile-stats strong,.profile-stats span{display:block}.profile-stats strong{font-size:22px}.profile-stats span{font-size:12px;color:#737c8d;margin-top:3px}.skills{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}.skills span{background:#efeeff;color:#5149dc;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700}.profile-card .primary-btn{width:auto;padding-inline:20px;background:#635bff;color:#fff}.side-card h3{margin-bottom:10px}.mini-service{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid #edf0f5}.mini-service>span{font-size:28px}.mini-service strong,.mini-service small{display:block}.mini-service strong{font-size:14px}.mini-service small{color:#757e8d;margin-top:5px}@media(max-width:920px){.profile-layout{grid-template-columns:1fr}}@media(max-width:620px){.profile-stats{grid-template-columns:1fr}}
+/* ========================================
+   QUẢN LÝ DỊCH VỤ FREELANCER
+======================================== */
+
+.manage-service-form {
+    margin-top: 30px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(30, 35, 80, 0.08);
+  }
+  
+  .manage-service-form h2 {
+    margin: 0 0 25px;
+    font-size: 26px;
+  }
+  
+  .manage-service-form form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 24px;
+  }
+  
+  .manage-service-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #172033;
+  }
+  
+  .manage-service-form input,
+  .manage-service-form select,
+  .manage-service-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 15px;
+    border: 1px solid #d9deea;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 15px;
+    font-family: inherit;
+    color: #172033;
+    outline: none;
+    transition: 0.2s;
+  }
+  
+  .manage-service-form input:focus,
+  .manage-service-form select:focus,
+  .manage-service-form textarea:focus {
+    border-color: #6557f5;
+    box-shadow: 0 0 0 3px rgba(101, 87, 245, 0.1);
+  }
+  
+  .manage-service-form textarea {
+    resize: vertical;
+    min-height: 130px;
+  }
+  
+  /* Các trường trải dài toàn bộ form */
+  .manage-service-form textarea,
+  .manage-service-form .form-message,
+  .manage-service-form .service-form-actions {
+    grid-column: 1 / -1;
+  }
+  
+  .service-form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+  }
+  
+  .service-form-actions button {
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* ========================================
+     DANH SÁCH DỊCH VỤ
+  ======================================== */
+  
+  .my-services {
+    margin-top: 50px;
+  }
+  
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 24px;
+  }
+  
+  .section-heading .eyebrow {
+    margin-bottom: 5px;
+  }
+  
+  .section-heading h2 {
+    margin: 0;
+    font-size: 30px;
+  }
+  
+  .section-heading > span {
+    color: #687080;
+    font-size: 15px;
+  }
+  
+  /* Grid */
+  .service-management-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  /* Card */
+  .management-service-card {
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #edf0f6;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .management-service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(30, 35, 80, 0.1);
+  }
+  
+  .management-service-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .service-category {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #eeeaff;
+    color: #5b4de0;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .service-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #eaf8ef;
+    color: #23834c;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .management-service-card h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  
+  .management-service-card p {
+    margin: 0;
+    min-height: 72px;
+    color: #687080;
+    line-height: 1.6;
+  }
+  
+  .service-price {
+    display: block;
+    margin: 18px 0;
+    font-size: 20px;
+    color: #5b4de0;
+  }
+  
+  /* Nút sửa xóa */
+  .management-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    flex: 1;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .edit-btn {
+    background: #eeeaff;
+    color: #5b4de0;
+  }
+  
+  .edit-btn:hover {
+    background: #ddd7ff;
+  }
+  
+  .delete-btn {
+    background: #ffe9e9;
+    color: #d83a3a;
+  }
+  
+  .delete-btn:hover {
+    background: #ffd8d8;
+  }
+  
+  /* ========================================
+     CHƯA CÓ DỊCH VỤ
+  ======================================== */
+  
+  .empty-services {
+    padding: 55px 20px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #dfe3ed;
+    border-radius: 18px;
+  }
+  
+  .empty-services > div {
+    font-size: 46px;
+    margin-bottom: 12px;
+  }
+  
+  .empty-services h3 {
+    margin: 0 0 8px;
+  }
+  
+  .empty-services p {
+    margin: 0;
+    color: #687080;
+  }
+  
+  /* ========================================
+     RESPONSIVE
+  ======================================== */
+  
+  @media (max-width: 900px) {
+    .manage-service-form form {
+      grid-template-columns: 1fr;
+    }
+  
+    .manage-service-form textarea,
+    .manage-service-form .form-message,
+    .manage-service-form .service-form-actions {
+      grid-column: auto;
+    }
+  
+    .service-management-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .manage-service-form {
+      padding: 20px;
+    }
+  
+    .service-management-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .section-heading {
+      display: block;
+    }
+  
+    .section-heading > span {
+      display: block;
+      margin-top: 8px;
+    }
+  
+    .service-form-actions {
+      flex-direction: column;
+    }
+  }
