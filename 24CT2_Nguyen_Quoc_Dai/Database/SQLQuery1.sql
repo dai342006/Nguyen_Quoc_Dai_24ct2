@@ -1,0 +1,12 @@
+USE DigitalSkillMarketplace;
+GO
+
+CREATE TABLE NguoiDung (
+    MaNguoiDung INT IDENTITY(1,1) PRIMARY KEY,
+    HoTen NVARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    MatKhau VARCHAR(255) NOT NULL,
+    VaiTro VARCHAR(20) NOT NULL DEFAULT 'KhachHang'
+);
+GO
+SELECT * FROM NguoiDung;
