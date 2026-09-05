@@ -482,5 +482,349 @@ app.get("/api/services/my", async (req, res) => {
       });
     }
   });
+  // =========================
+// API LẤY TẤT CẢ DỊCH VỤ
+// =========================
+app.get("/api/services", async (req, res) => {
+  try {
+    const result = await sql.query`
+      SELECT
+        d.MaDichVu,
+        d.MaNguoiDung,
+        d.TenDichVu,
+        d.MoTa,
+        d.DanhMuc,
+        d.Gia,
+        d.TrangThai,
+        d.NgayTao,
+        n.HoTen AS TenFreelancer
+      FROM DichVu d
+      INNER JOIN NguoiDung n
+        ON d.MaNguoiDung = n.MaNguoiDung
+      WHERE d.TrangThai = 'DangBan'
+      ORDER BY d.MaDichVu DESC
+    `;
+
+    res.json(result.recordset);
+  } catch (error) {
+    console.error("Lỗi lấy tất cả dịch vụ:", error);
+
+    res.status(500).json({
+      message: "Không thể lấy danh sách dịch vụ!",
+    });
+  }
+});
+// =========================
+// API TẠO ĐƠN HÀNG
+// =========================
+app.post("/api/orders", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+    const serviceId = Number(req.body.MaDichVu);
+
+    if (!userId || !serviceId) {
+      return res.status(400).json({
+        message: "Thiếu thông tin khách hàng hoặc dịch vụ!",
+      });
+    }
+
+    // =========================
+    // Kiểm tra khách hàng
+    // =========================
+    const customerResult = await sql.query`
+      SELECT MaNguoiDung, VaiTro
+      FROM NguoiDung
+      WHERE MaNguoiDung = ${userId}
+    `;
+
+    if (customerResult.recordset.length === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy tài khoản!",
+      });
+    }
+
+    if (customerResult.recordset[0].VaiTro !== "KhachHang") {
+      return res.status(403).json({
+        message: "Chỉ Khách hàng mới được đặt dịch vụ!",
+      });
+    }
+
+    // =========================
+    // Lấy thông tin dịch vụ
+    // =========================
+    const serviceResult = await sql.query`
+      SELECT
+        MaDichVu,
+        MaNguoiDung,
+        Gia,
+        TrangThai
+      FROM DichVu
+      WHERE MaDichVu = ${serviceId}
+    `;
+
+    if (serviceResult.recordset.length === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy dịch vụ!",
+      });
+    }
+
+    const service = serviceResult.recordset[0];
+
+    // Chỉ được đặt dịch vụ đang bán
+    if (service.TrangThai !== "DangBan") {
+      return res.status(400).json({
+        message: "Dịch vụ này hiện không còn nhận đơn!",
+      });
+    }
+
+    // =========================
+    // Không cho Freelancer tự đặt dịch vụ của mình
+    // =========================
+    if (service.MaNguoiDung === userId) {
+      return res.status(400).json({
+        message: "Bạn không thể tự đặt dịch vụ của mình!",
+      });
+    }
+
+    // =========================
+    // Kiểm tra đơn trùng
+    // =========================
+    const existingOrder = await sql.query`
+      SELECT MaDonHang
+      FROM DonHang
+      WHERE
+        MaKhachHang = ${userId}
+        AND MaDichVu = ${serviceId}
+        AND TrangThai IN ('ChoXacNhan', 'DangThucHien')
+    `;
+
+    if (existingOrder.recordset.length > 0) {
+      return res.status(409).json({
+        message: "Bạn đã có đơn hàng đang xử lý cho dịch vụ này!",
+      });
+    }
+
+    // =========================
+    // Tạo đơn hàng
+    // =========================
+    await sql.query`
+      INSERT INTO DonHang (
+        MaKhachHang,
+        MaDichVu,
+        MaFreelancer,
+        Gia,
+        TrangThai
+      )
+      VALUES (
+        ${userId},
+        ${service.MaDichVu},
+        ${service.MaNguoiDung},
+        ${service.Gia},
+        'ChoXacNhan'
+      )
+    `;
+
+    res.status(201).json({
+      message: "Đặt dịch vụ thành công!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi tạo đơn hàng:", error);
+
+    res.status(500).json({
+      message: "Không thể tạo đơn hàng!",
+    });
+  }
+});
+// =========================
+// API LẤY ĐƠN HÀNG
+// =========================
+app.get("/api/orders", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "Thiếu mã người dùng!",
+      });
+    }
+
+    // Lấy thông tin người dùng
+    const userResult = await sql.query`
+      SELECT MaNguoiDung, HoTen, VaiTro
+      FROM NguoiDung
+      WHERE MaNguoiDung = ${userId}
+    `;
+
+    if (userResult.recordset.length === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy người dùng!",
+      });
+    }
+
+    const user = userResult.recordset[0];
+
+    // =========================
+    // KHÁCH HÀNG
+    // =========================
+    if (user.VaiTro === "KhachHang") {
+      const result = await sql.query`
+        SELECT
+          d.MaDonHang,
+          d.MaKhachHang,
+          d.MaDichVu,
+          d.MaFreelancer,
+          d.Gia,
+          d.TrangThai,
+          d.NgayDat,
+
+          dv.TenDichVu,
+
+          f.HoTen AS TenFreelancer
+
+        FROM DonHang d
+
+        INNER JOIN DichVu dv
+          ON d.MaDichVu = dv.MaDichVu
+
+        INNER JOIN NguoiDung f
+          ON d.MaFreelancer = f.MaNguoiDung
+
+        WHERE d.MaKhachHang = ${userId}
+
+        ORDER BY d.MaDonHang DESC
+      `;
+
+      return res.json({
+        role: "KhachHang",
+        orders: result.recordset,
+      });
+    }
+
+    // =========================
+    // FREELANCER
+    // =========================
+    if (user.VaiTro === "Freelancer") {
+      const result = await sql.query`
+        SELECT
+          d.MaDonHang,
+          d.MaKhachHang,
+          d.MaDichVu,
+          d.MaFreelancer,
+          d.Gia,
+          d.TrangThai,
+          d.NgayDat,
+
+          dv.TenDichVu,
+
+          c.HoTen AS TenKhachHang
+
+        FROM DonHang d
+
+        INNER JOIN DichVu dv
+          ON d.MaDichVu = dv.MaDichVu
+
+        INNER JOIN NguoiDung c
+          ON d.MaKhachHang = c.MaNguoiDung
+
+        WHERE d.MaFreelancer = ${userId}
+
+        ORDER BY d.MaDonHang DESC
+      `;
+
+      return res.json({
+        role: "Freelancer",
+        orders: result.recordset,
+      });
+    }
+
+    return res.status(403).json({
+      message: "Vai trò tài khoản không hợp lệ!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi lấy đơn hàng:", error);
+
+    res.status(500).json({
+      message: "Không thể lấy danh sách đơn hàng!",
+    });
+  }
+});
+
+// =========================
+// API CẬP NHẬT TRẠNG THÁI ĐƠN
+// =========================
+app.put("/api/orders/:id/status", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+    const orderId = Number(req.params.id);
+    const { TrangThai } = req.body;
+
+    if (!userId || !orderId || !TrangThai) {
+      return res.status(400).json({
+        message: "Dữ liệu không hợp lệ!",
+      });
+    }
+
+    // Chỉ cho phép các trạng thái này
+    const allowedStatuses = [
+      "ChoXacNhan",
+      "DangThucHien",
+      "HoanThanh",
+      "DaHuy",
+    ];
+
+    if (!allowedStatuses.includes(TrangThai)) {
+      return res.status(400).json({
+        message: "Trạng thái đơn hàng không hợp lệ!",
+      });
+    }
+
+    // Kiểm tra Freelancer
+    const userResult = await sql.query`
+      SELECT VaiTro
+      FROM NguoiDung
+      WHERE MaNguoiDung = ${userId}
+    `;
+
+    if (userResult.recordset.length === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy người dùng!",
+      });
+    }
+
+    if (userResult.recordset[0].VaiTro !== "Freelancer") {
+      return res.status(403).json({
+        message: "Chỉ Freelancer mới được cập nhật trạng thái đơn!",
+      });
+    }
+
+    // Chỉ được sửa đơn thuộc Freelancer đó
+    const result = await sql.query`
+      UPDATE DonHang
+      SET TrangThai = ${TrangThai}
+      WHERE
+        MaDonHang = ${orderId}
+        AND MaFreelancer = ${userId}
+    `;
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy đơn hàng hoặc bạn không có quyền!",
+      });
+    }
+
+    res.json({
+      message: "Cập nhật trạng thái thành công!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi cập nhật đơn hàng:", error);
+
+    res.status(500).json({
+      message: "Không thể cập nhật trạng thái đơn hàng!",
+    });
+  }
+});
 // Chạy server
 startServer();

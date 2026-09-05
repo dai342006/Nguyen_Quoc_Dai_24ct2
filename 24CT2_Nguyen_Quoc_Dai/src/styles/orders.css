@@ -1,1 +1,104 @@
-.order-list{display:grid;gap:12px;margin-bottom:22px}.order-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:16px;align-items:center;background:#fff;border:1px solid #e5e9f0;border-radius:16px;padding:18px}.order-icon{width:44px;height:44px;display:grid;place-items:center;background:#f0efff;border-radius:12px}.order-main span{color:#7b8391;font-size:12px}.order-main h3{margin:4px 0}.order-main p{color:#7b8391;font-size:13px}.order-price{font-weight:800}.status{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}.status.done{background:#e8f8ee;color:#1e8c50}.status.pending{background:#fff4dd;color:#a76a00}@media(max-width:620px){.order-row{grid-template-columns:auto 1fr}.order-price,.status{grid-column:2;justify-self:start}}
+/* ========================================
+   ORDER ACTIONS
+======================================== */
+
+.order-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 10px;
+  }
+  
+  .order-actions .primary-btn {
+    white-space: nowrap;
+  }
+  
+  /* Trạng thái hủy */
+  .status.cancelled {
+    background: #ffe9e9;
+    color: #d83a3a;
+  }
+  
+  /* Ngày đặt */
+  .order-main small {
+    display: block;
+    margin-top: 6px;
+    color: #8a90a0;
+  }
+  
+  /* Thông báo */
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .order-row {
+    display: grid;
+    grid-template-columns: 50px 1fr auto auto auto;
+    gap: 20px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #edf0f6;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06);
+  }
+  
+  .order-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: #f0edff;
+    border-radius: 14px;
+    font-size: 23px;
+  }
+  
+  .order-main > span {
+    font-size: 13px;
+    color: #8a90a0;
+  }
+  
+  .order-main h3 {
+    margin: 5px 0;
+    font-size: 18px;
+  }
+  
+  .order-main p {
+    margin: 0;
+    color: #687080;
+  }
+  
+  .order-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #5d4bd8;
+    white-space: nowrap;
+  }
+  
+  @media (max-width: 900px) {
+    .order-row {
+      grid-template-columns: 50px 1fr;
+    }
+  
+    .order-price,
+    .order-row > .status,
+    .order-actions {
+      grid-column: 2;
+      justify-self: start;
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .order-row {
+      grid-template-columns: 1fr;
+    }
+  
+    .order-icon,
+    .order-price,
+    .order-row > .status,
+    .order-actions {
+      grid-column: auto;
+    }
+  }

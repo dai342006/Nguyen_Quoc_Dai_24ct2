@@ -195,12 +195,13 @@ function App() {
       // Chi tiết dịch vụ
       // ------------------------------------
       case "detail":
-        return (
-          <ServiceDetail
-            service={selectedService}
-            setPage={navigateTo}
-          />
-        );
+  return (
+    <ServiceDetail
+      service={selectedService}
+      setPage={navigateTo}
+      currentUser={currentUser}
+    />
+  );
 
       // ------------------------------------
       // Đăng nhập
@@ -248,11 +249,12 @@ function App() {
       // Đơn hàng
       // ------------------------------------
       case "orders":
-        return (
-          <Orders
-            setPage={navigateTo}
-          />
-        );
+  return (
+    <Orders
+      setPage={navigateTo}
+      currentUser={currentUser}
+    />
+  );
 
       // ------------------------------------
       // Mặc định

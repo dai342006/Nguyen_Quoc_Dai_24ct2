@@ -1,1 +1,113 @@
 .filter-bar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:28px}.filter-bar input,.filter-bar select{width:100%;border:1px solid #dfe3ec;border-radius:10px;padding:13px 14px;outline:none;background:#fff}.filter-bar input:focus,.filter-bar select:focus{border-color:#8a85ff;box-shadow:0 0 0 3px rgba(99,91,255,.12)}@media(max-width:620px){.filter-bar{grid-template-columns:1fr}}
+/* ========================================
+   SERVICE CARD
+======================================== */
+
+.service-card {
+    background: #ffffff;
+    border: 1px solid #edf0f6;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+    box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06);
+    transition: 0.2s ease;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(30, 35, 80, 0.1);
+  }
+  
+  .service-card-content {
+    flex: 1;
+  }
+  
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: #f0edff;
+    border-radius: 14px;
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+  
+  .service-category {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #6255df;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .service-card h3 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    line-height: 1.4;
+  }
+  
+  .service-card p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  
+  .service-freelancer {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 16px;
+    color: #596173;
+    font-size: 14px;
+  }
+  
+  .service-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #edf0f6;
+  }
+  
+  .service-card-bottom small {
+    display: block;
+    color: #8a90a0;
+    margin-bottom: 4px;
+  }
+  
+  .service-card-bottom strong {
+    font-size: 14px;
+  }
+  
+  .service-price {
+    color: #5f50da;
+    font-size: 19px;
+    font-weight: 700;
+  }
+  
+  .service-view-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #6255df;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .service-view-btn:hover {
+    background: #5143c7;
+  }
+  
+  @media (max-width: 600px) {
+    .service-card {
+      min-height: auto;
+    }
+  }
