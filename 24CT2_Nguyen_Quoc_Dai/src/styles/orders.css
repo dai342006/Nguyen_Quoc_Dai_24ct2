@@ -2,103 +2,129 @@
    ORDER ACTIONS
 ======================================== */
 
+/* Khu vực chứa các nút thao tác của đơn hàng */
 .order-actions {
-    display: flex;
-    gap: 8px;
-    margin-left: 10px;
-  }
-  
-  .order-actions .primary-btn {
-    white-space: nowrap;
-  }
-  
-  /* Trạng thái hủy */
-  .status.cancelled {
-    background: #ffe9e9;
-    color: #d83a3a;
-  }
-  
-  /* Ngày đặt */
-  .order-main small {
-    display: block;
-    margin-top: 6px;
-    color: #8a90a0;
-  }
-  
-  /* Thông báo */
-  .order-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
+  display: flex; /* Sắp xếp các nút theo hàng ngang */
+  gap: 8px; /* Khoảng cách giữa các nút */
+  margin-left: 10px; /* Tạo khoảng cách bên trái */
+}
+
+/* Nút chính trong khu vực thao tác */
+.order-actions .primary-btn {
+  white-space: nowrap; /* Không cho nội dung nút xuống dòng */
+}
+
+/* Trạng thái đơn hàng đã hủy */
+.status.cancelled {
+  background: #ffe9e9; /* Nền màu đỏ nhạt */
+  color: #d83a3a; /* Chữ màu đỏ */
+}
+
+/* Ngày đặt hàng */
+.order-main small {
+  display: block; /* Hiển thị thành một dòng riêng */
+  margin-top: 6px; /* Khoảng cách phía trên */
+  color: #8a90a0; /* Màu chữ xám */
+}
+
+/* Danh sách các đơn hàng */
+.order-list {
+  display: flex; /* Sử dụng Flexbox */
+  flex-direction: column; /* Xếp các đơn hàng theo chiều dọc */
+  gap: 16px; /* Khoảng cách giữa các đơn hàng */
+}
+
+/* Một dòng/card đơn hàng */
+.order-row {
+  display: grid; /* Sử dụng CSS Grid */
+  grid-template-columns: 50px 1fr auto auto auto; /* Chia thành 5 cột */
+  gap: 20px; /* Khoảng cách giữa các cột */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  background: #ffffff; /* Nền trắng */
+  border: 1px solid #edf0f6; /* Viền xám nhạt */
+  border-radius: 18px; /* Bo tròn góc */
+  padding: 20px; /* Khoảng cách bên trong */
+  box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06); /* Tạo bóng đổ */
+}
+
+/* Icon của đơn hàng */
+.order-icon {
+  width: 48px; /* Chiều rộng */
+  height: 48px; /* Chiều cao */
+  display: grid; /* Sử dụng Grid */
+  place-items: center; /* Căn icon vào chính giữa */
+  background: #f0edff; /* Nền tím nhạt */
+  border-radius: 14px; /* Bo góc */
+  font-size: 23px; /* Kích thước icon */
+}
+
+/* Thông tin phụ trong phần chính của đơn hàng */
+.order-main > span {
+  font-size: 13px; /* Kích thước chữ */
+  color: #8a90a0; /* Màu xám */
+}
+
+/* Tiêu đề tên dịch vụ trong đơn hàng */
+.order-main h3 {
+  margin: 5px 0; /* Khoảng cách trên và dưới */
+  font-size: 18px; /* Kích thước tiêu đề */
+}
+
+/* Mô tả đơn hàng */
+.order-main p {
+  margin: 0; /* Xóa margin mặc định */
+  color: #687080; /* Màu chữ xám */
+}
+
+/* Hiển thị giá đơn hàng */
+.order-price {
+  font-size: 18px; /* Kích thước giá */
+  font-weight: 700; /* Chữ đậm */
+  color: #5d4bd8; /* Màu tím */
+  white-space: nowrap; /* Không cho giá xuống dòng */
+}
+
+
+/* ========================================
+ RESPONSIVE - TABLET
+======================================== */
+
+/* Khi màn hình có chiều rộng tối đa 900px */
+@media (max-width: 900px) {
+
+  /* Chuyển bố cục đơn hàng thành 2 cột */
   .order-row {
-    display: grid;
-    grid-template-columns: 50px 1fr auto auto auto;
-    gap: 20px;
-    align-items: center;
-    background: #ffffff;
-    border: 1px solid #edf0f6;
-    border-radius: 18px;
-    padding: 20px;
-    box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06);
-  }
-  
-  .order-icon {
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    background: #f0edff;
-    border-radius: 14px;
-    font-size: 23px;
-  }
-  
-  .order-main > span {
-    font-size: 13px;
-    color: #8a90a0;
-  }
-  
-  .order-main h3 {
-    margin: 5px 0;
-    font-size: 18px;
-  }
-  
-  .order-main p {
-    margin: 0;
-    color: #687080;
-  }
-  
-  .order-price {
-    font-size: 18px;
-    font-weight: 700;
-    color: #5d4bd8;
-    white-space: nowrap;
-  }
-  
-  @media (max-width: 900px) {
-    .order-row {
       grid-template-columns: 50px 1fr;
-    }
-  
-    .order-price,
-    .order-row > .status,
-    .order-actions {
-      grid-column: 2;
-      justify-self: start;
-      margin-left: 0;
-    }
   }
-  
-  @media (max-width: 600px) {
-    .order-row {
+
+  /* Đưa giá, trạng thái và nút thao tác xuống cột thứ 2 */
+  .order-price,
+  .order-row > .status,
+  .order-actions {
+      grid-column: 2; /* Nằm ở cột thứ 2 */
+      justify-self: start; /* Căn về bên trái */
+      margin-left: 0; /* Xóa khoảng cách bên trái */
+  }
+}
+
+
+/* ========================================
+ RESPONSIVE - MOBILE
+======================================== */
+
+/* Khi màn hình có chiều rộng tối đa 600px */
+@media (max-width: 600px) {
+
+  /* Chuyển đơn hàng thành một cột */
+  .order-row {
       grid-template-columns: 1fr;
-    }
-  
-    .order-icon,
-    .order-price,
-    .order-row > .status,
-    .order-actions {
-      grid-column: auto;
-    }
   }
+
+  /* Các phần tử trở về bố cục mặc định */
+  .order-icon,
+  .order-price,
+  .order-row > .status,
+  .order-actions {
+      grid-column: auto;
+  }
+}

@@ -1,1 +1,392 @@
-.hero{padding:74px 0;background:linear-gradient(180deg,#f9f9ff 0%,#fff 100%)}.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}.hero-content h1{font-size:clamp(40px,5vw,66px);line-height:1.02;letter-spacing:-.055em;margin:14px 0 20px}.hero-content h1 span{color:#635bff}.hero-content p{font-size:18px;line-height:1.7;color:#5f6879;max-width:680px}.tag{display:inline-flex;padding:8px 12px;border-radius:999px;background:#ecebff;color:#4f47d7;font-weight:700;font-size:13px}.search-box{margin-top:28px;display:flex;max-width:650px;background:#fff;border:1px solid #dfe3ed;box-shadow:0 12px 32px rgba(37,48,73,.08);border-radius:14px;padding:6px}.search-box input{flex:1;min-width:0;border:0;outline:0;padding:14px;color:#172033}.search-box button{padding:12px 20px;border-radius:10px;background:#635bff;color:#fff;font-weight:700}.hero-note{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;color:#656f82;font-size:13px}.hero-card{background:#111827;color:#fff;border-radius:24px;padding:36px;box-shadow:0 24px 70px rgba(17,24,39,.18)}.hero-card-icon{font-size:48px;margin-bottom:18px}.hero-card h3{font-size:28px;margin-bottom:10px}.hero-card p{color:#c5cad5;line-height:1.7}.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:30px}.mini-stats div{background:rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center}.mini-stats strong,.mini-stats span{display:block}.mini-stats strong{font-size:20px}.mini-stats span{margin-top:4px;font-size:12px;color:#c2c7d3}.category-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.category-card{padding:22px 14px;border:1px solid #e7eaf1;background:#fff;border-radius:16px;text-align:left;transition:.2s}.category-card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(20,28,45,.08)}.category-icon{display:block;font-size:30px;margin-bottom:12px}.category-card strong,.category-card span:last-child{display:block}.category-card span:last-child{color:#7a8290;font-size:12px;margin-top:4px}.category-image{width:70px;height:70px;object-fit:cover;border-radius:14px;margin-bottom:15px;display:block}.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.service-card{overflow:hidden;padding:0;background:#fff;border:1px solid #e6eaf1;border-radius:18px;text-align:left;transition:.2s}.service-card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(20,28,45,.08)}.service-cover{height:170px;display:grid;place-items:center;background:linear-gradient(135deg,#eef0ff,#f8f8ff);font-size:56px}.service-info{padding:18px}.service-category{color:#635bff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.service-info h3{font-size:18px;line-height:1.3;margin:10px 0 8px}.seller{color:#7a8290;font-size:13px}.service-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}.service-bottom strong{color:#111827}.cta{padding:70px 0}.cta-box{display:flex;justify-content:space-between;gap:30px;align-items:center;background:#111827;color:#fff;border-radius:22px;padding:36px 40px}.cta-box p:not(.eyebrow){color:#c6cbd7;margin-top:10px}.cta-box h2{font-size:34px;max-width:700px}.cta-box button{background:#fff;color:#111827;padding:13px 20px;border-radius:10px;font-weight:800;white-space:nowrap}@media(max-width:920px){.hero-grid{grid-template-columns:1fr}.category-grid{grid-template-columns:repeat(3,1fr)}.service-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.hero{padding:50px 0}.hero-content h1{font-size:42px}.search-box{flex-direction:column;background:transparent;box-shadow:none;border:0;padding:0}.search-box input,.search-box button{width:100%}.category-grid,.service-grid{grid-template-columns:1fr}.cta-box{flex-direction:column;align-items:flex-start}.cta-box h2{font-size:28px}}
+/* ==================== HERO ==================== */
+
+/* Khu vực Hero đầu trang */
+.hero{
+    padding:74px 0; /* Khoảng cách trên và dưới */
+    background:linear-gradient(180deg,#38a5e8 0%,#fff 100%) /* Nền gradient */
+}
+
+/* Bố cục Hero gồm 2 cột */
+.hero-grid{
+    display:grid; /* Sử dụng CSS Grid */
+    grid-template-columns:1.25fr .75fr; /* Cột nội dung lớn hơn cột bên phải */
+    gap:48px; /* Khoảng cách giữa 2 cột */
+    align-items:center /* Căn giữa theo chiều dọc */
+}
+
+/* Tiêu đề chính của Hero */
+.hero-content h1{
+    font-size:clamp(40px,5vw,66px); /* Kích thước chữ thay đổi theo màn hình */
+    line-height:1.02; /* Khoảng cách dòng */
+    letter-spacing:-.055em; /* Thu nhỏ khoảng cách giữa các chữ */
+    margin:14px 0 20px /* Khoảng cách trên dưới */
+}
+
+/* Phần span trong tiêu đề */
+.hero-content h1 span{
+    color:#635bff /* Đổi màu chữ sang tím */
+}
+
+/* Đoạn mô tả trong Hero */
+.hero-content p{
+    font-size:18px; /* Kích thước chữ */
+    line-height:1.7; /* Khoảng cách dòng */
+    color:#5f6879; /* Màu chữ xám */
+    max-width:680px /* Giới hạn chiều rộng */
+}
+
+/* Nhãn nhỏ trong Hero */
+.tag{
+    display:inline-flex; /* Hiển thị dạng inline-flex */
+    padding:8px 12px; /* Khoảng cách bên trong */
+    border-radius:999px; /* Tạo hình bo tròn dạng pill */
+    background:#ecebff; /* Nền tím nhạt */
+    color:#4f47d7; /* Màu chữ tím */
+    font-weight:700; /* Chữ đậm */
+    font-size:13px /* Kích thước chữ */
+}
+
+/* Ô tìm kiếm */
+.search-box{
+    margin-top:28px; /* Khoảng cách với phần phía trên */
+    display:flex; /* Hiển thị theo Flexbox */
+    max-width:650px; /* Giới hạn chiều rộng */
+    background:#fff; /* Nền trắng */
+    border:1px solid #dfe3ed; /* Viền */
+    box-shadow:0 12px 32px rgba(37,48,73,.08); /* Bóng đổ */
+    border-radius:14px; /* Bo góc */
+    padding:6px /* Khoảng cách bên trong */
+}
+
+/* Ô nhập tìm kiếm */
+.search-box input{
+    flex:1; /* Cho input chiếm phần không gian còn lại */
+    min-width:0; /* Cho phép thu nhỏ */
+    border:0; /* Xóa viền */
+    outline:0; /* Xóa outline */
+    padding:14px; /* Khoảng cách bên trong */
+    color:#172033 /* Màu chữ */
+}
+
+/* Nút tìm kiếm */
+.search-box button{
+    padding:12px 20px; /* Khoảng cách bên trong */
+    border-radius:10px; /* Bo góc */
+    background:#635bff; /* Nền tím */
+    color:#fff; /* Chữ trắng */
+    font-weight:700 /* Chữ đậm */
+}
+
+/* Ghi chú/thông tin nhỏ bên dưới ô tìm kiếm */
+.hero-note{
+    display:flex; /* Sử dụng Flexbox */
+    gap:20px; /* Khoảng cách giữa các phần tử */
+    flex-wrap:wrap; /* Cho phép xuống dòng */
+    margin-top:20px; /* Khoảng cách phía trên */
+    color:#656f82; /* Màu chữ xám */
+    font-size:13px /* Kích thước chữ */
+}
+
+
+/* ==================== HERO CARD ==================== */
+
+/* Card bên phải của Hero */
+.hero-card{
+    background:#111827; /* Nền xanh đen */
+    color:#fff; /* Màu chữ trắng */
+    border-radius:24px; /* Bo góc */
+    padding:36px; /* Khoảng cách bên trong */
+    box-shadow:0 24px 70px rgba(17,24,39,.18) /* Bóng đổ */
+}
+
+/* Icon trong Hero Card */
+.hero-card-icon{
+    font-size:48px; /* Kích thước icon */
+    margin-bottom:18px /* Khoảng cách phía dưới */
+}
+
+/* Tiêu đề Hero Card */
+.hero-card h3{
+    font-size:28px; /* Kích thước chữ */
+    margin-bottom:10px /* Khoảng cách phía dưới */
+}
+
+/* Nội dung Hero Card */
+.hero-card p{
+    color:#c5cad5; /* Màu chữ xám sáng */
+    line-height:1.7 /* Khoảng cách dòng */
+}
+
+/* Khu vực thống kê nhỏ */
+.mini-stats{
+    display:grid; /* Sử dụng Grid */
+    grid-template-columns:repeat(3,1fr); /* Chia thành 3 cột bằng nhau */
+    gap:10px; /* Khoảng cách */
+    margin-top:30px /* Khoảng cách phía trên */
+}
+
+/* Từng ô thống kê */
+.mini-stats div{
+    background:rgba(255,255,255,.08); /* Nền trắng trong suốt */
+    border-radius:14px; /* Bo góc */
+    padding:14px; /* Khoảng cách bên trong */
+    text-align:center /* Căn giữa nội dung */
+}
+
+/* Định dạng chung cho số liệu và mô tả */
+.mini-stats strong,.mini-stats span{
+    display:block /* Mỗi phần nằm trên một dòng */
+}
+
+/* Số liệu thống kê */
+.mini-stats strong{
+    font-size:20px /* Kích thước số */
+}
+
+/* Mô tả thống kê */
+.mini-stats span{
+    margin-top:4px; /* Khoảng cách phía trên */
+    font-size:12px; /* Kích thước chữ */
+    color:#c2c7d3 /* Màu chữ */
+}
+
+
+/* ==================== CATEGORY ==================== */
+
+/* Lưới danh mục */
+.category-grid{
+    display:grid; /* Sử dụng CSS Grid */
+    grid-template-columns:repeat(6,1fr); /* Chia thành 6 cột */
+    gap:14px /* Khoảng cách */
+}
+
+/* Card danh mục */
+.category-card{
+    padding:22px 14px; /* Khoảng cách bên trong */
+    border:1px solid #e7eaf1; /* Viền */
+    background:#fff; /* Nền trắng */
+    border-radius:16px; /* Bo góc */
+    text-align:left; /* Căn chữ sang trái */
+    transition:.2s /* Hiệu ứng chuyển động */
+}
+
+/* Hiệu ứng khi rê chuột lên card */
+.category-card:hover{
+    transform:translateY(-3px); /* Card di chuyển lên 3px */
+    box-shadow:0 14px 28px rgba(20,28,45,.08) /* Tạo bóng */
+}
+
+/* Icon của danh mục */
+.category-icon{
+    display:block; /* Hiển thị dạng block */
+    font-size:30px; /* Kích thước icon */
+    margin-bottom:12px /* Khoảng cách phía dưới */
+}
+
+/* Nội dung trong card danh mục */
+.category-card strong,.category-card span:last-child{
+    display:block /* Đưa từng phần thành một dòng */
+}
+
+/* Mô tả nhỏ trong card */
+.category-card span:last-child{
+    color:#7a8290; /* Màu chữ xám */
+    font-size:12px; /* Kích thước chữ nhỏ */
+    margin-top:4px /* Khoảng cách phía trên */
+}
+
+/* Hình ảnh của danh mục */
+.category-image{
+    width:70px; /* Chiều rộng */
+    height:70px; /* Chiều cao */
+    object-fit:cover; /* Cắt ảnh vừa khung */
+    border-radius:14px; /* Bo góc */
+    margin-bottom:15px; /* Khoảng cách phía dưới */
+    display:block /* Hiển thị dạng block */
+}
+
+
+/* ==================== SERVICE ==================== */
+
+/* Lưới dịch vụ */
+.service-grid{
+    display:grid; /* Sử dụng CSS Grid */
+    grid-template-columns:repeat(3,1fr); /* Chia thành 3 cột */
+    gap:20px /* Khoảng cách */
+}
+
+/* Card dịch vụ */
+.service-card{
+    overflow:hidden; /* Ẩn phần nội dung vượt quá */
+    padding:0; /* Không có padding */
+    background:#fff; /* Nền trắng */
+    border:1px solid #e6eaf1; /* Viền */
+    border-radius:18px; /* Bo góc */
+    text-align:left; /* Căn chữ sang trái */
+    transition:.2s /* Hiệu ứng chuyển động */
+}
+
+/* Hiệu ứng hover cho card dịch vụ */
+.service-card:hover{
+    transform:translateY(-4px); /* Di chuyển card lên 4px */
+    box-shadow:0 16px 30px rgba(20,28,45,.08) /* Tạo bóng */
+}
+
+/* Khu vực ảnh/icon của dịch vụ */
+.service-cover{
+    height:170px; /* Chiều cao */
+    display:grid; /* Sử dụng Grid */
+    place-items:center; /* Căn giữa nội dung */
+    background:linear-gradient(135deg,#eef0ff,#f8f8ff); /* Nền gradient */
+    font-size:56px /* Kích thước icon */
+}
+
+/* Phần thông tin dịch vụ */
+.service-info{
+    padding:18px /* Khoảng cách bên trong */
+}
+
+/* Tên danh mục của dịch vụ */
+.service-category{
+    color:#635bff; /* Màu tím */
+    font-size:12px; /* Kích thước chữ */
+    font-weight:800; /* Chữ đậm */
+    text-transform:uppercase; /* Viết hoa */
+    letter-spacing:.08em /* Khoảng cách chữ */
+}
+
+/* Tiêu đề dịch vụ */
+.service-info h3{
+    font-size:18px; /* Kích thước chữ */
+    line-height:1.3; /* Khoảng cách dòng */
+    margin:10px 0 8px /* Khoảng cách */
+}
+
+/* Tên người bán */
+.seller{
+    color:#7a8290; /* Màu chữ xám */
+    font-size:13px /* Kích thước chữ */
+}
+
+/* Phần cuối của card dịch vụ */
+.service-bottom{
+    display:flex; /* Sử dụng Flexbox */
+    justify-content:space-between; /* Đưa nội dung về hai phía */
+    align-items:center; /* Căn giữa dọc */
+    gap:10px; /* Khoảng cách */
+    margin-top:18px /* Khoảng cách phía trên */
+}
+
+/* Giá dịch vụ */
+.service-bottom strong{
+    color:#111827 /* Màu chữ */
+}
+
+
+/* ==================== CTA ==================== */
+
+/* Khu vực CTA */
+.cta{
+    padding:70px 0 /* Khoảng cách trên dưới */
+}
+
+/* Hộp CTA */
+.cta-box{
+    display:flex; /* Sử dụng Flexbox */
+    justify-content:space-between; /* Đẩy nội dung ra hai phía */
+    gap:30px; /* Khoảng cách */
+    align-items:center; /* Căn giữa dọc */
+    background:#111827; /* Nền xanh đen */
+    color:#fff; /* Chữ trắng */
+    border-radius:22px; /* Bo góc */
+    padding:36px 40px /* Khoảng cách bên trong */
+}
+
+/* Đoạn mô tả CTA */
+.cta-box p:not(.eyebrow){
+    color:#c6cbd7; /* Màu chữ xám sáng */
+    margin-top:10px /* Khoảng cách phía trên */
+}
+
+/* Tiêu đề CTA */
+.cta-box h2{
+    font-size:34px; /* Kích thước tiêu đề */
+    max-width:700px /* Giới hạn chiều rộng */
+}
+
+/* Nút CTA */
+.cta-box button{
+    background:#fff; /* Nền trắng */
+    color:#111827; /* Chữ xanh đen */
+    padding:13px 20px; /* Khoảng cách bên trong */
+    border-radius:10px; /* Bo góc */
+    font-weight:800; /* Chữ đậm */
+    white-space:nowrap /* Không cho chữ xuống dòng */
+}
+
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Khi màn hình tối đa 920px */
+@media(max-width:920px){
+
+    /* Hero chuyển từ 2 cột thành 1 cột */
+    .hero-grid{
+        grid-template-columns:1fr
+    }
+
+    /* Danh mục chuyển còn 3 cột */
+    .category-grid{
+        grid-template-columns:repeat(3,1fr)
+    }
+
+    /* Dịch vụ chuyển còn 2 cột */
+    .service-grid{
+        grid-template-columns:repeat(2,1fr)
+    }
+}
+
+
+/* Khi màn hình tối đa 620px */
+@media(max-width:620px){
+
+    /* Giảm khoảng cách của Hero */
+    .hero{
+        padding:50px 0
+    }
+
+    /* Giảm kích thước tiêu đề Hero */
+    .hero-content h1{
+        font-size:42px
+    }
+
+    /* Chuyển ô tìm kiếm thành dạng dọc */
+    .search-box{
+        flex-direction:column;
+        background:transparent;
+        box-shadow:none;
+        border:0;
+        padding:0
+    }
+
+    /* Input và nút tìm kiếm chiếm toàn bộ chiều rộng */
+    .search-box input,.search-box button{
+        width:100%
+    }
+
+    /* Danh mục và dịch vụ chuyển thành 1 cột */
+    .category-grid,.service-grid{
+        grid-template-columns:1fr
+    }
+
+    /* CTA chuyển thành dạng dọc */
+    .cta-box{
+        flex-direction:column;
+        align-items:flex-start
+    }
+
+    /* Giảm kích thước tiêu đề CTA */
+    .cta-box h2{
+        font-size:28px
+    }
+}

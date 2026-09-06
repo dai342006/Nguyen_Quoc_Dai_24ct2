@@ -14,7 +14,9 @@ function Header({ page, setPage, currentUser, onLogout }) {
     <header className="header">
       <div className="container header-inner">
 
-        {/* Logo */}
+        {/* =========================
+            LOGO
+        ========================= */}
         <button
           className="logo"
           onClick={() => setPage("home")}
@@ -22,9 +24,12 @@ function Header({ page, setPage, currentUser, onLogout }) {
           Skill<span>Hub</span>
         </button>
 
-        {/* Menu */}
+        {/* =========================
+            MENU
+        ========================= */}
         <nav className="nav">
 
+          {/* Trang chủ */}
           <button
             className={page === "home" ? "active" : ""}
             onClick={() => setPage("home")}
@@ -32,40 +37,56 @@ function Header({ page, setPage, currentUser, onLogout }) {
             Trang chủ
           </button>
 
+          {/* Dịch vụ */}
           <button
-            className={page === "services" ? "active" : ""}
+            className={
+              page === "services" ? "active" : ""
+            }
             onClick={() => setPage("services")}
           >
             Dịch vụ
           </button>
 
-          <button
-            className={page === "freelancer" ? "active" : ""}
-            onClick={() => setPage("freelancer")}
-          >
-            Freelancer
-          </button>
-
-          {/* =========================
+          {/* =================================
               CHỈ FREELANCER MỚI THẤY
-          ========================= */}
+          ================================= */}
           {currentUser?.role === "Freelancer" && (
-            <button
-              className={
-                page === "manage-services"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setPage("manage-services")
-              }
-            >
-              Quản lý dịch vụ
-            </button>
+            <>
+              {/* Hồ sơ Freelancer */}
+              <button
+                className={
+                  page === "freelancer"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setPage("freelancer")
+                }
+              >
+                Freelancer
+              </button>
+
+              {/* Quản lý dịch vụ */}
+              <button
+                className={
+                  page === "manage-services"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setPage("manage-services")
+                }
+              >
+                Quản lý dịch vụ
+              </button>
+            </>
           )}
 
+          {/* Đơn hàng */}
           <button
-            className={page === "orders" ? "active" : ""}
+            className={
+              page === "orders" ? "active" : ""
+            }
             onClick={() => setPage("orders")}
           >
             Đơn hàng
@@ -74,7 +95,7 @@ function Header({ page, setPage, currentUser, onLogout }) {
         </nav>
 
         {/* =========================
-            KHU VỰC TÀI KHOẢN
+            TÀI KHOẢN
         ========================= */}
         <div className="header-actions">
 
@@ -101,14 +122,18 @@ function Header({ page, setPage, currentUser, onLogout }) {
             <>
               <button
                 className="login-btn"
-                onClick={() => setPage("login")}
+                onClick={() =>
+                  setPage("login")
+                }
               >
                 Đăng nhập
               </button>
 
               <button
                 className="register-btn"
-                onClick={() => setPage("register")}
+                onClick={() =>
+                  setPage("register")
+                }
               >
                 Đăng ký
               </button>

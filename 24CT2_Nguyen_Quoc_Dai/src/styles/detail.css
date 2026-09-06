@@ -1,1 +1,125 @@
-.detail-grid{display:grid;grid-template-columns:1.6fr .8fr;gap:28px;align-items:start}.detail-cover{height:360px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(135deg,#eef0ff,#f8f8ff);font-size:90px}.detail-section{padding:24px 0}.detail-section h2{font-size:32px;margin-bottom:15px}.detail-section p{color:#667084;line-height:1.8;margin-top:12px}.price-box{position:sticky;top:94px;padding:24px;border:1px solid #e5e9f0;border-radius:18px;background:#fff;box-shadow:0 10px 26px rgba(20,28,45,.06)}.price-box h2{font-size:22px;margin:10px 0}.rating-big{font-weight:700}.rating-big span{color:#747d8d;font-weight:500}.big-price{font-size:30px;font-weight:800;margin:22px 0}.price-box .primary-btn{width:100%;background:#635bff;color:#fff}.price-box .secondary-btn{width:100%;margin-top:10px}.seller-box{display:flex;gap:12px;align-items:center;border-top:1px solid #eceff4;margin-top:22px;padding-top:18px}.avatar{width:44px;height:44px;display:grid;place-items:center;background:#eef0ff;border-radius:50%}.seller-box span{display:block;color:#7a8290;font-size:12px;margin-top:3px}@media(max-width:920px){.detail-grid{grid-template-columns:1fr}.price-box{position:static}}
+/* Khung bố cục chính của trang chi tiết */
+.detail-grid{
+    display:grid; /* Sử dụng CSS Grid */
+    grid-template-columns:1.6fr .8fr; /* Chia 2 cột: cột nội dung lớn hơn cột giá */
+    gap:28px; /* Khoảng cách giữa 2 cột */
+    align-items:start /* Căn các phần tử lên phía trên */
+}
+
+/* Ảnh hoặc khu vực hiển thị hình đại diện dịch vụ */
+.detail-cover{
+    height:360px; /* Chiều cao 360px */
+    border-radius:20px; /* Bo tròn góc */
+    display:grid; /* Sử dụng Grid */
+    place-items:center; /* Căn nội dung vào chính giữa */
+    background:linear-gradient(135deg,#eef0ff,#f8f8ff); /* Tạo nền chuyển màu */
+    font-size:90px /* Kích thước icon/emoji */
+}
+
+/* Khu vực nội dung chi tiết */
+.detail-section{
+    padding:24px 0 /* Tạo khoảng cách trên và dưới */
+}
+
+/* Tiêu đề trong phần chi tiết */
+.detail-section h2{
+    font-size:32px; /* Kích thước tiêu đề */
+    margin-bottom:15px /* Khoảng cách phía dưới */
+}
+
+/* Đoạn văn mô tả */
+.detail-section p{
+    color:#667084; /* Màu chữ xám */
+    line-height:1.8; /* Khoảng cách giữa các dòng */
+    margin-top:12px /* Khoảng cách phía trên */
+}
+
+/* Hộp chứa thông tin giá và nút đặt dịch vụ */
+.price-box{
+    position:sticky; /* Giữ hộp cố định khi cuộn trang */
+    top:94px; /* Cách phía trên 94px */
+    padding:24px; /* Khoảng cách bên trong */
+    border:1px solid #e5e9f0; /* Viền mỏng */
+    border-radius:18px; /* Bo tròn góc */
+    background:#fff; /* Nền trắng */
+    box-shadow:0 10px 26px rgba(20,28,45,.06) /* Tạo bóng đổ */
+}
+
+/* Tiêu đề trong hộp giá */
+.price-box h2{
+    font-size:22px; /* Kích thước chữ */
+    margin:10px 0 /* Khoảng cách trên dưới */
+}
+
+/* Phần đánh giá */
+.rating-big{
+    font-weight:700 /* Chữ đậm */
+}
+
+/* Phần phụ nằm trong đánh giá */
+.rating-big span{
+    color:#747d8d; /* Màu xám */
+    font-weight:500 /* Độ đậm vừa */
+}
+
+/* Hiển thị giá lớn */
+.big-price{
+    font-size:30px; /* Kích thước giá */
+    font-weight:800; /* Chữ rất đậm */
+    margin:22px 0 /* Khoảng cách trên dưới */
+}
+
+/* Nút chính trong hộp giá */
+.price-box .primary-btn{
+    width:100%; /* Chiếm toàn bộ chiều rộng */
+    background:#635bff; /* Màu nền tím */
+    color:#fff /* Màu chữ trắng */
+}
+
+/* Nút phụ trong hộp giá */
+.price-box .secondary-btn{
+    width:100%; /* Chiếm toàn bộ chiều rộng */
+    margin-top:10px /* Khoảng cách với nút phía trên */
+}
+
+/* Thông tin người bán */
+.seller-box{
+    display:flex; /* Sắp xếp theo Flexbox */
+    gap:12px; /* Khoảng cách giữa các phần tử */
+    align-items:center; /* Căn giữa theo chiều dọc */
+    border-top:1px solid #eceff4; /* Đường viền phía trên */
+    margin-top:22px; /* Khoảng cách phía trên */
+    padding-top:18px /* Khoảng cách phía trên nội dung */
+}
+
+/* Avatar của người bán */
+.avatar{
+    width:44px; /* Chiều rộng */
+    height:44px; /* Chiều cao */
+    display:grid; /* Sử dụng Grid */
+    place-items:center; /* Căn nội dung chính giữa */
+    background:#eef0ff; /* Màu nền */
+    border-radius:50% /* Tạo hình tròn */
+}
+
+/* Nội dung span trong thông tin người bán */
+.seller-box span{
+    display:block; /* Hiển thị dạng block */
+    color:#7a8290; /* Màu chữ xám */
+    font-size:12px; /* Kích thước chữ nhỏ */
+    margin-top:3px /* Khoảng cách phía trên */
+}
+
+/* Responsive khi màn hình nhỏ hơn hoặc bằng 920px */
+@media(max-width:920px){
+
+    /* Chuyển layout 2 cột thành 1 cột */
+    .detail-grid{
+        grid-template-columns:1fr
+    }
+
+    /* Bỏ chế độ sticky trên màn hình nhỏ */
+    .price-box{
+        position:static
+    }
+}

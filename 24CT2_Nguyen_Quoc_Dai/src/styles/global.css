@@ -1,2 +1,124 @@
-*{box-sizing:border-box;margin:0;padding:0}:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#fff;font-synthesis:none;text-rendering:optimizeLegibility}body{min-width:320px;background:#fff}button,input,select{font:inherit}button{border:0;cursor:pointer}.container{width:min(1120px,calc(100% - 40px));margin:0 auto}.eyebrow{color:#635bff;font-size:12px;font-weight:800;letter-spacing:.13em;margin-bottom:7px}.text-btn,.back-btn{background:transparent;color:#635bff;font-weight:700}.page{min-height:70vh;padding:56px 0 80px}.page-title{margin-bottom:28px}.page-title h1{font-size:42px;margin-bottom:8px;letter-spacing:-.03em}.page-title>p:last-child{color:#6a7384}.section{padding:72px 0}.gray-section{background:#f7f8fc}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px;gap:20px}.section-head h2{font-size:34px;letter-spacing:-.03em}.primary-btn,.secondary-btn{padding:13px 16px;border-radius:10px;font-weight:800}.secondary-btn{background:#f1f2f7;color:#273042}
-@media(max-width:620px){.container{width:min(100% - 24px,1120px)}}
+/* Áp dụng cho tất cả các phần tử trên trang */
+*{
+    box-sizing:border-box; /* Tính padding và border vào kích thước phần tử */
+    margin:0; /* Xóa margin mặc định */
+    padding:0 /* Xóa padding mặc định */
+}
+
+/* Thiết lập biến và font chữ chung */
+:root{
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; /* Font chữ sử dụng */
+    color:#172033; /* Màu chữ mặc định */
+    background:#fff; /* Màu nền mặc định */
+    font-synthesis:none; /* Không tự tạo kiểu chữ giả */
+    text-rendering:optimizeLegibility /* Tối ưu khả năng hiển thị chữ */
+}
+
+/* Thiết lập cho toàn bộ body */
+body{
+    min-width:320px; /* Chiều rộng tối thiểu của trang */
+    background:#fff /* Nền trắng */
+}
+
+/* Cho button, input và select sử dụng font giống font của trang */
+button,input,select{
+    font:inherit /* Kế thừa font từ phần tử cha */
+}
+
+/* Thiết lập chung cho button */
+button{
+    border:0; /* Xóa đường viền mặc định */
+    cursor:pointer /* Hiển thị con trỏ dạng bàn tay */
+}
+
+/* Container dùng để giới hạn chiều rộng nội dung */
+.container{
+    width:min(1120px,calc(100% - 40px)); /* Tối đa 1120px và chừa 40px hai bên */
+    margin:0 auto /* Căn giữa container */
+}
+
+/* Dòng chữ nhỏ phía trên tiêu đề */
+.eyebrow{
+    color:#635bff; /* Màu tím */
+    font-size:12px; /* Kích thước chữ */
+    font-weight:800; /* Chữ đậm */
+    letter-spacing:.13em; /* Khoảng cách giữa các chữ */
+    margin-bottom:7px /* Khoảng cách phía dưới */
+}
+
+/* Nút dạng text và nút quay lại */
+.text-btn,.back-btn{
+    background:transparent; /* Nền trong suốt */
+    color:#635bff; /* Màu chữ tím */
+    font-weight:700 /* Chữ đậm */
+}
+
+/* Khu vực nội dung của trang */
+.page{
+    min-height:70vh; /* Chiều cao tối thiểu bằng 70% chiều cao màn hình */
+    padding:56px 0 80px /* Khoảng cách trên và dưới */
+}
+
+/* Phần tiêu đề trang */
+.page-title{
+    margin-bottom:28px /* Khoảng cách phía dưới */
+}
+
+/* Tiêu đề h1 của trang */
+.page-title h1{
+    font-size:42px; /* Kích thước tiêu đề */
+    margin-bottom:8px; /* Khoảng cách phía dưới */
+    letter-spacing:-.03em /* Điều chỉnh khoảng cách chữ */
+}
+
+/* Đoạn paragraph cuối cùng trong page-title */
+.page-title>p:last-child{
+    color:#6a7384 /* Màu chữ xám */
+}
+
+/* Các section chính của website */
+.section{
+    padding:72px 0 /* Tạo khoảng cách trên và dưới */
+}
+
+/* Section có nền màu xám nhạt */
+.gray-section{
+    background:#f7f8fc /* Màu nền xám nhạt */
+}
+
+/* Phần tiêu đề của section */
+.section-head{
+    display:flex; /* Sử dụng Flexbox */
+    justify-content:space-between; /* Đẩy các phần tử ra hai phía */
+    align-items:end; /* Căn các phần tử xuống phía dưới */
+    margin-bottom:28px; /* Khoảng cách phía dưới */
+    gap:20px /* Khoảng cách giữa các phần tử */
+}
+
+/* Tiêu đề h2 trong section-head */
+.section-head h2{
+    font-size:34px; /* Kích thước tiêu đề */
+    letter-spacing:-.03em /* Điều chỉnh khoảng cách giữa các chữ */
+}
+
+/* Thiết lập chung cho nút chính và nút phụ */
+.primary-btn,.secondary-btn{
+    padding:13px 16px; /* Khoảng cách bên trong nút */
+    border-radius:10px; /* Bo tròn góc */
+    font-weight:800 /* Chữ đậm */
+}
+
+/* Thiết lập nút phụ */
+.secondary-btn{
+    background:#f1f2f7; /* Nền xám nhạt */
+    color:#273042 /* Màu chữ */
+}
+
+/* Responsive cho màn hình có chiều rộng tối đa 620px */
+@media(max-width:620px){
+
+    /* Điều chỉnh container trên điện thoại */
+    .container{
+        width:min(100% - 24px,1120px)
+    }
+}

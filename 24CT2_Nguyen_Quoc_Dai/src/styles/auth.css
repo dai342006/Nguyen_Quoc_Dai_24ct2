@@ -1,18 +1,272 @@
 /* CSS cho Đăng nhập + Đăng ký */
-.auth-page{min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at top left,rgba(99,91,255,.14),transparent 35%),linear-gradient(180deg,#f7f7ff,#eef0f8);padding:40px 20px}
-.auth-card{width:min(460px,100%);background:#fff;padding:36px;border-radius:22px;border:1px solid #e7e9f1;box-shadow:0 22px 55px rgba(20,28,45,.1)}
-.auth-brand{display:inline-block;margin-bottom:22px;background:transparent;color:#111827;font-size:24px;font-weight:800;letter-spacing:-.04em}.auth-brand span{color:#635bff}
-.auth-heading{margin-bottom:24px}.auth-eyebrow{color:#635bff!important;font-size:11px!important;font-weight:800!important;letter-spacing:.12em;margin:0 0 7px!important}
-.auth-card h1{font-size:32px;margin-bottom:7px;letter-spacing:-.035em}.auth-heading>p:last-child{color:#727b8b;line-height:1.6;margin:0}
-.auth-card label:not(.terms-row){display:block;margin:15px 0 7px;font-weight:700;font-size:14px;color:#293144}
-.auth-card input:not([type=checkbox]){width:100%;border:1px solid #dfe3ec;border-radius:11px;padding:13px 14px;outline:none;background:#fff;color:#172033;transition:.2s}
-.auth-card input:not([type=checkbox]):focus{border-color:#8a85ff;box-shadow:0 0 0 3px rgba(99,91,255,.12)}.auth-card input.input-error{border-color:#ed5a6b}
-.field-error{display:block;margin-top:5px;color:#dc3f52;font-size:12px;line-height:1.4}.password-field{position:relative}.password-field input{padding-right:66px!important}
-.password-toggle{position:absolute;top:50%;right:10px;transform:translateY(-50%);background:transparent;color:#635bff;font-size:12px;font-weight:800}
-.terms-row{display:flex!important;align-items:flex-start;gap:9px;margin:17px 0 6px!important;color:#687183;font-size:13px!important;font-weight:500!important;line-height:1.45}.terms-row input[type=checkbox]{width:16px!important;height:16px;margin:1px 0 0;flex:0 0 auto}
-.login-options{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:15px 0 20px}.remember-row{margin:0!important}.link-btn{padding:0;background:transparent;color:#635bff;font-size:13px;font-weight:700}
-.form-message{padding:11px 13px;border-radius:10px;font-size:13px;margin:14px 0;line-height:1.45}.form-message.error{background:#fff0f2;border:1px solid #ffd0d6;color:#c93247}
-.full{width:100%}.primary-btn{background:#635bff;color:#fff}.primary-btn:disabled{cursor:not-allowed;opacity:.65}
-.auth-divider{position:relative;text-align:center;margin:24px 0 15px}.auth-divider:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid #eceef4}.auth-divider span{position:relative;padding:0 10px;background:#fff;color:#858c9b;font-size:12px}
-.auth-outline-btn{width:100%;padding:12px 16px;border:1px solid #dcdfea;border-radius:10px;background:#fff;color:#333a4c;font-weight:800}.auth-outline-btn:hover{background:#f7f7fb;border-color:#c9c5ff}
-@media(max-width:500px){.auth-page{padding:25px 12px}.auth-card{padding:28px 20px;border-radius:18px}.auth-card h1{font-size:28px}.login-options{align-items:flex-start;flex-direction:column}}
+
+/* Khung tổng của trang đăng nhập/đăng ký */
+.auth-page{
+    min-height:100vh; /* Chiều cao tối thiểu bằng toàn bộ màn hình */
+    display:grid; /* Sử dụng CSS Grid */
+    place-items:center; /* Căn giữa nội dung theo cả chiều ngang và dọc */
+    background:radial-gradient(circle at top left,rgba(99,91,255,.14),transparent 35%),linear-gradient(180deg,#f7f7ff,#eef0f8); /* Tạo nền gradient */
+    padding:40px 20px /* Tạo khoảng cách bên trong */
+}
+
+/* Thẻ chứa form đăng nhập/đăng ký */
+.auth-card{
+    width:min(460px,100%); /* Chiều rộng tối đa 460px */
+    background:#fff; /* Màu nền trắng */
+    padding:36px; /* Khoảng cách bên trong */
+    border-radius:22px; /* Bo tròn góc */
+    border:1px solid #e7e9f1; /* Viền mỏng */
+    box-shadow:0 22px 55px rgba(20,28,45,.1) /* Tạo bóng đổ */
+}
+
+/* Tên thương hiệu */
+.auth-brand{
+    display:inline-block; /* Hiển thị dạng inline-block */
+    margin-bottom:22px; /* Khoảng cách phía dưới */
+    background:transparent; /* Nền trong suốt */
+    color:#111827; /* Màu chữ */
+    font-size:24px; /* Kích thước chữ */
+    font-weight:800; /* Độ đậm chữ */
+    letter-spacing:-.04em /* Điều chỉnh khoảng cách giữa các chữ */
+}
+
+/* Màu riêng cho phần span trong tên thương hiệu */
+.auth-brand span{
+    color:#635bff /* Màu tím */
+}
+
+/* Phần tiêu đề của form */
+.auth-heading{
+    margin-bottom:24px /* Khoảng cách phía dưới */
+}
+
+/* Dòng chữ nhỏ phía trên tiêu đề */
+.auth-eyebrow{
+    color:#635bff!important; /* Màu tím */
+    font-size:11px!important; /* Kích thước chữ */
+    font-weight:800!important; /* Chữ đậm */
+    letter-spacing:.12em; /* Tạo khoảng cách giữa các chữ */
+    margin:0 0 7px!important /* Khoảng cách phía dưới */
+}
+
+/* Tiêu đề chính h1 trong form */
+.auth-card h1{
+    font-size:32px; /* Kích thước tiêu đề */
+    margin-bottom:7px; /* Khoảng cách phía dưới */
+    letter-spacing:-.035em /* Điều chỉnh khoảng cách chữ */
+}
+
+/* Đoạn mô tả cuối cùng trong phần heading */
+.auth-heading>p:last-child{
+    color:#727b8b; /* Màu chữ xám */
+    line-height:1.6; /* Khoảng cách giữa các dòng */
+    margin:0 /* Xóa margin mặc định */
+}
+
+/* Nhãn của các ô nhập liệu */
+.auth-card label:not(.terms-row){
+    display:block; /* Hiển thị dạng block */
+    margin:15px 0 7px; /* Khoảng cách trên và dưới */
+    font-weight:700; /* Chữ đậm */
+    font-size:14px; /* Kích thước chữ */
+    color:#293144 /* Màu chữ */
+}
+
+/* Các ô input, ngoại trừ checkbox */
+.auth-card input:not([type=checkbox]){
+    width:100%; /* Chiếm toàn bộ chiều rộng */
+    border:1px solid #dfe3ec; /* Viền */
+    border-radius:11px; /* Bo góc */
+    padding:13px 14px; /* Khoảng cách bên trong */
+    outline:none; /* Xóa viền mặc định khi focus */
+    background:#fff; /* Nền trắng */
+    color:#172033; /* Màu chữ */
+    transition:.2s /* Hiệu ứng chuyển đổi */
+}
+
+/* Hiệu ứng khi người dùng click vào input */
+.auth-card input:not([type=checkbox]):focus{
+    border-color:#8a85ff; /* Đổi màu viền */
+    box-shadow:0 0 0 3px rgba(99,91,255,.12) /* Tạo vòng sáng xung quanh */
+}
+
+/* Input khi có lỗi */
+.auth-card input.input-error{
+    border-color:#ed5a6b /* Viền màu đỏ */
+}
+
+/* Nội dung thông báo lỗi dưới input */
+.field-error{
+    display:block; /* Hiển thị dạng block */
+    margin-top:5px; /* Khoảng cách phía trên */
+    color:#dc3f52; /* Màu đỏ */
+    font-size:12px; /* Kích thước chữ */
+    line-height:1.4 /* Khoảng cách dòng */
+}
+
+/* Khung chứa ô nhập mật khẩu */
+.password-field{
+    position:relative /* Làm mốc để đặt nút hiện/ẩn mật khẩu */
+}
+
+/* Ô input mật khẩu */
+.password-field input{
+    padding-right:66px!important /* Chừa khoảng trống bên phải cho nút */
+}
+
+/* Nút hiện/ẩn mật khẩu */
+.password-toggle{
+    position:absolute; /* Đặt nút nằm bên trong khung */
+    top:50%; /* Căn theo chiều dọc */
+    right:10px; /* Cách mép phải 10px */
+    transform:translateY(-50%); /* Căn giữa chính xác */
+    background:transparent; /* Nền trong suốt */
+    color:#635bff; /* Màu tím */
+    font-size:12px; /* Kích thước chữ */
+    font-weight:800 /* Chữ đậm */
+}
+
+/* Hàng điều khoản và checkbox */
+.terms-row{
+    display:flex!important; /* Hiển thị flex */
+    align-items:flex-start; /* Căn phần tử lên đầu */
+    gap:9px; /* Khoảng cách giữa checkbox và chữ */
+    margin:17px 0 6px!important; /* Khoảng cách */
+    color:#687183; /* Màu chữ */
+    font-size:13px!important; /* Kích thước chữ */
+    font-weight:500!important; /* Độ đậm */
+    line-height:1.45 /* Khoảng cách dòng */
+}
+
+/* Checkbox trong hàng điều khoản */
+.terms-row input[type=checkbox]{
+    width:16px!important; /* Chiều rộng checkbox */
+    height:16px!important; /* Chiều cao checkbox */
+    margin:1px 0 0; /* Căn chỉnh vị trí */
+    flex:0 0 auto /* Không cho checkbox co giãn */
+}
+
+/* Khu vực ghi nhớ tài khoản và quên mật khẩu */
+.login-options{
+    display:flex; /* Sử dụng flexbox */
+    justify-content:space-between; /* Đẩy 2 phần tử ra 2 bên */
+    align-items:center; /* Căn giữa theo chiều dọc */
+    gap:12px; /* Khoảng cách giữa các phần tử */
+    margin:15px 0 20px /* Khoảng cách */
+}
+
+/* Dòng ghi nhớ đăng nhập */
+.remember-row{
+    margin:0!important /* Xóa margin */
+}
+
+/* Nút dạng liên kết */
+.link-btn{
+    padding:0; /* Không có khoảng cách */
+    background:transparent; /* Nền trong suốt */
+    color:#635bff; /* Màu tím */
+    font-size:13px; /* Kích thước chữ */
+    font-weight:700 /* Chữ đậm */
+}
+
+/* Thông báo chung của form */
+.form-message{
+    padding:11px 13px; /* Khoảng cách bên trong */
+    border-radius:10px; /* Bo góc */
+    font-size:13px; /* Kích thước chữ */
+    margin:14px 0; /* Khoảng cách trên dưới */
+    line-height:1.45 /* Khoảng cách dòng */
+}
+
+/* Thông báo lỗi */
+.form-message.error{
+    background:#fff0f2; /* Nền đỏ nhạt */
+    border:1px solid #ffd0d6; /* Viền đỏ nhạt */
+    color:#c93247 /* Chữ màu đỏ */
+}
+
+/* Class dùng để chiếm toàn bộ chiều rộng */
+.full{
+    width:100% /* Chiếm 100% chiều rộng */
+}
+
+/* Nút chính */
+.primary-btn{
+    background:#635bff; /* Nền màu tím */
+    color:#fff /* Chữ màu trắng */
+}
+
+/* Nút chính khi bị vô hiệu hóa */
+.primary-btn:disabled{
+    cursor:not-allowed; /* Hiển thị con trỏ không cho phép */
+    opacity:.65 /* Làm nút mờ đi */
+}
+
+/* Đường phân cách giữa các phương thức đăng nhập */
+.auth-divider{
+    position:relative; /* Làm mốc cho đường kẻ */
+    text-align:center; /* Căn chữ giữa */
+    margin:24px 0 15px /* Khoảng cách */
+}
+
+/* Tạo đường kẻ ngang */
+.auth-divider:before{
+    content:""; /* Nội dung rỗng */
+    position:absolute; /* Đặt tuyệt đối */
+    left:0; /* Bắt đầu từ bên trái */
+    right:0; /* Kéo đến bên phải */
+    top:50%; /* Đặt ở giữa */
+    border-top:1px solid #eceef4 /* Tạo đường kẻ */
+}
+
+/* Phần chữ nằm giữa đường phân cách */
+.auth-divider span{
+    position:relative; /* Đặt trên đường kẻ */
+    padding:0 10px; /* Khoảng cách hai bên */
+    background:#fff; /* Nền trắng để che đường kẻ */
+    color:#858c9b; /* Màu chữ xám */
+    font-size:12px /* Kích thước chữ */
+}
+
+/* Nút phụ dạng outline */
+.auth-outline-btn{
+    width:100%; /* Chiếm toàn bộ chiều rộng */
+    padding:12px 16px; /* Khoảng cách bên trong */
+    border:1px solid #dcdfea; /* Viền */
+    border-radius:10px; /* Bo góc */
+    background:#fff; /* Nền trắng */
+    color:#333a4c; /* Màu chữ */
+    font-weight:800 /* Chữ đậm */
+}
+
+/* Hiệu ứng hover cho nút outline */
+.auth-outline-btn:hover{
+    background:#f7f7fb; /* Đổi màu nền */
+    border-color:#c9c5ff /* Đổi màu viền */
+}
+
+/* Responsive cho màn hình có chiều rộng tối đa 500px */
+@media(max-width:500px){
+
+    /* Điều chỉnh padding của trang trên điện thoại */
+    .auth-page{
+        padding:25px 12px
+    }
+
+    /* Điều chỉnh kích thước thẻ form trên điện thoại */
+    .auth-card{
+        padding:28px 20px;
+        border-radius:18px
+    }
+
+    /* Giảm kích thước tiêu đề trên điện thoại */
+    .auth-card h1{
+        font-size:28px
+    }
+
+    /* Chuyển khu vực login options thành dạng cột */
+    .login-options{
+        align-items:flex-start;
+        flex-direction:column
+    }
+}

@@ -1,113 +1,163 @@
-.filter-bar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:28px}.filter-bar input,.filter-bar select{width:100%;border:1px solid #dfe3ec;border-radius:10px;padding:13px 14px;outline:none;background:#fff}.filter-bar input:focus,.filter-bar select:focus{border-color:#8a85ff;box-shadow:0 0 0 3px rgba(99,91,255,.12)}@media(max-width:620px){.filter-bar{grid-template-columns:1fr}}
+/* ==================== FILTER BAR ==================== */
+
+/* Thanh tìm kiếm và bộ lọc */
+.filter-bar{
+  display:grid; /* Sử dụng CSS Grid */
+  grid-template-columns:2fr 1fr 1fr; /* Chia thành 3 cột, ô đầu rộng hơn */
+  gap:12px; /* Khoảng cách giữa các ô */
+  margin-bottom:28px /* Khoảng cách phía dưới */
+}
+
+/* Input và select trong thanh lọc */
+.filter-bar input,.filter-bar select{
+  width:100%; /* Chiếm toàn bộ chiều rộng của cột */
+  border:1px solid #dfe3ec; /* Viền xám nhạt */
+  border-radius:10px; /* Bo tròn góc */
+  padding:13px 14px; /* Khoảng cách bên trong */
+  outline:none; /* Xóa outline mặc định */
+  background:#fff /* Nền trắng */
+}
+
+/* Hiệu ứng khi chọn input hoặc select */
+.filter-bar input:focus,.filter-bar select:focus{
+  border-color:#8a85ff; /* Đổi màu viền sang tím */
+  box-shadow:0 0 0 3px rgba(99,91,255,.12) /* Tạo hiệu ứng viền sáng */
+}
+
+/* Responsive cho bộ lọc trên màn hình nhỏ */
+@media(max-width:620px){
+  .filter-bar{
+      grid-template-columns:1fr /* Chuyển thành 1 cột */
+  }
+}
+
+
 /* ========================================
-   SERVICE CARD
+ SERVICE CARD
 ======================================== */
 
+/* Card hiển thị thông tin dịch vụ */
 .service-card {
-    background: #ffffff;
-    border: 1px solid #edf0f6;
-    border-radius: 18px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    min-height: 320px;
-    box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06);
-    transition: 0.2s ease;
-  }
-  
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 35px rgba(30, 35, 80, 0.1);
-  }
-  
-  .service-card-content {
-    flex: 1;
-  }
-  
-  .service-icon {
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    background: #f0edff;
-    border-radius: 14px;
-    font-size: 24px;
-    margin-bottom: 14px;
-  }
-  
-  .service-category {
-    display: inline-block;
-    margin-bottom: 8px;
-    color: #6255df;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  
-  .service-card h3 {
-    margin: 0 0 10px;
-    font-size: 19px;
-    line-height: 1.4;
-  }
-  
-  .service-card p {
-    margin: 0;
-    color: #6b7280;
-    line-height: 1.6;
-  }
-  
-  .service-freelancer {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin-top: 16px;
-    color: #596173;
-    font-size: 14px;
-  }
-  
-  .service-card-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid #edf0f6;
-  }
-  
-  .service-card-bottom small {
-    display: block;
-    color: #8a90a0;
-    margin-bottom: 4px;
-  }
-  
-  .service-card-bottom strong {
-    font-size: 14px;
-  }
-  
-  .service-price {
-    color: #5f50da;
-    font-size: 19px;
-    font-weight: 700;
-  }
-  
-  .service-view-btn {
-    width: 100%;
-    margin-top: 16px;
-    padding: 11px 16px;
-    border: none;
-    border-radius: 10px;
-    background: #6255df;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  
-  .service-view-btn:hover {
-    background: #5143c7;
-  }
-  
-  @media (max-width: 600px) {
-    .service-card {
+  background: #ffffff; /* Nền trắng */
+  border: 1px solid #edf0f6; /* Viền xám nhạt */
+  border-radius: 18px; /* Bo tròn góc */
+  padding: 20px; /* Khoảng cách bên trong */
+  display: flex; /* Sử dụng Flexbox */
+  flex-direction: column; /* Xếp nội dung theo chiều dọc */
+  min-height: 320px; /* Chiều cao tối thiểu */
+  box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06); /* Tạo bóng đổ */
+  transition: 0.2s ease; /* Hiệu ứng chuyển động */
+}
+
+/* Hiệu ứng khi rê chuột vào card */
+.service-card:hover {
+  transform: translateY(-4px); /* Card di chuyển lên 4px */
+  box-shadow: 0 14px 35px rgba(30, 35, 80, 0.1); /* Tăng bóng đổ */
+}
+
+/* Phần nội dung chính của card */
+.service-card-content {
+  flex: 1; /* Chiếm phần không gian còn lại */
+}
+
+/* Icon của dịch vụ */
+.service-icon {
+  width: 48px; /* Chiều rộng */
+  height: 48px; /* Chiều cao */
+  display: grid; /* Sử dụng Grid */
+  place-items: center; /* Căn icon vào chính giữa */
+  background: #f0edff; /* Nền tím nhạt */
+  border-radius: 14px; /* Bo góc */
+  font-size: 24px; /* Kích thước icon */
+  margin-bottom: 14px; /* Khoảng cách phía dưới */
+}
+
+/* Tên danh mục dịch vụ */
+.service-category {
+  display: inline-block; /* Hiển thị dạng inline-block */
+  margin-bottom: 8px; /* Khoảng cách phía dưới */
+  color: #6255df; /* Màu tím */
+  font-size: 13px; /* Kích thước chữ */
+  font-weight: 700; /* Chữ đậm */
+}
+
+/* Tiêu đề dịch vụ */
+.service-card h3 {
+  margin: 0 0 10px; /* Khoảng cách phía dưới */
+  font-size: 19px; /* Kích thước tiêu đề */
+  line-height: 1.4; /* Khoảng cách dòng */
+}
+
+/* Mô tả dịch vụ */
+.service-card p {
+  margin: 0; /* Xóa margin mặc định */
+  color: #6b7280; /* Màu chữ xám */
+  line-height: 1.6; /* Khoảng cách dòng */
+}
+
+/* Thông tin freelancer */
+.service-freelancer {
+  display: flex; /* Sử dụng Flexbox */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  gap: 7px; /* Khoảng cách giữa các phần tử */
+  margin-top: 16px; /* Khoảng cách phía trên */
+  color: #596173; /* Màu chữ */
+  font-size: 14px; /* Kích thước chữ */
+}
+
+/* Phần cuối của card dịch vụ */
+.service-card-bottom {
+  display: flex; /* Sử dụng Flexbox */
+  justify-content: space-between; /* Đưa các phần tử ra hai phía */
+  align-items: end; /* Căn phần tử xuống phía dưới */
+  margin-top: 20px; /* Khoảng cách phía trên */
+  padding-top: 16px; /* Khoảng cách bên trên nội dung */
+  border-top: 1px solid #edf0f6; /* Đường viền phía trên */
+}
+
+/* Nội dung nhỏ trong phần cuối card */
+.service-card-bottom small {
+  display: block; /* Hiển thị thành một dòng */
+  color: #8a90a0; /* Màu chữ xám */
+  margin-bottom: 4px; /* Khoảng cách phía dưới */
+}
+
+/* Nội dung strong trong phần cuối card */
+.service-card-bottom strong {
+  font-size: 14px; /* Kích thước chữ */
+}
+
+/* Giá dịch vụ */
+.service-price {
+  color: #5f50da; /* Màu tím */
+  font-size: 19px; /* Kích thước giá */
+  font-weight: 700; /* Chữ đậm */
+}
+
+/* Nút xem chi tiết dịch vụ */
+.service-view-btn {
+  width: 100%; /* Chiếm toàn bộ chiều rộng */
+  margin-top: 16px; /* Khoảng cách phía trên */
+  padding: 11px 16px; /* Khoảng cách bên trong */
+  border: none; /* Xóa đường viền */
+  border-radius: 10px; /* Bo góc */
+  background: #6255df; /* Nền màu tím */
+  color: white; /* Chữ màu trắng */
+  font-weight: 600; /* Chữ hơi đậm */
+  cursor: pointer; /* Con trỏ dạng bàn tay */
+  transition: 0.2s; /* Hiệu ứng chuyển đổi */
+}
+
+/* Hiệu ứng hover cho nút xem dịch vụ */
+.service-view-btn:hover {
+  background: #5143c7; /* Đổi sang màu tím đậm hơn */
+}
+
+/* Responsive cho màn hình điện thoại */
+@media (max-width: 600px) {
+
+  /* Bỏ chiều cao tối thiểu của card trên mobile */
+  .service-card {
       min-height: auto;
-    }
   }
+}
