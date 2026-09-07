@@ -22,7 +22,7 @@ function Orders({ setPage, currentUser }) {
       setError("");
 
       const response = await fetch(
-"https://nguyen-quoc-dai-24ct2.onrender.com/api/orders",
+        "https://nguyen-quoc-dai-24ct2.onrender.com/api/orders",
         {
           method: "GET",
           headers: {
@@ -36,8 +36,7 @@ function Orders({ setPage, currentUser }) {
 
       if (!response.ok) {
         setError(
-          data.message ||
-            "Không thể tải đơn hàng."
+          data.message || "Không thể tải đơn hàng."
         );
         return;
       }
@@ -47,7 +46,6 @@ function Orders({ setPage, currentUser }) {
           ? data.orders
           : []
       );
-
     } catch (err) {
       console.error("Lỗi loadOrders:", err);
 
@@ -67,7 +65,7 @@ function Orders({ setPage, currentUser }) {
   }, [currentUser]);
 
   // ========================================
-  // Cập nhật trạng thái
+  // Cập nhật trạng thái đơn hàng
   // ========================================
   async function updateStatus(orderId, status) {
     setError("");
@@ -104,7 +102,6 @@ function Orders({ setPage, currentUser }) {
       );
 
       await loadOrders();
-
     } catch (err) {
       console.error(
         "Lỗi updateStatus:",
@@ -122,6 +119,7 @@ function Orders({ setPage, currentUser }) {
   // ========================================
   function getStatusText(status) {
     switch (status) {
+      case "ChoXuLy":
       case "ChoXacNhan":
         return "Chờ xác nhận";
 
@@ -150,6 +148,11 @@ function Orders({ setPage, currentUser }) {
       case "DaHuy":
         return "status cancelled";
 
+      case "DangThucHien":
+        return "status pending";
+
+      case "ChoXuLy":
+      case "ChoXacNhan":
       default:
         return "status pending";
     }
@@ -162,7 +165,6 @@ function Orders({ setPage, currentUser }) {
     return (
       <main className="page">
         <div className="container">
-
           <div className="page-title">
             <p className="eyebrow">
               QUẢN LÝ
@@ -184,7 +186,6 @@ function Orders({ setPage, currentUser }) {
               Vui lòng chờ một chút.
             </p>
           </div>
-
         </div>
       </main>
     );
@@ -234,7 +235,6 @@ function Orders({ setPage, currentUser }) {
             KHÔNG CÓ ĐƠN
         ========================= */}
         {orders.length === 0 ? (
-
           <div className="empty-services">
 
             <div>📦</div>
@@ -250,9 +250,7 @@ function Orders({ setPage, currentUser }) {
             </p>
 
           </div>
-
         ) : (
-
           <div className="order-list">
 
             {orders.map((order) => (
@@ -319,55 +317,57 @@ function Orders({ setPage, currentUser }) {
                   )}
                 </span>
 
-                {/* Freelancer cập nhật */}
-                {currentUser?.role ===
-                  "Freelancer" &&
-                  order.TrangThai !==
-                    "HoanThanh" &&
-                  order.TrangThai !==
-                    "DaHuy" && (
+                {/* =========================
+                    FREELANCER CẬP NHẬT
+                ========================= */}
+                {currentUser?.role === "Freelancer" &&
+                  order.TrangThai !== "HoanThanh" &&
+                  order.TrangThai !== "DaHuy" && (
 
-                    <div className="order-actions">
+                  <div className="order-actions">
 
-                      {order.TrangThai ===
-                        "ChoXacNhan" && (
-                        <button
-                          className="primary-btn"
-                          onClick={() =>
-                            updateStatus(
-                              order.MaDonHang,
-                              "DangThucHien"
-                            )
-                          }
-                        >
-                          Nhận đơn
-                        </button>
-                      )}
+                    {/* Chờ xác nhận */}
+                    {(order.TrangThai === "ChoXuLy" ||
+                      order.TrangThai === "ChoXacNhan") && (
 
-                      {order.TrangThai ===
-                        "DangThucHien" && (
-                        <button
-                          className="primary-btn"
-                          onClick={() =>
-                            updateStatus(
-                              order.MaDonHang,
-                              "HoanThanh"
-                            )
-                          }
-                        >
-                          Hoàn thành
-                        </button>
-                      )}
+                      <button
+                        className="primary-btn"
+                        onClick={() =>
+                          updateStatus(
+                            order.MaDonHang,
+                            "DangThucHien"
+                          )
+                        }
+                      >
+                        Xác nhận đơn
+                      </button>
+                    )}
 
-                    </div>
-                  )}
+                    {/* Đang thực hiện */}
+                    {order.TrangThai ===
+                      "DangThucHien" && (
+
+                      <button
+                        className="primary-btn"
+                        onClick={() =>
+                          updateStatus(
+                            order.MaDonHang,
+                            "HoanThanh"
+                          )
+                        }
+                      >
+                        Hoàn thành
+                      </button>
+                    )}
+
+                  </div>
+                )}
 
               </div>
 
             ))}
 
           </div>
-
         )}
 
         {/* =========================
