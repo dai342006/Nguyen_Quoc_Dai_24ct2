@@ -25,13 +25,13 @@ function Home({ setPage, setSelectedService }) {
   const [loading, setLoading] = useState(true);
 
   // ========================================
-  // Lấy dịch vụ từ SQL Server
+  // // Lấy dịch vụ từ Backend Render
   // ========================================
   useEffect(() => {
     async function loadServices() {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/services"
+          "https://nguyen-quoc-dai-24ct2.onrender.com/api/services"
         );
 
         const data = await response.json();

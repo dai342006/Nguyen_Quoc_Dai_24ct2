@@ -3,7 +3,7 @@
 /* Khu vực Hero đầu trang */
 .hero{
     padding:74px 0; /* Khoảng cách trên và dưới */
-    background:linear-gradient(180deg,#38a5e8 0%,#fff 100%) /* Nền gradient */
+    background:linear-gradient(180deg,#38a5e8 0%,#fff 100%) /* Nền gradient (nền home*/
 }
 
 /* Bố cục Hero gồm 2 cột */
