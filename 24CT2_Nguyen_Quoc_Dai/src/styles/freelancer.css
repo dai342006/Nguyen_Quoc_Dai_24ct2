@@ -1,280 +1,516 @@
-.profile-layout{display:grid;grid-template-columns:1.5fr .7fr;gap:24px}.profile-card,.side-card{background:#fff;border:1px solid #e5e9f0;border-radius:18px;padding:26px}.profile-top{display:flex;gap:18px;align-items:center}.profile-avatar{width:84px;height:84px;display:grid;place-items:center;background:#eef0ff;border-radius:50%;overflow:hidden;flex-shrink:0}.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}.profile-card h2{font-size:28px;letter-spacing:-.03em}.profile-card p{color:#6f7888;line-height:1.7;margin:16px 0}.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.profile-stats div{background:#f6f7fb;padding:15px;border-radius:12px;text-align:center}.profile-stats strong,.profile-stats span{display:block}.profile-stats strong{font-size:22px}.profile-stats span{font-size:12px;color:#737c8d;margin-top:3px}.skills{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}.skills span{background:#efeeff;color:#5149dc;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700}.profile-card .primary-btn{width:auto;padding-inline:20px;background:#635bff;color:#fff}.side-card h3{margin-bottom:10px}.mini-service{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid #edf0f5}.mini-service>span{font-size:28px}.mini-service strong,.mini-service small{display:block}.mini-service strong{font-size:14px}.mini-service small{color:#757e8d;margin-top:5px}@media(max-width:920px){.profile-layout{grid-template-columns:1fr}}@media(max-width:620px){.profile-stats{grid-template-columns:1fr}}
 /* ========================================
-   QUẢN LÝ DỊCH VỤ FREELANCER
+   PROFILE LAYOUT
 ======================================== */
 
-.manage-service-form {
-    margin-top: 30px;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(30, 35, 80, 0.08);
+/* Bố cục chính của trang profile */
+.profile-layout{
+  display:grid; /* Sử dụng CSS Grid */
+  grid-template-columns:1.5fr .7fr; /* Chia thành 2 cột, cột chính rộng hơn */
+  gap:24px /* Khoảng cách giữa 2 cột */
+}
+
+/* Card profile và card bên cạnh */
+.profile-card,.side-card{
+  background:#fff; /* Nền trắng */
+  border:1px solid #e5e9f0; /* Viền xám nhạt */
+  border-radius:18px; /* Bo tròn góc */
+  padding:26px /* Khoảng cách bên trong */
+}
+
+/* Phần đầu profile */
+.profile-top{
+  display:flex; /* Sử dụng Flexbox */
+  gap:18px; /* Khoảng cách giữa avatar và thông tin */
+  align-items:center /* Căn giữa theo chiều dọc */
+}
+
+/* Avatar của freelancer */
+.profile-avatar{
+  width:84px; /* Chiều rộng avatar */
+  height:84px; /* Chiều cao avatar */
+  display:grid; /* Sử dụng Grid */
+  place-items:center; /* Căn nội dung vào chính giữa */
+  background:#eef0ff; /* Nền tím nhạt */
+  border-radius:50%; /* Tạo hình tròn */
+  overflow:hidden; /* Ẩn phần ảnh vượt khỏi avatar */
+  flex-shrink:0 /* Không cho avatar bị co lại */
+}
+
+/* Hình ảnh bên trong avatar */
+.profile-avatar img{
+  width:100%; /* Ảnh chiếm toàn bộ chiều rộng */
+  height:100%; /* Ảnh chiếm toàn bộ chiều cao */
+  object-fit:cover; /* Cắt ảnh vừa khung */
+  display:block /* Hiển thị dạng block */
+}
+
+/* Tên freelancer */
+.profile-card h2{
+  font-size:28px; /* Kích thước tiêu đề */
+  letter-spacing:-.03em /* Điều chỉnh khoảng cách chữ */
+}
+
+/* Mô tả profile */
+.profile-card p{
+  color:#6f7888; /* Màu chữ xám */
+  line-height:1.7; /* Khoảng cách dòng */
+  margin:16px 0 /* Khoảng cách trên dưới */
+}
+
+/* Khu vực thống kê của profile */
+.profile-stats{
+  display:grid; /* Sử dụng Grid */
+  grid-template-columns:repeat(3,1fr); /* Chia thành 3 cột */
+  gap:12px; /* Khoảng cách giữa các ô */
+  margin:24px 0 /* Khoảng cách trên dưới */
+}
+
+/* Từng ô thống kê */
+.profile-stats div{
+  background:#f6f7fb; /* Nền xám nhạt */
+  padding:15px; /* Khoảng cách bên trong */
+  border-radius:12px; /* Bo góc */
+  text-align:center /* Căn giữa nội dung */
+}
+
+/* Số liệu và mô tả thống kê */
+.profile-stats strong,.profile-stats span{
+  display:block /* Hiển thị mỗi phần trên một dòng */
+}
+
+/* Số liệu thống kê */
+.profile-stats strong{
+  font-size:22px /* Kích thước số */
+}
+
+/* Mô tả thống kê */
+.profile-stats span{
+  font-size:12px; /* Kích thước chữ */
+  color:#737c8d; /* Màu chữ xám */
+  margin-top:3px /* Khoảng cách phía trên */
+}
+
+/* Danh sách kỹ năng */
+.skills{
+  display:flex; /* Sử dụng Flexbox */
+  flex-wrap:wrap; /* Cho phép xuống dòng */
+  gap:8px; /* Khoảng cách giữa các kỹ năng */
+  margin:18px 0 22px /* Khoảng cách */
+}
+
+/* Từng kỹ năng */
+.skills span{
+  background:#efeeff; /* Nền tím nhạt */
+  color:#5149dc; /* Chữ màu tím */
+  padding:7px 10px; /* Khoảng cách bên trong */
+  border-radius:999px; /* Bo tròn dạng pill */
+  font-size:12px; /* Kích thước chữ */
+  font-weight:700 /* Chữ đậm */
+}
+
+/* Nút chính trong profile */
+.profile-card .primary-btn{
+  width:auto; /* Chiều rộng tự động */
+  padding-inline:20px; /* Khoảng cách trái phải */
+  background:#635bff; /* Nền tím */
+  color:#fff /* Chữ trắng */
+}
+
+/* Tiêu đề card bên phải */
+.side-card h3{
+  margin-bottom:10px /* Khoảng cách phía dưới */
+}
+
+/* Một dịch vụ nhỏ trong side card */
+.mini-service{
+  display:flex; /* Sử dụng Flexbox */
+  gap:10px; /* Khoảng cách */
+  padding:14px 0; /* Khoảng cách trên dưới */
+  border-bottom:1px solid #edf0f5 /* Đường viền phía dưới */
+}
+
+/* Icon dịch vụ nhỏ */
+.mini-service>span{
+  font-size:28px /* Kích thước icon */
+}
+
+/* Tên dịch vụ và thông tin phụ */
+.mini-service strong,.mini-service small{
+  display:block /* Hiển thị mỗi phần trên một dòng */
+}
+
+/* Tên dịch vụ */
+.mini-service strong{
+  font-size:14px /* Kích thước chữ */
+}
+
+/* Thông tin phụ */
+.mini-service small{
+  color:#757e8d; /* Màu chữ xám */
+  margin-top:5px /* Khoảng cách phía trên */
+}
+
+
+/* ========================================
+ RESPONSIVE PROFILE
+======================================== */
+
+/* Khi màn hình tối đa 920px */
+@media(max-width:920px){
+
+  /* Chuyển profile thành 1 cột */
+  .profile-layout{
+      grid-template-columns:1fr
   }
-  
-  .manage-service-form h2 {
-    margin: 0 0 25px;
-    font-size: 26px;
+}
+
+/* Khi màn hình tối đa 620px */
+@media(max-width:620px){
+
+  /* Thống kê chuyển thành 1 cột */
+  .profile-stats{
+      grid-template-columns:1fr
   }
-  
-  .manage-service-form form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px 24px;
+}
+
+
+/* ========================================
+ QUẢN LÝ DỊCH VỤ FREELANCER
+======================================== */
+
+/* Form quản lý dịch vụ */
+.manage-service-form{
+  margin-top:30px; /* Khoảng cách phía trên */
+  padding:30px; /* Khoảng cách bên trong */
+  background:#ffffff; /* Nền trắng */
+  border-radius:20px; /* Bo góc */
+  box-shadow:0 10px 30px rgba(30,35,80,0.08) /* Bóng đổ */
+}
+
+/* Tiêu đề form quản lý */
+.manage-service-form h2{
+  margin:0 0 25px; /* Khoảng cách phía dưới */
+  font-size:26px /* Kích thước tiêu đề */
+}
+
+/* Form nhập dữ liệu */
+.manage-service-form form{
+  display:grid; /* Sử dụng CSS Grid */
+  grid-template-columns:1fr 1fr; /* Chia thành 2 cột */
+  gap:18px 24px /* Khoảng cách hàng và cột */
+}
+
+/* Nhãn của các trường nhập */
+.manage-service-form label{
+  display:block; /* Hiển thị dạng block */
+  margin-bottom:8px; /* Khoảng cách phía dưới */
+  font-weight:600; /* Chữ đậm */
+  color:#172033 /* Màu chữ */
+}
+
+/* Input, select và textarea */
+.manage-service-form input,
+.manage-service-form select,
+.manage-service-form textarea{
+  width:100%; /* Chiếm toàn bộ chiều rộng */
+  box-sizing:border-box; /* Tính padding và border vào kích thước */
+  padding:13px 15px; /* Khoảng cách bên trong */
+  border:1px solid #d9deea; /* Viền */
+  border-radius:12px; /* Bo góc */
+  background:#fff; /* Nền trắng */
+  font-size:15px; /* Kích thước chữ */
+  font-family:inherit; /* Kế thừa font */
+  color:#172033; /* Màu chữ */
+  outline:none; /* Xóa outline mặc định */
+  transition:0.2s /* Hiệu ứng chuyển đổi */
+}
+
+/* Hiệu ứng khi focus vào input */
+.manage-service-form input:focus,
+.manage-service-form select:focus,
+.manage-service-form textarea:focus{
+  border-color:#6557f5; /* Đổi màu viền */
+  box-shadow:0 0 0 3px rgba(101,87,245,0.1) /* Tạo hiệu ứng bao quanh */
+}
+
+/* Ô textarea */
+.manage-service-form textarea{
+  resize:vertical; /* Chỉ cho phép thay đổi chiều cao */
+  min-height:130px /* Chiều cao tối thiểu */
+}
+
+/* Các trường trải dài toàn bộ form */
+.manage-service-form textarea,
+.manage-service-form .form-message,
+.manage-service-form .service-form-actions{
+  grid-column:1 / -1; /* Chiếm toàn bộ các cột */
+}
+
+/* Khu vực nút của form */
+.service-form-actions{
+  display:flex; /* Sắp xếp nút theo hàng ngang */
+  gap:12px; /* Khoảng cách giữa các nút */
+  margin-top:5px /* Khoảng cách phía trên */
+}
+
+/* Các nút trong form */
+.service-form-actions button{
+  border:none; /* Không có viền */
+  cursor:pointer /* Con trỏ dạng bàn tay */
+}
+
+
+/* ========================================
+ DANH SÁCH DỊCH VỤ
+======================================== */
+
+/* Khu vực danh sách dịch vụ */
+.my-services{
+  margin-top:50px /* Khoảng cách phía trên */
+}
+
+/* Tiêu đề của danh sách */
+.section-heading{
+  display:flex; /* Sử dụng Flexbox */
+  justify-content:space-between; /* Đưa nội dung ra hai phía */
+  align-items:end; /* Căn xuống dưới */
+  margin-bottom:24px /* Khoảng cách phía dưới */
+}
+
+/* Eyebrow trong phần tiêu đề */
+.section-heading .eyebrow{
+  margin-bottom:5px /* Khoảng cách phía dưới */
+}
+
+/* Tiêu đề h2 */
+.section-heading h2{
+  margin:0; /* Xóa margin */
+  font-size:30px /* Kích thước tiêu đề */
+}
+
+/* Nội dung phụ bên phải */
+.section-heading > span{
+  color:#687080; /* Màu xám */
+  font-size:15px /* Kích thước chữ */
+}
+
+
+/* ========================================
+ SERVICE MANAGEMENT GRID
+======================================== */
+
+/* Grid quản lý dịch vụ */
+.service-management-grid{
+  display:grid; /* Sử dụng CSS Grid */
+  grid-template-columns:repeat(3,1fr); /* Chia thành 3 cột */
+  gap:20px /* Khoảng cách */
+}
+
+
+/* ========================================
+ MANAGEMENT SERVICE CARD
+======================================== */
+
+/* Card quản lý dịch vụ */
+.management-service-card{
+  padding:22px; /* Khoảng cách bên trong */
+  background:#ffffff; /* Nền trắng */
+  border:1px solid #edf0f6; /* Viền */
+  border-radius:18px; /* Bo góc */
+  box-shadow:0 8px 25px rgba(30,35,80,0.06); /* Bóng đổ */
+  transition:transform 0.2s, box-shadow 0.2s /* Hiệu ứng */
+}
+
+/* Hiệu ứng hover card */
+.management-service-card:hover{
+  transform:translateY(-3px); /* Di chuyển lên 3px */
+  box-shadow:0 14px 30px rgba(30,35,80,0.1) /* Tăng bóng */
+}
+
+/* Phần trên của card */
+.management-service-top{
+  display:flex; /* Sử dụng Flexbox */
+  justify-content:space-between; /* Đưa 2 phần ra hai phía */
+  align-items:center; /* Căn giữa dọc */
+  gap:10px; /* Khoảng cách */
+  margin-bottom:15px /* Khoảng cách phía dưới */
+}
+
+/* Nhãn danh mục dịch vụ */
+.service-category{
+  display:inline-block; /* Hiển thị inline-block */
+  padding:5px 10px; /* Khoảng cách bên trong */
+  border-radius:999px; /* Bo tròn dạng pill */
+  background:#eeeaff; /* Nền tím nhạt */
+  color:#5b4de0; /* Chữ màu tím */
+  font-size:12px; /* Kích thước chữ */
+  font-weight:700 /* Chữ đậm */
+}
+
+/* Trạng thái dịch vụ */
+.service-status{
+  display:inline-block; /* Hiển thị inline-block */
+  padding:5px 10px; /* Khoảng cách bên trong */
+  border-radius:999px; /* Bo tròn */
+  background:#eaf8ef; /* Nền xanh nhạt */
+  color:#23834c; /* Chữ xanh */
+  font-size:12px; /* Kích thước chữ */
+  font-weight:600 /* Độ đậm */
+}
+
+/* Tiêu đề dịch vụ */
+.management-service-card h3{
+  margin:0 0 10px; /* Khoảng cách phía dưới */
+  font-size:20px; /* Kích thước */
+  line-height:1.4 /* Khoảng cách dòng */
+}
+
+/* Mô tả dịch vụ */
+.management-service-card p{
+  margin:0; /* Xóa margin */
+  min-height:72px; /* Chiều cao tối thiểu */
+  color:#687080; /* Màu chữ xám */
+  line-height:1.6 /* Khoảng cách dòng */
+}
+
+/* Giá dịch vụ */
+.service-price{
+  display:block; /* Hiển thị thành dòng riêng */
+  margin:18px 0; /* Khoảng cách trên dưới */
+  font-size:20px; /* Kích thước giá */
+  color:#5b4de0 /* Màu tím */
+}
+
+
+/* ========================================
+ NÚT SỬA / XÓA
+======================================== */
+
+/* Khu vực chứa nút sửa và xóa */
+.management-actions{
+  display:flex; /* Sử dụng Flexbox */
+  gap:10px /* Khoảng cách giữa các nút */
+}
+
+/* Thiết lập chung cho nút sửa và xóa */
+.edit-btn,
+.delete-btn{
+  flex:1; /* Hai nút chia đều chiều rộng */
+  padding:10px 14px; /* Khoảng cách bên trong */
+  border:none; /* Xóa viền */
+  border-radius:10px; /* Bo góc */
+  font-size:14px; /* Kích thước chữ */
+  font-weight:600; /* Chữ đậm */
+  cursor:pointer; /* Con trỏ dạng bàn tay */
+  transition:0.2s /* Hiệu ứng */
+}
+
+/* Nút sửa */
+.edit-btn{
+  background:#eeeaff; /* Nền tím nhạt */
+  color:#5b4de0 /* Màu chữ tím */
+}
+
+/* Hover nút sửa */
+.edit-btn:hover{
+  background:#ddd7ff /* Đổi nền tím đậm hơn */
+}
+
+/* Nút xóa */
+.delete-btn{
+  background:#ffe9e9; /* Nền đỏ nhạt */
+  color:#d83a3a /* Chữ đỏ */
+}
+
+/* Hover nút xóa */
+.delete-btn:hover{
+  background:#ffd8d8 /* Đổi nền đỏ đậm hơn */
+}
+
+
+/* ========================================
+ CHƯA CÓ DỊCH VỤ
+======================================== */
+
+/* Giao diện khi freelancer chưa có dịch vụ */
+.empty-services{
+  padding:55px 20px; /* Khoảng cách bên trong */
+  text-align:center; /* Căn giữa */
+  background:#ffffff; /* Nền trắng */
+  border:1px dashed #dfe3ed; /* Viền nét đứt */
+  border-radius:18px /* Bo góc */
+}
+
+/* Icon khi chưa có dịch vụ */
+.empty-services > div{
+  font-size:46px; /* Kích thước icon */
+  margin-bottom:12px /* Khoảng cách phía dưới */
+}
+
+/* Tiêu đề khi chưa có dịch vụ */
+.empty-services h3{
+  margin:0 0 8px /* Khoảng cách phía dưới */
+}
+
+/* Mô tả khi chưa có dịch vụ */
+.empty-services p{
+  margin:0; /* Xóa margin */
+  color:#687080 /* Màu chữ xám */
+}
+
+
+/* ========================================
+ RESPONSIVE
+======================================== */
+
+/* Khi màn hình tối đa 900px */
+@media (max-width: 900px){
+
+  /* Form chuyển từ 2 cột thành 1 cột */
+  .manage-service-form form{
+      grid-template-columns:1fr
   }
-  
-  .manage-service-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #172033;
-  }
-  
-  .manage-service-form input,
-  .manage-service-form select,
-  .manage-service-form textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 13px 15px;
-    border: 1px solid #d9deea;
-    border-radius: 12px;
-    background: #fff;
-    font-size: 15px;
-    font-family: inherit;
-    color: #172033;
-    outline: none;
-    transition: 0.2s;
-  }
-  
-  .manage-service-form input:focus,
-  .manage-service-form select:focus,
-  .manage-service-form textarea:focus {
-    border-color: #6557f5;
-    box-shadow: 0 0 0 3px rgba(101, 87, 245, 0.1);
-  }
-  
-  .manage-service-form textarea {
-    resize: vertical;
-    min-height: 130px;
-  }
-  
-  /* Các trường trải dài toàn bộ form */
+
+  /* Các trường không còn chiếm toàn bộ grid */
   .manage-service-form textarea,
   .manage-service-form .form-message,
-  .manage-service-form .service-form-actions {
-    grid-column: 1 / -1;
+  .manage-service-form .service-form-actions{
+      grid-column:auto
   }
-  
-  .service-form-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 5px;
+
+  /* Grid dịch vụ chuyển thành 2 cột */
+  .service-management-grid{
+      grid-template-columns:repeat(2,1fr)
   }
-  
-  .service-form-actions button {
-    border: none;
-    cursor: pointer;
+}
+
+
+/* Khi màn hình tối đa 600px */
+@media (max-width: 600px){
+
+  /* Giảm padding của form */
+  .manage-service-form{
+      padding:20px
   }
-  
-  /* ========================================
-     DANH SÁCH DỊCH VỤ
-  ======================================== */
-  
-  .my-services {
-    margin-top: 50px;
+
+  /* Dịch vụ chuyển thành 1 cột */
+  .service-management-grid{
+      grid-template-columns:1fr
   }
-  
-  .section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    margin-bottom: 24px;
+
+  /* Phần tiêu đề chuyển thành dạng block */
+  .section-heading{
+      display:block
   }
-  
-  .section-heading .eyebrow {
-    margin-bottom: 5px;
+
+  /* Nội dung phụ xuống dòng */
+  .section-heading > span{
+      display:block;
+      margin-top:8px
   }
-  
-  .section-heading h2 {
-    margin: 0;
-    font-size: 30px;
+
+  /* Các nút form xếp dọc */
+  .service-form-actions{
+      flex-direction:column
   }
-  
-  .section-heading > span {
-    color: #687080;
-    font-size: 15px;
-  }
-  
-  /* Grid */
-  .service-management-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  
-  /* Card */
-  .management-service-card {
-    padding: 22px;
-    background: #ffffff;
-    border: 1px solid #edf0f6;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .management-service-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 30px rgba(30, 35, 80, 0.1);
-  }
-  
-  .management-service-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .service-category {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: #eeeaff;
-    color: #5b4de0;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  
-  .service-status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: #eaf8ef;
-    color: #23834c;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  
-  .management-service-card h3 {
-    margin: 0 0 10px;
-    font-size: 20px;
-    line-height: 1.4;
-  }
-  
-  .management-service-card p {
-    margin: 0;
-    min-height: 72px;
-    color: #687080;
-    line-height: 1.6;
-  }
-  
-  .service-price {
-    display: block;
-    margin: 18px 0;
-    font-size: 20px;
-    color: #5b4de0;
-  }
-  
-  /* Nút sửa xóa */
-  .management-actions {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .edit-btn,
-  .delete-btn {
-    flex: 1;
-    padding: 10px 14px;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  
-  .edit-btn {
-    background: #eeeaff;
-    color: #5b4de0;
-  }
-  
-  .edit-btn:hover {
-    background: #ddd7ff;
-  }
-  
-  .delete-btn {
-    background: #ffe9e9;
-    color: #d83a3a;
-  }
-  
-  .delete-btn:hover {
-    background: #ffd8d8;
-  }
-  
-  /* ========================================
-     CHƯA CÓ DỊCH VỤ
-  ======================================== */
-  
-  .empty-services {
-    padding: 55px 20px;
-    text-align: center;
-    background: #ffffff;
-    border: 1px dashed #dfe3ed;
-    border-radius: 18px;
-  }
-  
-  .empty-services > div {
-    font-size: 46px;
-    margin-bottom: 12px;
-  }
-  
-  .empty-services h3 {
-    margin: 0 0 8px;
-  }
-  
-  .empty-services p {
-    margin: 0;
-    color: #687080;
-  }
-  
-  /* ========================================
-     RESPONSIVE
-  ======================================== */
-  
-  @media (max-width: 900px) {
-    .manage-service-form form {
-      grid-template-columns: 1fr;
-    }
-  
-    .manage-service-form textarea,
-    .manage-service-form .form-message,
-    .manage-service-form .service-form-actions {
-      grid-column: auto;
-    }
-  
-    .service-management-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .manage-service-form {
-      padding: 20px;
-    }
-  
-    .service-management-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    .section-heading {
-      display: block;
-    }
-  
-    .section-heading > span {
-      display: block;
-      margin-top: 8px;
-    }
-  
-    .service-form-actions {
-      flex-direction: column;
-    }
-  }
+}

@@ -1,47 +1,45 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
-const { sql, connectDB } = require("./db");
+
+const { pool, connectDB } = require("./db");
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-// =========================
-// Cấu hình Middleware
-// =========================
+// ======================================================
+// MIDDLEWARE
+// ======================================================
+
 app.use(cors());
 app.use(express.json());
 
-// =========================
-// Trang kiểm tra Backend
-// =========================
+// ======================================================
+// API KIỂM TRA BACKEND
+// ======================================================
+
 app.get("/", (req, res) => {
   res.json({
-    message: "Backend Digital Skill Marketplace đang chạy!",
+    message: "Backend SkillHub đang chạy!",
   });
 });
 
-// =========================
+// ======================================================
 // API ĐĂNG KÝ
-// =========================
+// ======================================================
+
 app.post("/api/register", async (req, res) => {
   try {
-    // Nhận dữ liệu từ Frontend
     const { HoTen, Email, MatKhau, VaiTro } = req.body;
 
-    // Làm sạch dữ liệu
     const name = String(HoTen || "").trim();
     const email = String(Email || "").trim().toLowerCase();
     const password = String(MatKhau || "");
 
-    // Chỉ cho phép 2 vai trò
     const role =
       VaiTro === "Freelancer"
         ? "Freelancer"
         : "KhachHang";
-
-    // =========================
-    // Kiểm tra dữ liệu
-    // =========================
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -67,52 +65,41 @@ app.post("/api/register", async (req, res) => {
       });
     }
 
-    // =========================
-    // Kiểm tra email đã tồn tại
-    // =========================
+    const existing = await pool.query(
+      `
+      SELECT ma_nguoi_dung
+      FROM nguoi_dung
+      WHERE email = $1
+      `,
+      [email]
+    );
 
-    const existing = await sql.query`
-      SELECT MaNguoiDung
-      FROM NguoiDung
-      WHERE Email = ${email}
-    `;
-
-    if (existing.recordset.length > 0) {
+    if (existing.rows.length > 0) {
       return res.status(409).json({
         message: "Email này đã được đăng ký!",
       });
     }
 
-    // =========================
-    // Mã hóa mật khẩu
-    // =========================
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // =========================
-    // Thêm người dùng vào SQL
-    // =========================
-
-    await sql.query`
-      INSERT INTO NguoiDung
+    await pool.query(
+      `
+      INSERT INTO nguoi_dung
       (
-        HoTen,
-        Email,
-        MatKhau,
-        VaiTro
+        ho_ten,
+        email,
+        mat_khau,
+        vai_tro
       )
-      VALUES
-      (
-        ${name},
-        ${email},
-        ${hashedPassword},
-        ${role}
-      )
-    `;
-
-    // =========================
-    // Trả kết quả
-    // =========================
+      VALUES ($1, $2, $3, $4)
+      `,
+      [
+        name,
+        email,
+        hashedPassword,
+        role,
+      ]
+    );
 
     res.status(201).json({
       message: "Đăng ký thành công!",
@@ -128,20 +115,16 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-// =========================
+// ======================================================
 // API ĐĂNG NHẬP
-// =========================
+// ======================================================
+
 app.post("/api/login", async (req, res) => {
   try {
-    // Nhận dữ liệu từ Frontend
     const { Email, MatKhau } = req.body;
 
     const email = String(Email || "").trim().toLowerCase();
     const password = String(MatKhau || "");
-
-    // =========================
-    // Kiểm tra dữ liệu
-    // =========================
 
     if (!email || !password) {
       return res.status(400).json({
@@ -149,38 +132,31 @@ app.post("/api/login", async (req, res) => {
       });
     }
 
-    // =========================
-    // Tìm tài khoản
-    // =========================
-
-    const result = await sql.query`
+    const result = await pool.query(
+      `
       SELECT
-        MaNguoiDung,
-        HoTen,
-        Email,
-        MatKhau,
-        VaiTro
-      FROM NguoiDung
-      WHERE Email = ${email}
-    `;
+        ma_nguoi_dung,
+        ho_ten,
+        email,
+        mat_khau,
+        vai_tro
+      FROM nguoi_dung
+      WHERE email = $1
+      `,
+      [email]
+    );
 
-    // Không tìm thấy tài khoản
-    if (result.recordset.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(401).json({
         message: "Email hoặc mật khẩu không đúng!",
       });
     }
 
-    // Lấy thông tin người dùng
-    const user = result.recordset[0];
-
-    // =========================
-    // Kiểm tra mật khẩu
-    // =========================
+    const user = result.rows[0];
 
     const passwordCorrect = await bcrypt.compare(
       password,
-      user.MatKhau
+      user.mat_khau
     );
 
     if (!passwordCorrect) {
@@ -189,18 +165,14 @@ app.post("/api/login", async (req, res) => {
       });
     }
 
-    // =========================
-    // Đăng nhập thành công
-    // =========================
-
     res.json({
       message: "Đăng nhập thành công!",
 
       user: {
-        id: user.MaNguoiDung,
-        name: user.HoTen,
-        email: user.Email,
-        role: user.VaiTro,
+        id: user.ma_nguoi_dung,
+        name: user.ho_ten,
+        email: user.email,
+        role: user.vai_tro,
       },
     });
 
@@ -213,299 +185,31 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// =========================
-// Khởi động Server
-// =========================
-async function startServer() {
-  try {
-    // Kết nối SQL Server
-    await connectDB();
-
-    // Chạy server
-    app.listen(5000, () => {
-      console.log(
-        "Server đang chạy tại http://localhost:5000"
-      );
-    });
-
-  } catch (error) {
-    console.log(
-      "Không thể khởi động server vì SQL Server chưa kết nối."
-    );
-  }
-}
-// =========================
-// API LẤY DỊCH VỤ CỦA FREELANCER
-// =========================
-app.get("/api/services/my", async (req, res) => {
-    try {
-      const userId = Number(req.headers["x-user-id"]);
-  
-      if (!userId) {
-        return res.status(400).json({
-          message: "Thiếu thông tin người dùng!",
-        });
-      }
-  
-      const userResult = await sql.query`
-        SELECT MaNguoiDung, VaiTro
-        FROM NguoiDung
-        WHERE MaNguoiDung = ${userId}
-      `;
-  
-      if (userResult.recordset.length === 0) {
-        return res.status(404).json({
-          message: "Không tìm thấy người dùng!",
-        });
-      }
-  
-      if (userResult.recordset[0].VaiTro !== "Freelancer") {
-        return res.status(403).json({
-          message: "Bạn không có quyền sử dụng chức năng này!",
-        });
-      }
-  
-      const result = await sql.query`
-        SELECT
-          MaDichVu,
-          MaNguoiDung,
-          TenDichVu,
-          MoTa,
-          DanhMuc,
-          Gia,
-          TrangThai,
-          NgayTao
-        FROM DichVu
-        WHERE MaNguoiDung = ${userId}
-        ORDER BY MaDichVu DESC
-      `;
-  
-      res.json(result.recordset);
-    } catch (error) {
-      console.error("Lỗi lấy dịch vụ:", error);
-  
-      res.status(500).json({
-        message: "Không thể lấy danh sách dịch vụ!",
-      });
-    }
-  });
-  
-  // =========================
-  // API THÊM DỊCH VỤ
-  // =========================
-  app.post("/api/services", async (req, res) => {
-    try {
-      const userId = Number(req.headers["x-user-id"]);
-  
-      const {
-        TenDichVu,
-        MoTa,
-        DanhMuc,
-        Gia,
-      } = req.body;
-  
-      const name = String(TenDichVu || "").trim();
-      const description = String(MoTa || "").trim();
-      const category = String(DanhMuc || "").trim();
-      const price = Number(Gia);
-  
-      if (!userId) {
-        return res.status(400).json({
-          message: "Thiếu thông tin người dùng!",
-        });
-      }
-  
-      if (!name || !category || !Gia) {
-        return res.status(400).json({
-          message: "Vui lòng nhập đầy đủ thông tin!",
-        });
-      }
-  
-      if (Number.isNaN(price) || price <= 0) {
-        return res.status(400).json({
-          message: "Giá dịch vụ không hợp lệ!",
-        });
-      }
-  
-      const userResult = await sql.query`
-        SELECT VaiTro
-        FROM NguoiDung
-        WHERE MaNguoiDung = ${userId}
-      `;
-  
-      if (userResult.recordset.length === 0) {
-        return res.status(404).json({
-          message: "Không tìm thấy người dùng!",
-        });
-      }
-  
-      if (userResult.recordset[0].VaiTro !== "Freelancer") {
-        return res.status(403).json({
-          message: "Chỉ Freelancer mới được tạo dịch vụ!",
-        });
-      }
-  
-      await sql.query`
-        INSERT INTO DichVu (
-          MaNguoiDung,
-          TenDichVu,
-          MoTa,
-          DanhMuc,
-          Gia,
-          TrangThai
-        )
-        VALUES (
-          ${userId},
-          ${name},
-          ${description},
-          ${category},
-          ${price},
-          'DangBan'
-        )
-      `;
-  
-      res.status(201).json({
-        message: "Thêm dịch vụ thành công!",
-      });
-    } catch (error) {
-      console.error("Lỗi thêm dịch vụ:", error);
-  
-      res.status(500).json({
-        message: "Không thể thêm dịch vụ!",
-      });
-    }
-  });
-  
-  // =========================
-  // API SỬA DỊCH VỤ
-  // =========================
-  app.put("/api/services/:id", async (req, res) => {
-    try {
-      const userId = Number(req.headers["x-user-id"]);
-      const serviceId = Number(req.params.id);
-  
-      const {
-        TenDichVu,
-        MoTa,
-        DanhMuc,
-        Gia,
-      } = req.body;
-  
-      const name = String(TenDichVu || "").trim();
-      const description = String(MoTa || "").trim();
-      const category = String(DanhMuc || "").trim();
-      const price = Number(Gia);
-  
-      if (!userId || !serviceId) {
-        return res.status(400).json({
-          message: "Dữ liệu không hợp lệ!",
-        });
-      }
-  
-      if (!name || !category || !Gia) {
-        return res.status(400).json({
-          message: "Vui lòng nhập đầy đủ thông tin!",
-        });
-      }
-  
-      if (Number.isNaN(price) || price <= 0) {
-        return res.status(400).json({
-          message: "Giá dịch vụ không hợp lệ!",
-        });
-      }
-  
-      const result = await sql.query`
-        UPDATE DichVu
-        SET
-          TenDichVu = ${name},
-          MoTa = ${description},
-          DanhMuc = ${category},
-          Gia = ${price}
-        WHERE
-          MaDichVu = ${serviceId}
-          AND MaNguoiDung = ${userId}
-      `;
-  
-      if (result.rowsAffected[0] === 0) {
-        return res.status(404).json({
-          message: "Không tìm thấy dịch vụ hoặc bạn không có quyền sửa!",
-        });
-      }
-  
-      res.json({
-        message: "Cập nhật dịch vụ thành công!",
-      });
-    } catch (error) {
-      console.error("Lỗi sửa dịch vụ:", error);
-  
-      res.status(500).json({
-        message: "Không thể cập nhật dịch vụ!",
-      });
-    }
-  });
-  
-  // =========================
-  // API XÓA DỊCH VỤ
-  // =========================
-  app.delete("/api/services/:id", async (req, res) => {
-    try {
-      const userId = Number(req.headers["x-user-id"]);
-      const serviceId = Number(req.params.id);
-  
-      if (!userId || !serviceId) {
-        return res.status(400).json({
-          message: "Dữ liệu không hợp lệ!",
-        });
-      }
-  
-      const result = await sql.query`
-        DELETE FROM DichVu
-        WHERE
-          MaDichVu = ${serviceId}
-          AND MaNguoiDung = ${userId}
-      `;
-  
-      if (result.rowsAffected[0] === 0) {
-        return res.status(404).json({
-          message: "Không tìm thấy dịch vụ hoặc bạn không có quyền xóa!",
-        });
-      }
-  
-      res.json({
-        message: "Xóa dịch vụ thành công!",
-      });
-    } catch (error) {
-      console.error("Lỗi xóa dịch vụ:", error);
-  
-      res.status(500).json({
-        message: "Không thể xóa dịch vụ!",
-      });
-    }
-  });
-  // =========================
+// ======================================================
 // API LẤY TẤT CẢ DỊCH VỤ
-// =========================
+// ======================================================
+
 app.get("/api/services", async (req, res) => {
   try {
-    const result = await sql.query`
+    const result = await pool.query(`
       SELECT
-        d.MaDichVu,
-        d.MaNguoiDung,
-        d.TenDichVu,
-        d.MoTa,
-        d.DanhMuc,
-        d.Gia,
-        d.TrangThai,
-        d.NgayTao,
-        n.HoTen AS TenFreelancer
-      FROM DichVu d
-      INNER JOIN NguoiDung n
-        ON d.MaNguoiDung = n.MaNguoiDung
-      WHERE d.TrangThai = 'DangBan'
-      ORDER BY d.MaDichVu DESC
-    `;
+        d.ma_dich_vu AS "MaDichVu",
+        d.ma_nguoi_dung AS "MaNguoiDung",
+        d.ten_dich_vu AS "TenDichVu",
+        d.mo_ta AS "MoTa",
+        d.danh_muc AS "DanhMuc",
+        d.gia AS "Gia",
+        'DangBan' AS "TrangThai",
+        n.ho_ten AS "TenFreelancer"
+      FROM dich_vu d
+      INNER JOIN nguoi_dung n
+        ON d.ma_nguoi_dung = n.ma_nguoi_dung
+      WHERE n.vai_tro = 'Freelancer'
+      ORDER BY d.ma_dich_vu DESC
+    `);
 
-    res.json(result.recordset);
+    res.json(result.rows);
+
   } catch (error) {
     console.error("Lỗi lấy tất cả dịch vụ:", error);
 
@@ -514,9 +218,296 @@ app.get("/api/services", async (req, res) => {
     });
   }
 });
-// =========================
+
+// ======================================================
+// API LẤY DỊCH VỤ CỦA FREELANCER
+// ======================================================
+
+app.get("/api/services/my", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "Thiếu thông tin người dùng!",
+      });
+    }
+
+    const userResult = await pool.query(
+      `
+      SELECT
+        ma_nguoi_dung,
+        vai_tro
+      FROM nguoi_dung
+      WHERE ma_nguoi_dung = $1
+      `,
+      [userId]
+    );
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy người dùng!",
+      });
+    }
+
+    if (userResult.rows[0].vai_tro !== "Freelancer") {
+      return res.status(403).json({
+        message: "Bạn không có quyền sử dụng chức năng này!",
+      });
+    }
+
+    const result = await pool.query(
+      `
+      SELECT
+        ma_dich_vu AS "MaDichVu",
+        ma_nguoi_dung AS "MaNguoiDung",
+        ten_dich_vu AS "TenDichVu",
+        mo_ta AS "MoTa",
+        danh_muc AS "DanhMuc",
+        gia AS "Gia",
+        'DangBan' AS "TrangThai"
+      FROM dich_vu
+      WHERE ma_nguoi_dung = $1
+      ORDER BY ma_dich_vu DESC
+      `,
+      [userId]
+    );
+
+    res.json(result.rows);
+
+  } catch (error) {
+    console.error("Lỗi lấy dịch vụ:", error);
+
+    res.status(500).json({
+      message: "Không thể lấy danh sách dịch vụ!",
+    });
+  }
+});
+
+// ======================================================
+// API THÊM DỊCH VỤ
+// ======================================================
+
+app.post("/api/services", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+
+    const {
+      TenDichVu,
+      MoTa,
+      DanhMuc,
+      Gia,
+    } = req.body;
+
+    const name = String(TenDichVu || "").trim();
+    const description = String(MoTa || "").trim();
+    const category = String(DanhMuc || "").trim();
+    const price = Number(Gia);
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "Thiếu thông tin người dùng!",
+      });
+    }
+
+    if (!name || !category || Gia === undefined || Gia === "") {
+      return res.status(400).json({
+        message: "Vui lòng nhập đầy đủ thông tin!",
+      });
+    }
+
+    if (Number.isNaN(price) || price <= 0) {
+      return res.status(400).json({
+        message: "Giá dịch vụ không hợp lệ!",
+      });
+    }
+
+    const userResult = await pool.query(
+      `
+      SELECT vai_tro
+      FROM nguoi_dung
+      WHERE ma_nguoi_dung = $1
+      `,
+      [userId]
+    );
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy người dùng!",
+      });
+    }
+
+    if (userResult.rows[0].vai_tro !== "Freelancer") {
+      return res.status(403).json({
+        message: "Chỉ Freelancer mới được tạo dịch vụ!",
+      });
+    }
+
+    await pool.query(
+      `
+      INSERT INTO dich_vu
+      (
+        ma_nguoi_dung,
+        ten_dich_vu,
+        mo_ta,
+        danh_muc,
+        gia
+      )
+      VALUES ($1, $2, $3, $4, $5)
+      `,
+      [
+        userId,
+        name,
+        description,
+        category,
+        price,
+      ]
+    );
+
+    res.status(201).json({
+      message: "Thêm dịch vụ thành công!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi thêm dịch vụ:", error);
+
+    res.status(500).json({
+      message: "Không thể thêm dịch vụ!",
+    });
+  }
+});
+
+// ======================================================
+// API SỬA DỊCH VỤ
+// ======================================================
+
+app.put("/api/services/:id", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+    const serviceId = Number(req.params.id);
+
+    const {
+      TenDichVu,
+      MoTa,
+      DanhMuc,
+      Gia,
+    } = req.body;
+
+    const name = String(TenDichVu || "").trim();
+    const description = String(MoTa || "").trim();
+    const category = String(DanhMuc || "").trim();
+    const price = Number(Gia);
+
+    if (!userId || !serviceId) {
+      return res.status(400).json({
+        message: "Dữ liệu không hợp lệ!",
+      });
+    }
+
+    if (!name || !category) {
+      return res.status(400).json({
+        message: "Vui lòng nhập đầy đủ thông tin!",
+      });
+    }
+
+    if (Number.isNaN(price) || price <= 0) {
+      return res.status(400).json({
+        message: "Giá dịch vụ không hợp lệ!",
+      });
+    }
+
+    const result = await pool.query(
+      `
+      UPDATE dich_vu
+      SET
+        ten_dich_vu = $1,
+        mo_ta = $2,
+        danh_muc = $3,
+        gia = $4
+      WHERE
+        ma_dich_vu = $5
+        AND ma_nguoi_dung = $6
+      `,
+      [
+        name,
+        description,
+        category,
+        price,
+        serviceId,
+        userId,
+      ]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy dịch vụ hoặc bạn không có quyền sửa!",
+      });
+    }
+
+    res.json({
+      message: "Cập nhật dịch vụ thành công!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi sửa dịch vụ:", error);
+
+    res.status(500).json({
+      message: "Không thể cập nhật dịch vụ!",
+    });
+  }
+});
+
+// ======================================================
+// API XÓA DỊCH VỤ
+// ======================================================
+
+app.delete("/api/services/:id", async (req, res) => {
+  try {
+    const userId = Number(req.headers["x-user-id"]);
+    const serviceId = Number(req.params.id);
+
+    if (!userId || !serviceId) {
+      return res.status(400).json({
+        message: "Dữ liệu không hợp lệ!",
+      });
+    }
+
+    const result = await pool.query(
+      `
+      DELETE FROM dich_vu
+      WHERE
+        ma_dich_vu = $1
+        AND ma_nguoi_dung = $2
+      `,
+      [
+        serviceId,
+        userId,
+      ]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy dịch vụ hoặc bạn không có quyền xóa!",
+      });
+    }
+
+    res.json({
+      message: "Xóa dịch vụ thành công!",
+    });
+
+  } catch (error) {
+    console.error("Lỗi xóa dịch vụ:", error);
+
+    res.status(500).json({
+      message: "Không thể xóa dịch vụ!",
+    });
+  }
+});
+
+// ======================================================
 // API TẠO ĐƠN HÀNG
-// =========================
+// ======================================================
+
 app.post("/api/orders", async (req, res) => {
   try {
     const userId = Number(req.headers["x-user-id"]);
@@ -528,101 +519,101 @@ app.post("/api/orders", async (req, res) => {
       });
     }
 
-    // =========================
-    // Kiểm tra khách hàng
-    // =========================
-    const customerResult = await sql.query`
-      SELECT MaNguoiDung, VaiTro
-      FROM NguoiDung
-      WHERE MaNguoiDung = ${userId}
-    `;
+    // Kiểm tra người dùng
+    const customerResult = await pool.query(
+      `
+      SELECT
+        ma_nguoi_dung,
+        vai_tro
+      FROM nguoi_dung
+      WHERE ma_nguoi_dung = $1
+      `,
+      [userId]
+    );
 
-    if (customerResult.recordset.length === 0) {
+    if (customerResult.rows.length === 0) {
       return res.status(404).json({
         message: "Không tìm thấy tài khoản!",
       });
     }
 
-    if (customerResult.recordset[0].VaiTro !== "KhachHang") {
+    if (customerResult.rows[0].vai_tro !== "KhachHang") {
       return res.status(403).json({
         message: "Chỉ Khách hàng mới được đặt dịch vụ!",
       });
     }
 
-    // =========================
-    // Lấy thông tin dịch vụ
-    // =========================
-    const serviceResult = await sql.query`
+    // Lấy dịch vụ
+    const serviceResult = await pool.query(
+      `
       SELECT
-        MaDichVu,
-        MaNguoiDung,
-        Gia,
-        TrangThai
-      FROM DichVu
-      WHERE MaDichVu = ${serviceId}
-    `;
+        ma_dich_vu,
+        ma_nguoi_dung,
+        gia
+      FROM dich_vu
+      WHERE ma_dich_vu = $1
+      `,
+      [serviceId]
+    );
 
-    if (serviceResult.recordset.length === 0) {
+    if (serviceResult.rows.length === 0) {
       return res.status(404).json({
         message: "Không tìm thấy dịch vụ!",
       });
     }
 
-    const service = serviceResult.recordset[0];
+    const service = serviceResult.rows[0];
 
-    // Chỉ được đặt dịch vụ đang bán
-    if (service.TrangThai !== "DangBan") {
-      return res.status(400).json({
-        message: "Dịch vụ này hiện không còn nhận đơn!",
-      });
-    }
-
-    // =========================
-    // Không cho Freelancer tự đặt dịch vụ của mình
-    // =========================
-    if (service.MaNguoiDung === userId) {
+    // Không cho tự mua dịch vụ
+    if (service.ma_nguoi_dung === userId) {
       return res.status(400).json({
         message: "Bạn không thể tự đặt dịch vụ của mình!",
       });
     }
 
-    // =========================
-    // Kiểm tra đơn trùng
-    // =========================
-    const existingOrder = await sql.query`
-      SELECT MaDonHang
-      FROM DonHang
+    // Kiểm tra đơn đang xử lý
+    const existingOrder = await pool.query(
+      `
+      SELECT ma_don_hang
+      FROM don_hang
       WHERE
-        MaKhachHang = ${userId}
-        AND MaDichVu = ${serviceId}
-        AND TrangThai IN ('ChoXacNhan', 'DangThucHien')
-    `;
+        ma_nguoi_mua = $1
+        AND ma_dich_vu = $2
+        AND trang_thai IN (
+          'ChoXuLy',
+          'DangThucHien'
+        )
+      `,
+      [
+        userId,
+        serviceId,
+      ]
+    );
 
-    if (existingOrder.recordset.length > 0) {
+    if (existingOrder.rows.length > 0) {
       return res.status(409).json({
         message: "Bạn đã có đơn hàng đang xử lý cho dịch vụ này!",
       });
     }
 
-    // =========================
-    // Tạo đơn hàng
-    // =========================
-    await sql.query`
-      INSERT INTO DonHang (
-        MaKhachHang,
-        MaDichVu,
-        MaFreelancer,
-        Gia,
-        TrangThai
+    // Tạo đơn
+    await pool.query(
+      `
+      INSERT INTO don_hang
+      (
+        ma_nguoi_mua,
+        ma_dich_vu,
+        gia,
+        trang_thai
       )
-      VALUES (
-        ${userId},
-        ${service.MaDichVu},
-        ${service.MaNguoiDung},
-        ${service.Gia},
-        'ChoXacNhan'
-      )
-    `;
+      VALUES ($1, $2, $3, 'ChoXuLy')
+      `,
+      [
+        userId,
+        service.ma_dich_vu,
+        service.gia,
+      ]
+    );
 
     res.status(201).json({
       message: "Đặt dịch vụ thành công!",
@@ -636,9 +627,11 @@ app.post("/api/orders", async (req, res) => {
     });
   }
 });
-// =========================
+
+// ======================================================
 // API LẤY ĐƠN HÀNG
-// =========================
+// ======================================================
+
 app.get("/api/orders", async (req, res) => {
   try {
     const userId = Number(req.headers["x-user-id"]);
@@ -649,92 +642,105 @@ app.get("/api/orders", async (req, res) => {
       });
     }
 
-    // Lấy thông tin người dùng
-    const userResult = await sql.query`
-      SELECT MaNguoiDung, HoTen, VaiTro
-      FROM NguoiDung
-      WHERE MaNguoiDung = ${userId}
-    `;
+    const userResult = await pool.query(
+      `
+      SELECT
+        ma_nguoi_dung,
+        ho_ten,
+        vai_tro
+      FROM nguoi_dung
+      WHERE ma_nguoi_dung = $1
+      `,
+      [userId]
+    );
 
-    if (userResult.recordset.length === 0) {
+    if (userResult.rows.length === 0) {
       return res.status(404).json({
         message: "Không tìm thấy người dùng!",
       });
     }
 
-    const user = userResult.recordset[0];
+    const user = userResult.rows[0];
 
-    // =========================
+    // ==================================================
     // KHÁCH HÀNG
-    // =========================
-    if (user.VaiTro === "KhachHang") {
-      const result = await sql.query`
+    // ==================================================
+
+    if (user.vai_tro === "KhachHang") {
+      const result = await pool.query(
+        `
         SELECT
-          d.MaDonHang,
-          d.MaKhachHang,
-          d.MaDichVu,
-          d.MaFreelancer,
-          d.Gia,
-          d.TrangThai,
-          d.NgayDat,
+          d.ma_don_hang AS "MaDonHang",
+          d.ma_nguoi_mua AS "MaKhachHang",
+          d.ma_dich_vu AS "MaDichVu",
+          dv.ma_nguoi_dung AS "MaFreelancer",
+          d.gia AS "Gia",
+          d.trang_thai AS "TrangThai",
+          d.ngay_dat AS "NgayDat",
 
-          dv.TenDichVu,
+          dv.ten_dich_vu AS "TenDichVu",
 
-          f.HoTen AS TenFreelancer
+          f.ho_ten AS "TenFreelancer"
 
-        FROM DonHang d
+        FROM don_hang d
 
-        INNER JOIN DichVu dv
-          ON d.MaDichVu = dv.MaDichVu
+        INNER JOIN dich_vu dv
+          ON d.ma_dich_vu = dv.ma_dich_vu
 
-        INNER JOIN NguoiDung f
-          ON d.MaFreelancer = f.MaNguoiDung
+        INNER JOIN nguoi_dung f
+          ON dv.ma_nguoi_dung = f.ma_nguoi_dung
 
-        WHERE d.MaKhachHang = ${userId}
+        WHERE d.ma_nguoi_mua = $1
 
-        ORDER BY d.MaDonHang DESC
-      `;
+        ORDER BY d.ma_don_hang DESC
+        `,
+        [userId]
+      );
 
       return res.json({
         role: "KhachHang",
-        orders: result.recordset,
+        orders: result.rows,
       });
     }
 
-    // =========================
+    // ==================================================
     // FREELANCER
-    // =========================
-    if (user.VaiTro === "Freelancer") {
-      const result = await sql.query`
+    // ==================================================
+
+    if (user.vai_tro === "Freelancer") {
+      const result = await pool.query(
+        `
         SELECT
-          d.MaDonHang,
-          d.MaKhachHang,
-          d.MaDichVu,
-          d.MaFreelancer,
-          d.Gia,
-          d.TrangThai,
-          d.NgayDat,
+          d.ma_don_hang AS "MaDonHang",
+          d.ma_nguoi_mua AS "MaKhachHang",
+          d.ma_dich_vu AS "MaDichVu",
+          dv.ma_nguoi_dung AS "MaFreelancer",
+          d.gia AS "Gia",
+          d.trang_thai AS "TrangThai",
+          d.ngay_dat AS "NgayDat",
 
-          dv.TenDichVu,
+          dv.ten_dich_vu AS "TenDichVu",
 
-          c.HoTen AS TenKhachHang
+          c.ho_ten AS "TenKhachHang"
 
-        FROM DonHang d
+        FROM don_hang d
 
-        INNER JOIN DichVu dv
-          ON d.MaDichVu = dv.MaDichVu
+        INNER JOIN dich_vu dv
+          ON d.ma_dich_vu = dv.ma_dich_vu
 
-        INNER JOIN NguoiDung c
-          ON d.MaKhachHang = c.MaNguoiDung
+        INNER JOIN nguoi_dung c
+          ON d.ma_nguoi_mua = c.ma_nguoi_dung
 
-        WHERE d.MaFreelancer = ${userId}
+        WHERE dv.ma_nguoi_dung = $1
 
-        ORDER BY d.MaDonHang DESC
-      `;
+        ORDER BY d.ma_don_hang DESC
+        `,
+        [userId]
+      );
 
       return res.json({
         role: "Freelancer",
-        orders: result.recordset,
+        orders: result.rows,
       });
     }
 
@@ -751,14 +757,16 @@ app.get("/api/orders", async (req, res) => {
   }
 });
 
-// =========================
+// ======================================================
 // API CẬP NHẬT TRẠNG THÁI ĐƠN
-// =========================
+// ======================================================
+
 app.put("/api/orders/:id/status", async (req, res) => {
   try {
     const userId = Number(req.headers["x-user-id"]);
     const orderId = Number(req.params.id);
-    const { TrangThai } = req.body;
+
+    let { TrangThai } = req.body;
 
     if (!userId || !orderId || !TrangThai) {
       return res.status(400).json({
@@ -766,9 +774,13 @@ app.put("/api/orders/:id/status", async (req, res) => {
       });
     }
 
-    // Chỉ cho phép các trạng thái này
+    // Tương thích với trạng thái cũ
+    if (TrangThai === "ChoXacNhan") {
+      TrangThai = "ChoXuLy";
+    }
+
     const allowedStatuses = [
-      "ChoXacNhan",
+      "ChoXuLy",
       "DangThucHien",
       "HoanThanh",
       "DaHuy",
@@ -781,34 +793,48 @@ app.put("/api/orders/:id/status", async (req, res) => {
     }
 
     // Kiểm tra Freelancer
-    const userResult = await sql.query`
-      SELECT VaiTro
-      FROM NguoiDung
-      WHERE MaNguoiDung = ${userId}
-    `;
+    const userResult = await pool.query(
+      `
+      SELECT vai_tro
+      FROM nguoi_dung
+      WHERE ma_nguoi_dung = $1
+      `,
+      [userId]
+    );
 
-    if (userResult.recordset.length === 0) {
+    if (userResult.rows.length === 0) {
       return res.status(404).json({
         message: "Không tìm thấy người dùng!",
       });
     }
 
-    if (userResult.recordset[0].VaiTro !== "Freelancer") {
+    if (userResult.rows[0].vai_tro !== "Freelancer") {
       return res.status(403).json({
         message: "Chỉ Freelancer mới được cập nhật trạng thái đơn!",
       });
     }
 
-    // Chỉ được sửa đơn thuộc Freelancer đó
-    const result = await sql.query`
-      UPDATE DonHang
-      SET TrangThai = ${TrangThai}
-      WHERE
-        MaDonHang = ${orderId}
-        AND MaFreelancer = ${userId}
-    `;
+    // Chỉ sửa đơn của dịch vụ mình
+    const result = await pool.query(
+      `
+      UPDATE don_hang d
+      SET trang_thai = $1
 
-    if (result.rowsAffected[0] === 0) {
+      FROM dich_vu dv
+
+      WHERE
+        d.ma_dich_vu = dv.ma_dich_vu
+        AND d.ma_don_hang = $2
+        AND dv.ma_nguoi_dung = $3
+      `,
+      [
+        TrangThai,
+        orderId,
+        userId,
+      ]
+    );
+
+    if (result.rowCount === 0) {
       return res.status(404).json({
         message: "Không tìm thấy đơn hàng hoặc bạn không có quyền!",
       });
@@ -819,12 +845,33 @@ app.put("/api/orders/:id/status", async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Lỗi cập nhật đơn hàng:", error);
+    console.error("Lỗi cập nhật trạng thái:", error);
 
     res.status(500).json({
       message: "Không thể cập nhật trạng thái đơn hàng!",
     });
   }
 });
-// Chạy server
+
+// ======================================================
+// KHỞI ĐỘNG SERVER
+// ======================================================
+
+async function startServer() {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(
+        `Server đang chạy tại http://localhost:${PORT}`
+      );
+    });
+
+  } catch (error) {
+    console.log(
+      "Không thể khởi động server vì chưa kết nối được Supabase."
+    );
+  }
+}
+
 startServer();
