@@ -75,7 +75,7 @@ function ServiceDetail({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/orders",
+        "https://nguyen-quoc-dai-24ct2.onrender.com/api/orders",
         {
           method: "POST",
 

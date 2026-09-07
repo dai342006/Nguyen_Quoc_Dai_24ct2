@@ -22,7 +22,7 @@ function Orders({ setPage, currentUser }) {
       setError("");
 
       const response = await fetch(
-        "http://localhost:5000/api/orders",
+"https://nguyen-quoc-dai-24ct2.onrender.com/api/orders",
         {
           method: "GET",
           headers: {
@@ -75,7 +75,7 @@ function Orders({ setPage, currentUser }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/orders/${orderId}/status`,
+        `https://nguyen-quoc-dai-24ct2.onrender.com/api/orders/${orderId}/status`,
         {
           method: "PUT",
           headers: {

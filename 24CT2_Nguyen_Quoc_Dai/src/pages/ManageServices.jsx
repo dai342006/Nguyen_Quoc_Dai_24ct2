@@ -54,7 +54,7 @@ function ManageServices({ currentUser }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/services/my",
+        "https://nguyen-quoc-dai-24ct2.onrender.com/api/services/my",
         {
           method: "GET",
           headers: {
@@ -80,7 +80,7 @@ function ManageServices({ currentUser }) {
       console.error("Lỗi loadServices:", err);
 
       setError(
-        "Không thể kết nối đến máy chủ. Hãy kiểm tra backend đang chạy tại http://localhost:5000."
+"Không thể kết nối đến máy chủ. Vui lòng thử lại sau."
       );
     }
   }
@@ -150,8 +150,9 @@ function ManageServices({ currentUser }) {
 
     try {
       const url = editingId
-        ? `http://localhost:5000/api/services/${editingId}`
-        : "http://localhost:5000/api/services";
+      ? `https://nguyen-quoc-dai-24ct2.onrender.com/api/services/${editingId}`
+      : "https://nguyen-quoc-dai-24ct2.onrender.com/api/services";
+  
 
       const method = editingId ? "PUT" : "POST";
 
@@ -244,7 +245,7 @@ function ManageServices({ currentUser }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/services/${id}`,
+        `https://nguyen-quoc-dai-24ct2.onrender.com/api/services/${id}`,
         {
           method: "DELETE",
           headers: {
