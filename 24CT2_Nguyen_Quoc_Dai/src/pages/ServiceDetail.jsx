@@ -1,24 +1,25 @@
-import { useState } from "react";
-
 // Trang chi tiết dịch vụ
 function ServiceDetail({
   service,
   setPage,
   currentUser,
 }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
 
   // ========================================
   // Kiểm tra dịch vụ
   // ========================================
+
   if (!service) {
     return (
       <main className="page">
+
         <div className="container">
+
           <div className="empty-services">
-            <div>⚠️</div>
+
+            <div>
+              ⚠️
+            </div>
 
             <h3>
               Không tìm thấy dịch vụ
@@ -32,117 +33,75 @@ function ServiceDetail({
             >
               Quay lại danh sách dịch vụ
             </button>
+
           </div>
+
         </div>
+
       </main>
     );
   }
 
   // ========================================
-  // Đặt dịch vụ
+  // Thanh toán
   // ========================================
-  async function handleOrder() {
-    setMessage("");
-    setError("");
+
+  function handlePayment() {
 
     // Chưa đăng nhập
     if (!currentUser) {
+
       alert(
-        "Vui lòng đăng nhập bằng tài khoản Khách hàng để đặt dịch vụ."
+        "Vui lòng đăng nhập bằng tài khoản Khách hàng để thanh toán."
       );
 
       setPage("login");
       return;
     }
 
-    // Freelancer không được đặt
+    // Không phải khách hàng
     if (currentUser.role !== "KhachHang") {
-      setError(
+
+      alert(
         "Chỉ tài khoản Khách hàng mới có thể đặt dịch vụ."
       );
+
       return;
     }
 
     // Kiểm tra mã dịch vụ
     if (!service.id) {
-      setError(
+
+      alert(
         "Không tìm thấy mã dịch vụ."
       );
+
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(
-        "https://nguyen-quoc-dai-24ct2.onrender.com/api/orders",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-            "X-User-Id": String(
-              currentUser.id
-            ),
-          },
-
-          body: JSON.stringify({
-            MaDichVu: service.id,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      console.log(
-        "POST /api/orders:",
-        data
-      );
-
-      if (!response.ok) {
-        setError(
-          data.message ||
-            "Đặt dịch vụ thất bại."
-        );
-        return;
-      }
-
-      setMessage(
-        data.message ||
-          "Đặt dịch vụ thành công!"
-      );
-
-      // Chuyển sang trang đơn hàng
-      setTimeout(() => {
-        setPage("orders");
-      }, 1000);
-
-    } catch (err) {
-      console.error(
-        "Lỗi đặt dịch vụ:",
-        err
-      );
-
-      setError(
-        "Không thể kết nối đến máy chủ."
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    // Chuyển sang trang thanh toán
+    setPage("payment");
   }
 
   // ========================================
   // Giá dịch vụ
   // ========================================
+
   const price = service.price;
+
+  // ========================================
+  // Giao diện
+  // ========================================
 
   return (
     <main className="page">
+
       <div className="container">
 
         {/* =========================
             QUAY LẠI
         ========================= */}
+
         <button
           className="back-btn"
           onClick={() =>
@@ -152,142 +111,203 @@ function ServiceDetail({
           ← Quay lại
         </button>
 
+
         <div className="detail-grid">
 
           {/* =========================
-              CHI TIẾT
+              CHI TIẾT DỊCH VỤ
           ========================= */}
+
           <div className="detail-left">
 
             <div className="detail-cover">
+
               {service.icon || "💼"}
+
             </div>
+
 
             <div className="detail-section">
 
               <p className="eyebrow">
+
                 {service.category ||
                   "DỊCH VỤ"}
+
               </p>
+
 
               <h2>
+
                 {service.title}
+
               </h2>
 
+
               <p>
+
                 {service.description ||
                   "Freelancer chưa cung cấp mô tả cho dịch vụ này."}
+
               </p>
+
 
               <p>
+
                 Dịch vụ được cung cấp bởi{" "}
+
                 <strong>
+
                   {service.freelancer ||
                     "Freelancer"}
+
                 </strong>
+
                 . Bạn có thể trao đổi yêu cầu
                 trước khi đặt dịch vụ.
+
               </p>
 
+
               {/* Freelancer */}
+
               <div className="seller-box">
+
                 <div className="avatar">
+
                   👨‍💻
+
                 </div>
+
 
                 <div>
+
                   <strong>
+
                     {service.freelancer ||
                       "Freelancer"}
+
                   </strong>
 
+
                   <span>
+
                     Freelancer chuyên nghiệp
+
                   </span>
+
                 </div>
+
               </div>
 
             </div>
+
           </div>
 
+
           {/* =========================
-              THÔNG TIN ĐẶT DỊCH VỤ
+              THÔNG TIN DỊCH VỤ
           ========================= */}
+
           <aside className="price-box">
 
             <div className="service-category">
+
               {service.category ||
                 "Dịch vụ"}
+
             </div>
+
 
             <h2>
+
               {service.title}
+
             </h2>
 
+
             <div className="rating-big">
-              ⭐ {service.rating || "5.0"}
+
+              ⭐{" "}
+
+              {service.rating ||
+                "5.0"}
 
               <span>
+
                 • Đánh giá
+
               </span>
+
             </div>
+
 
             <div className="big-price">
+
               {price}
+
             </div>
 
-            {/* Thông báo */}
-            {message && (
-              <div className="form-message success">
-                {message}
-              </div>
-            )}
 
-            {error && (
-              <div className="form-message error">
-                {error}
-              </div>
-            )}
+            {/* =========================
+                THANH TOÁN
+            ========================= */}
 
-            {/* Nút đặt */}
             <button
               className="primary-btn"
-              onClick={handleOrder}
-              disabled={isLoading}
+              onClick={handlePayment}
             >
-              {isLoading
-                ? "Đang đặt dịch vụ..."
-                : "Thuê dịch vụ"}
+              Thanh toán ngay
             </button>
 
-            {/* Liên hệ */}
+
+            {/* =========================
+                LIÊN HỆ
+            ========================= */}
+
             <button
               className="secondary-btn"
               onClick={() => {
+
                 alert(
                   "Chức năng liên hệ Freelancer sẽ được bổ sung sau."
                 );
+
               }}
             >
               Liên hệ Freelancer
             </button>
 
-            {/* Freelancer */}
+
+            {/* =========================
+                FREELANCER
+            ========================= */}
+
             <div className="seller-box">
 
               <div className="avatar">
+
                 👨‍💻
+
               </div>
 
+
               <div>
+
                 <strong>
+
                   {service.freelancer ||
                     "Freelancer"}
+
                 </strong>
 
+
                 <span>
+
                   Freelancer chuyên nghiệp
+
                 </span>
+
               </div>
 
             </div>
@@ -295,7 +315,9 @@ function ServiceDetail({
           </aside>
 
         </div>
+
       </div>
+
     </main>
   );
 }

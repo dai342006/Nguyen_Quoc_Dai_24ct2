@@ -17,6 +17,7 @@ import Register from "./pages/Register";
 import Freelancer from "./pages/Freelancer";
 import Orders from "./pages/Orders";
 import ManageServices from "./pages/ManageServices";
+import Payment from "./pages/Payment";
 
 // =========================
 // Data
@@ -34,11 +35,13 @@ import "./styles/detail.css";
 import "./styles/auth.css";
 import "./styles/freelancer.css";
 import "./styles/orders.css";
+import "./styles/payment.css";
 
 // =========================
 // App
 // =========================
 function App() {
+
   // Trang hiện tại
   const [page, setPage] = useState("home");
 
@@ -72,6 +75,7 @@ function App() {
   // Kiểm tra quyền truy cập
   // ========================================
   function checkPermission(targetPage) {
+
     // Các trang yêu cầu đăng nhập
     const protectedPages = [
       "orders",
@@ -101,6 +105,7 @@ function App() {
 
     // Chỉ Freelancer được vào hồ sơ Freelancer
     if (targetPage === "freelancer") {
+
       if (currentUser.role === "Freelancer") {
         return true;
       }
@@ -116,6 +121,7 @@ function App() {
 
     // Chỉ Freelancer được quản lý dịch vụ
     if (targetPage === "manage-services") {
+
       if (currentUser.role === "Freelancer") {
         return true;
       }
@@ -134,6 +140,7 @@ function App() {
     // ========================================
 
     if (targetPage === "orders") {
+
       if (
         currentUser.role === "KhachHang" ||
         currentUser.role === "Freelancer"
@@ -159,6 +166,7 @@ function App() {
   // Hàm chuyển trang
   // ========================================
   function navigateTo(targetPage) {
+
     if (checkPermission(targetPage)) {
       setPage(targetPage);
     }
@@ -168,7 +176,9 @@ function App() {
   // Hiển thị trang
   // ========================================
   const renderPage = () => {
+
     switch (page) {
+
       // ------------------------------------
       // Trang chủ
       // ------------------------------------
@@ -195,13 +205,25 @@ function App() {
       // Chi tiết dịch vụ
       // ------------------------------------
       case "detail":
-  return (
-    <ServiceDetail
-      service={selectedService}
-      setPage={navigateTo}
-      currentUser={currentUser}
-    />
-  );
+        return (
+          <ServiceDetail
+            service={selectedService}
+            setPage={navigateTo}
+            currentUser={currentUser}
+          />
+        );
+
+      // ------------------------------------
+      // Thanh toán
+      // ------------------------------------
+      case "payment":
+        return (
+          <Payment
+            setPage={navigateTo}
+            selectedService={selectedService}
+            currentUser={currentUser}
+          />
+        );
 
       // ------------------------------------
       // Đăng nhập
@@ -249,12 +271,12 @@ function App() {
       // Đơn hàng
       // ------------------------------------
       case "orders":
-  return (
-    <Orders
-      setPage={navigateTo}
-      currentUser={currentUser}
-    />
-  );
+        return (
+          <Orders
+            setPage={navigateTo}
+            currentUser={currentUser}
+          />
+        );
 
       // ------------------------------------
       // Mặc định
@@ -302,6 +324,7 @@ function App() {
       ========================= */}
       {currentUser && page === "home" && (
         <div className="welcome-bar">
+
           <div className="container">
 
             <strong>
@@ -315,6 +338,7 @@ function App() {
             </span>
 
           </div>
+
         </div>
       )}
 
