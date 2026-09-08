@@ -1,35 +1,63 @@
 import { useEffect, useState } from "react";
-import laptrinh from "../assets/laptrinh.jpg";
+
+//import laptrinh from "../assets/laptrinh.jpg";
+
 import ServiceCard from "../components/ServiceCard";
 
 // ========================================
 // Trang chủ SkillHub
 // ========================================
+
 function Home({ setPage, setSelectedService }) {
+
   // ========================================
   // Danh mục
   // ========================================
+
   const categories = [
-    [laptrinh, "Lập trình"],
-    ["🎨", "Thiết kế"],
-    ["🎬", "Video"],
-    ["✍️", "Nội dung"],
-    ["📣", "Marketing"],
-    ["📱", "Mạng xã hội"],
+    {
+      image: "💻",
+      name: "Lập trình",
+    },
+    {
+      icon: "🎨",
+      name: "Thiết kế",
+    },
+    {
+      icon: "🎬",
+      name: "Video",
+    },
+    {
+      icon: "✍️",
+      name: "Nội dung",
+    },
+    {
+      icon: "📣",
+      name: "Marketing",
+    },
+    {
+      icon: "📱",
+      name: "Mạng xã hội",
+    },
   ];
 
   // ========================================
   // State dịch vụ
   // ========================================
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // ========================================
-  // // Lấy dịch vụ từ Backend Render
+  // Lấy dịch vụ từ Backend Render
   // ========================================
+
   useEffect(() => {
+
     async function loadServices() {
+
       try {
+
         const response = await fetch(
           "https://nguyen-quoc-dai-24ct2.onrender.com/api/services"
         );
@@ -37,63 +65,95 @@ function Home({ setPage, setSelectedService }) {
         const data = await response.json();
 
         if (!response.ok) {
+
           console.error(
             "Lỗi lấy dịch vụ:",
             data.message
           );
+
           return;
         }
 
         setServices(
           Array.isArray(data) ? data : []
         );
+
       } catch (error) {
+
         console.error(
           "Không thể kết nối backend:",
           error
         );
+
       } finally {
+
         setLoading(false);
+
       }
     }
 
     loadServices();
+
   }, []);
 
   // ========================================
-  // Chuyển dữ liệu SQL sang ServiceCard
+  // Chuyển dữ liệu API sang ServiceCard
   // ========================================
+
   function convertService(service) {
+
     return {
+
       id: service.MaDichVu,
+
       title: service.TenDichVu,
+
       description:
-        service.MoTa || "Chưa có mô tả.",
+        service.MoTa ||
+        "Chưa có mô tả.",
+
       category:
-        service.DanhMuc || "Dịch vụ",
-      price: `${Number(
-        service.Gia
-      ).toLocaleString("vi-VN")}đ`,
+        service.DanhMuc ||
+        "Dịch vụ",
+
+      price:
+        `${Number(
+          service.Gia
+        ).toLocaleString("vi-VN")}đ`,
+
       rating: "5.0",
+
       icon: "💼",
+
       freelancer:
         service.TenFreelancer ||
         "Freelancer",
+
       MaNguoiDung:
         service.MaNguoiDung,
+
     };
   }
 
+  // ========================================
   // Lấy tối đa 3 dịch vụ nổi bật
+  // ========================================
+
   const featuredServices = services
     .map(convertService)
     .slice(0, 3);
 
+  // ========================================
+  // Giao diện
+  // ========================================
+
   return (
     <>
+
       {/* ========================================
           HERO
       ======================================== */}
+
       <section className="hero">
 
         <div className="container hero-grid">
@@ -117,14 +177,17 @@ function Home({ setPage, setSelectedService }) {
             </p>
 
             {/* Search */}
+
             <div className="search-box">
 
               <input
                 placeholder="Bạn cần tìm dịch vụ gì?"
                 onKeyDown={(e) => {
+
                   if (e.key === "Enter") {
                     setPage("services");
                   }
+
                 }}
               />
 
@@ -159,6 +222,7 @@ function Home({ setPage, setSelectedService }) {
           {/* =========================
               HERO CARD
           ========================= */}
+
           <div className="hero-card">
 
             <div className="hero-card-icon">
@@ -177,6 +241,7 @@ function Home({ setPage, setSelectedService }) {
             <div className="mini-stats">
 
               <div>
+
                 <strong>
                   {services.length > 0
                     ? `${services.length}+`
@@ -186,9 +251,11 @@ function Home({ setPage, setSelectedService }) {
                 <span>
                   Dịch vụ
                 </span>
+
               </div>
 
               <div>
+
                 <strong>
                   200+
                 </strong>
@@ -196,9 +263,11 @@ function Home({ setPage, setSelectedService }) {
                 <span>
                   Freelancer
                 </span>
+
               </div>
 
               <div>
+
                 <strong>
                   1K+
                 </strong>
@@ -206,6 +275,7 @@ function Home({ setPage, setSelectedService }) {
                 <span>
                   Đơn hàng
                 </span>
+
               </div>
 
             </div>
@@ -216,9 +286,11 @@ function Home({ setPage, setSelectedService }) {
 
       </section>
 
+
       {/* ========================================
           DANH MỤC
       ======================================== */}
+
       <section className="section">
 
         <div className="container">
@@ -226,6 +298,7 @@ function Home({ setPage, setSelectedService }) {
           <div className="section-head">
 
             <div>
+
               <p className="eyebrow">
                 DANH MỤC
               </p>
@@ -233,6 +306,7 @@ function Home({ setPage, setSelectedService }) {
               <h2>
                 Khám phá dịch vụ
               </h2>
+
             </div>
 
             <button
@@ -246,48 +320,50 @@ function Home({ setPage, setSelectedService }) {
 
           </div>
 
+
           <div className="category-grid">
 
-            {categories.map(
-              ([icon, name]) => (
+            {categories.map((category) => (
 
-                <button
-                  key={name}
-                  className="category-card"
-                  onClick={() =>
-                    setPage("services")
-                  }
-                >
+              <button
+                key={category.name}
+                className="category-card"
+                onClick={() =>
+                  setPage("services")
+                }
+              >
 
-                  {typeof icon ===
-                  "string" ? (
+                {/* =========================
+                    ẢNH HOẶC ICON
+                ========================= */}
 
-                    <span className="category-icon">
-                      {icon}
-                    </span>
+                {category.image ? (
 
-                  ) : (
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="category-image"
+                  />
 
-                    <img
-                      src={icon}
-                      alt={name}
-                      className="category-image"
-                    />
+                ) : (
 
-                  )}
-
-                  <strong>
-                    {name}
-                  </strong>
-
-                  <span>
-                    Khám phá ngay
+                  <span className="category-icon">
+                    {category.icon}
                   </span>
 
-                </button>
+                )}
 
-              )
-            )}
+                <strong>
+                  {category.name}
+                </strong>
+
+                <span>
+                  Khám phá ngay
+                </span>
+
+              </button>
+
+            ))}
 
           </div>
 
@@ -295,9 +371,11 @@ function Home({ setPage, setSelectedService }) {
 
       </section>
 
+
       {/* ========================================
           DỊCH VỤ NỔI BẬT
       ======================================== */}
+
       <section className="section gray-section">
 
         <div className="container">
@@ -305,6 +383,7 @@ function Home({ setPage, setSelectedService }) {
           <div className="section-head">
 
             <div>
+
               <p className="eyebrow">
                 NỔI BẬT
               </p>
@@ -312,6 +391,7 @@ function Home({ setPage, setSelectedService }) {
               <h2>
                 Dịch vụ được yêu thích
               </h2>
+
             </div>
 
             <button
@@ -325,8 +405,11 @@ function Home({ setPage, setSelectedService }) {
 
           </div>
 
+
           {/* Đang tải */}
+
           {loading && (
+
             <div className="empty-services">
 
               <div>
@@ -342,67 +425,73 @@ function Home({ setPage, setSelectedService }) {
               </p>
 
             </div>
+
           )}
 
+
           {/* Không có dịch vụ */}
+
           {!loading &&
             featuredServices.length === 0 && (
 
-              <div className="empty-services">
+            <div className="empty-services">
 
-                <div>
-                  📦
-                </div>
-
-                <h3>
-                  Chưa có dịch vụ
-                </h3>
-
-                <p>
-                  Freelancer chưa đăng dịch vụ nào.
-                </p>
-
+              <div>
+                📦
               </div>
 
-            )}
+              <h3>
+                Chưa có dịch vụ
+              </h3>
+
+              <p>
+                Freelancer chưa đăng dịch vụ nào.
+              </p>
+
+            </div>
+
+          )}
+
 
           {/* Dịch vụ */}
+
           {!loading &&
             featuredServices.length > 0 && (
 
-              <div className="service-grid">
+            <div className="service-grid">
 
-                {featuredServices.map(
-                  (service) => (
+              {featuredServices.map(
+                (service) => (
 
-                    <ServiceCard
-                      key={service.id}
-                      service={service}
-                      onClick={() => {
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  onClick={() => {
 
-                        setSelectedService(
-                          service
-                        );
+                    setSelectedService(
+                      service
+                    );
 
-                        setPage("detail");
+                    setPage("detail");
 
-                      }}
-                    />
+                  }}
+                />
 
-                  )
-                )}
+              ))}
 
-              </div>
+            </div>
 
-            )}
+          )}
 
         </div>
 
       </section>
 
+
       {/* ========================================
           THỐNG KÊ
       ======================================== */}
+
       <section className="section">
 
         <div className="container">
@@ -410,6 +499,7 @@ function Home({ setPage, setSelectedService }) {
           <div className="section-head">
 
             <div>
+
               <p className="eyebrow">
                 SKILLHUB
               </p>
@@ -417,13 +507,16 @@ function Home({ setPage, setSelectedService }) {
               <h2>
                 Nền tảng kết nối kỹ năng số
               </h2>
+
             </div>
 
           </div>
 
+
           <div className="mini-stats">
 
             <div>
+
               <strong>
                 {services.length}
               </strong>
@@ -431,9 +524,11 @@ function Home({ setPage, setSelectedService }) {
               <span>
                 Dịch vụ hiện có
               </span>
+
             </div>
 
             <div>
+
               <strong>
                 200+
               </strong>
@@ -441,9 +536,11 @@ function Home({ setPage, setSelectedService }) {
               <span>
                 Freelancer
               </span>
+
             </div>
 
             <div>
+
               <strong>
                 1K+
               </strong>
@@ -451,6 +548,7 @@ function Home({ setPage, setSelectedService }) {
               <span>
                 Đơn hàng
               </span>
+
             </div>
 
           </div>
@@ -459,9 +557,11 @@ function Home({ setPage, setSelectedService }) {
 
       </section>
 
+
       {/* ========================================
           CTA FREELANCER
       ======================================== */}
+
       <section className="cta">
 
         <div className="container cta-box">
@@ -496,6 +596,7 @@ function Home({ setPage, setSelectedService }) {
         </div>
 
       </section>
+
     </>
   );
 }
