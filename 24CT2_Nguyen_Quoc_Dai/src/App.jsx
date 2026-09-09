@@ -20,6 +20,7 @@ import ManageServices from "./pages/ManageServices";
 import Payment from "./pages/Payment";
 import DangYeuCau from "./pages/DangYeuCau";
 import YeuCauCuaToi from "./pages/YeuCauCuaToi";
+import YeuCauFreelancer from "./pages/YeuCauFreelancer";
 
 // =========================
 // Data
@@ -40,6 +41,7 @@ import "./styles/orders.css";
 import "./styles/payment.css";
 import "./styles/DangYeuCau.css";
 import "./styles/YeuCauCuaToi.css";
+import "./styles/YeuCauFreelancer.css";
 
 // =========================
 // App
@@ -93,6 +95,7 @@ function App() {
       "create-request",
       "my-requests",
       "payment",
+      "freelancer-requests",
     ];
 
     // Nếu không phải trang cần đăng nhập
@@ -112,10 +115,9 @@ function App() {
     }
 
     // ========================================
-    // Freelancer
+    // Chỉ Freelancer
     // ========================================
 
-    // Chỉ Freelancer được vào hồ sơ Freelancer
     if (targetPage === "freelancer") {
 
       if (currentUser.role === "Freelancer") {
@@ -131,7 +133,6 @@ function App() {
       return false;
     }
 
-    // Chỉ Freelancer được quản lý dịch vụ
     if (targetPage === "manage-services") {
 
       if (currentUser.role === "Freelancer") {
@@ -148,7 +149,30 @@ function App() {
     }
 
     // ========================================
-    // Khách hàng
+    // Yêu cầu dành cho Freelancer
+    // ========================================
+
+    if (
+      targetPage === "freelancer-requests"
+    ) {
+
+      if (
+        currentUser.role === "Freelancer"
+      ) {
+        return true;
+      }
+
+      alert(
+        "Chỉ Freelancer mới có thể xem yêu cầu khách hàng."
+      );
+
+      setPage("home");
+
+      return false;
+    }
+
+    // ========================================
+    // Chỉ Khách hàng
     // ========================================
 
     if (
@@ -156,7 +180,9 @@ function App() {
       targetPage === "my-requests"
     ) {
 
-      if (currentUser.role === "KhachHang") {
+      if (
+        currentUser.role === "KhachHang"
+      ) {
         return true;
       }
 
@@ -173,9 +199,13 @@ function App() {
     // Thanh toán
     // ========================================
 
-    if (targetPage === "payment") {
+    if (
+      targetPage === "payment"
+    ) {
 
-      if (currentUser.role === "KhachHang") {
+      if (
+        currentUser.role === "KhachHang"
+      ) {
         return true;
       }
 
@@ -192,7 +222,9 @@ function App() {
     // Đơn hàng
     // ========================================
 
-    if (targetPage === "orders") {
+    if (
+      targetPage === "orders"
+    ) {
 
       if (
         currentUser.role === "KhachHang" ||
@@ -220,7 +252,9 @@ function App() {
   // ========================================
   function navigateTo(targetPage) {
 
-    if (checkPermission(targetPage)) {
+    if (
+      checkPermission(targetPage)
+    ) {
       setPage(targetPage);
     }
   }
@@ -239,7 +273,9 @@ function App() {
         return (
           <Home
             setPage={navigateTo}
-            setSelectedService={setSelectedService}
+            setSelectedService={
+              setSelectedService
+            }
           />
         );
 
@@ -250,7 +286,9 @@ function App() {
         return (
           <Services
             setPage={navigateTo}
-            setSelectedService={setSelectedService}
+            setSelectedService={
+              setSelectedService
+            }
           />
         );
 
@@ -277,6 +315,18 @@ function App() {
         );
 
       // ------------------------------------
+      // Yêu cầu khách hàng
+      // Dành cho Freelancer
+      // ------------------------------------
+      case "freelancer-requests":
+        return (
+          <YeuCauFreelancer
+            setPage={navigateTo}
+            currentUser={currentUser}
+          />
+        );
+
+      // ------------------------------------
       // Chi tiết dịch vụ
       // ------------------------------------
       case "detail":
@@ -295,7 +345,9 @@ function App() {
         return (
           <Payment
             setPage={navigateTo}
-            selectedService={selectedService}
+            selectedService={
+              selectedService
+            }
             currentUser={currentUser}
           />
         );
@@ -307,7 +359,9 @@ function App() {
         return (
           <Login
             setPage={navigateTo}
-            onLoginSuccess={setCurrentUser}
+            onLoginSuccess={
+              setCurrentUser
+            }
           />
         );
 
@@ -360,7 +414,9 @@ function App() {
         return (
           <Home
             setPage={navigateTo}
-            setSelectedService={setSelectedService}
+            setSelectedService={
+              setSelectedService
+            }
           />
         );
     }
@@ -382,11 +438,13 @@ function App() {
       {/* =========================
           HEADER
       ========================= */}
+
       {!authPage && (
         <Header
           page={page}
           setPage={navigateTo}
           currentUser={currentUser}
+
           onLogout={() => {
             setCurrentUser(null);
             setPage("home");
@@ -397,19 +455,26 @@ function App() {
       {/* =========================
           WELCOME BAR
       ========================= */}
-      {currentUser && page === "home" && (
+
+      {currentUser &&
+        page === "home" && (
+
         <div className="welcome-bar">
 
           <div className="container">
 
             <strong>
-              👋 Xin chào, {currentUser.name}!
+              👋 Xin chào,{" "}
+              {currentUser.name}!
             </strong>
 
             <span>
-              {currentUser.role === "Freelancer"
+
+              {currentUser.role ===
+              "Freelancer"
                 ? "Bạn đang sử dụng tài khoản Freelancer."
                 : "Chúc bạn có một ngày thật hiệu quả trên SkillHub."}
+
             </span>
 
           </div>
@@ -420,11 +485,13 @@ function App() {
       {/* =========================
           PAGE CONTENT
       ========================= */}
+
       {renderPage()}
 
       {/* =========================
           FOOTER
       ========================= */}
+
       {!authPage && (
         <Footer
           setPage={navigateTo}

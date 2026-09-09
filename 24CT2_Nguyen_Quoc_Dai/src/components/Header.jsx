@@ -80,6 +80,7 @@ function Header({
           {currentUser?.role ===
             "KhachHang" && (
             <>
+
               {/* Đăng yêu cầu */}
               <button
                 className={
@@ -112,6 +113,7 @@ function Header({
               >
                 Yêu cầu của tôi
               </button>
+
             </>
           )}
 
@@ -122,6 +124,7 @@ function Header({
           {currentUser?.role ===
             "Freelancer" && (
             <>
+
               {/* Hồ sơ Freelancer */}
               <button
                 className={
@@ -153,6 +156,25 @@ function Header({
               >
                 Quản lý dịch vụ
               </button>
+
+
+              {/* Yêu cầu khách hàng */}
+              <button
+                className={
+                  page ===
+                  "freelancer-requests"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setPage(
+                    "freelancer-requests"
+                  )
+                }
+              >
+                Yêu cầu khách hàng
+              </button>
+
             </>
           )}
 
@@ -208,6 +230,7 @@ function Header({
           ) : (
 
             <>
+
               {/* Đăng nhập */}
               <button
                 className="login-btn"
@@ -228,6 +251,7 @@ function Header({
               >
                 Đăng ký
               </button>
+
             </>
 
           )}

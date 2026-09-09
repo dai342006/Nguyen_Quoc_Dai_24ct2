@@ -1,0 +1,101 @@
+/* ========================================
+   YÊU CẦU DÀNH CHO FREELANCER
+======================================== */
+
+.freelancer-request-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .freelancer-request-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+  
+    padding: 24px;
+  
+    background: #ffffff;
+    border: 1px solid #e5e9f0;
+    border-radius: 18px;
+  
+    transition: 0.2s ease;
+  }
+  
+  .freelancer-request-card:hover {
+    transform: translateY(-2px);
+  
+    box-shadow:
+      0 8px 25px rgba(27, 39, 74, 0.07);
+  }
+  
+  .freelancer-request-icon {
+    width: 58px;
+    height: 58px;
+  
+    display: grid;
+    place-items: center;
+  
+    background: #eeebff;
+    border-radius: 15px;
+  
+    font-size: 25px;
+  }
+  
+  .freelancer-request-content {
+    min-width: 0;
+  }
+  
+  .freelancer-request-content h3 {
+    margin: 5px 0 8px;
+  
+    color: #182238;
+    font-size: 19px;
+  }
+  
+  .freelancer-request-content p {
+    margin: 0 0 14px;
+  
+    color: #727a8b;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .freelancer-request-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  
+    color: #737b8d;
+    font-size: 13px;
+  }
+  
+  .freelancer-request-action {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  
+    min-width: 150px;
+  }
+  
+  .freelancer-request-action .primary-btn {
+    width: 100%;
+  }
+  
+  @media (max-width: 800px) {
+  
+    .freelancer-request-card {
+      grid-template-columns: 1fr;
+    }
+  
+    .freelancer-request-icon {
+      width: 50px;
+      height: 50px;
+    }
+  
+    .freelancer-request-action {
+      width: 100%;
+    }
+  }
