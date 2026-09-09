@@ -12,7 +12,6 @@ module.exports = function YeuCau(app) {
 
   app.post("/api/requests", async (req, res) => {
     try {
-
       const userId = Number(
         req.headers["x-user-id"]
       );
@@ -28,20 +27,22 @@ module.exports = function YeuCau(app) {
         TieuDe || ""
       ).trim();
 
-      const description =
-        String(
-          MoTa || ""
-        ).trim();
+      const description = String(
+        MoTa || ""
+      ).trim();
 
-      const category =
-        String(
-          DanhMuc || ""
-        ).trim();
+      const category = String(
+        DanhMuc || ""
+      ).trim();
 
-      const budget =
-        Number(NganSach);
+      const budget = Number(
+        NganSach
+      );
 
+      // ==========================================
       // Kiểm tra người dùng
+      // ==========================================
+
       if (!userId) {
         return res.status(400).json({
           message:
@@ -49,7 +50,10 @@ module.exports = function YeuCau(app) {
         });
       }
 
+      // ==========================================
       // Kiểm tra dữ liệu
+      // ==========================================
+
       if (
         !title ||
         !description ||
@@ -65,15 +69,18 @@ module.exports = function YeuCau(app) {
 
       if (
         Number.isNaN(budget) ||
-        budget < 0
+        budget <= 0
       ) {
         return res.status(400).json({
           message:
-            "Ngân sách không hợp lệ!",
+            "Ngân sách phải lớn hơn 0!",
         });
       }
 
+      // ==========================================
       // Kiểm tra tài khoản
+      // ==========================================
+
       const userResult =
         await pool.query(
           `
@@ -95,7 +102,10 @@ module.exports = function YeuCau(app) {
         });
       }
 
-      // Chỉ khách hàng được đăng
+      // ==========================================
+      // Chỉ Khách hàng được đăng yêu cầu
+      // ==========================================
+
       if (
         userResult.rows[0].vai_tro !==
         "KhachHang"
@@ -106,7 +116,10 @@ module.exports = function YeuCau(app) {
         });
       }
 
-      // Thêm yêu cầu
+      // ==========================================
+      // Thêm yêu cầu vào database
+      // ==========================================
+
       const result =
         await pool.query(
           `
@@ -130,6 +143,7 @@ module.exports = function YeuCau(app) {
           )
           RETURNING
             ma_yeu_cau,
+            ma_nguoi_dang,
             tieu_de,
             mo_ta,
             danh_muc,
@@ -145,6 +159,10 @@ module.exports = function YeuCau(app) {
             budget,
           ]
         );
+
+      // ==========================================
+      // Trả kết quả
+      // ==========================================
 
       res.status(201).json({
         message:
@@ -178,10 +196,13 @@ module.exports = function YeuCau(app) {
     async (req, res) => {
 
       try {
-
         const userId = Number(
           req.headers["x-user-id"]
         );
+
+        // ==========================================
+        // Kiểm tra user
+        // ==========================================
 
         if (!userId) {
           return res.status(400).json({
@@ -190,11 +211,16 @@ module.exports = function YeuCau(app) {
           });
         }
 
+        // ==========================================
         // Kiểm tra tài khoản
+        // ==========================================
+
         const userResult =
           await pool.query(
             `
-            SELECT vai_tro
+            SELECT
+              ma_nguoi_dung,
+              vai_tro
             FROM nguoi_dung
             WHERE ma_nguoi_dung = $1
             `,
@@ -210,6 +236,10 @@ module.exports = function YeuCau(app) {
           });
         }
 
+        // ==========================================
+        // Chỉ Khách hàng được xem
+        // ==========================================
+
         if (
           userResult.rows[0].vai_tro !==
           "KhachHang"
@@ -219,6 +249,10 @@ module.exports = function YeuCau(app) {
               "Chỉ Khách hàng mới được xem yêu cầu của mình!",
           });
         }
+
+        // ==========================================
+        // Lấy danh sách yêu cầu
+        // ==========================================
 
         const result =
           await pool.query(
@@ -243,7 +277,12 @@ module.exports = function YeuCau(app) {
             [userId]
           );
 
+        // ==========================================
+        // Trả dữ liệu
+        // ==========================================
+
         res.json({
+          role: "KhachHang",
           requests:
             result.rows,
         });
