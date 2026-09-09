@@ -131,9 +131,12 @@ function YeuCau(app) {
         });
       }
 
+      // Kiểm tra người dùng
       const userResult = await pool.query(
         `
-        SELECT vai_tro
+        SELECT
+          ma_nguoi_dung,
+          vai_tro
         FROM nguoi_dung
         WHERE ma_nguoi_dung = $1
         `,
@@ -152,11 +155,13 @@ function YeuCau(app) {
         });
       }
 
+      // Lấy yêu cầu của khách hàng
       const result = await pool.query(
         `
         SELECT
           y.ma_yeu_cau AS "MaYeuCau",
           y.ma_nguoi_dang AS "MaNguoiDang",
+
           y.tieu_de AS "TieuDe",
           y.mo_ta AS "MoTa",
           y.danh_muc AS "DanhMuc",
@@ -179,7 +184,11 @@ function YeuCau(app) {
         [userId]
       );
 
-      res.json(result.rows);
+      // Trả về object có requests
+      // để frontend YeuCauCuaToi sử dụng
+      res.json({
+        requests: result.rows,
+      });
 
     } catch (error) {
       console.error("Lỗi lấy yêu cầu của tôi:", error);
@@ -204,9 +213,12 @@ function YeuCau(app) {
         });
       }
 
+      // Kiểm tra người dùng
       const userResult = await pool.query(
         `
-        SELECT vai_tro
+        SELECT
+          ma_nguoi_dung,
+          vai_tro
         FROM nguoi_dung
         WHERE ma_nguoi_dung = $1
         `,
@@ -269,6 +281,7 @@ function YeuCau(app) {
   // FREELANCER - NHẬN YÊU CẦU
   // =====================================================
   app.put("/api/requests/:id/accept", async (req, res) => {
+
     const client = await pool.connect();
 
     try {
@@ -280,6 +293,7 @@ function YeuCau(app) {
           message: "Dữ liệu không hợp lệ!",
         });
       }
+
 
       // =================================================
       // 1. KIỂM TRA FREELANCER
@@ -339,6 +353,7 @@ function YeuCau(app) {
       );
 
       if (requestResult.rows.length === 0) {
+
         await client.query("ROLLBACK");
 
         return res.status(404).json({
@@ -354,6 +369,7 @@ function YeuCau(app) {
       // =================================================
 
       if (request.trang_thai !== "DangTimFreelancer") {
+
         await client.query("ROLLBACK");
 
         return res.status(409).json({
@@ -430,28 +446,47 @@ function YeuCau(app) {
       await client.query("COMMIT");
 
 
+      // =================================================
+      // 8. TRẢ KẾT QUẢ
+      // =================================================
+
       res.json({
         message: "Nhận yêu cầu thành công và đã tạo đơn hàng!",
+
         request: {
           ma_yeu_cau: request.ma_yeu_cau,
           trang_thai: "DaNhan",
           ma_freelancer: userId,
         },
+
         order: orderResult.rows[0],
       });
 
     } catch (error) {
 
-      await client.query("ROLLBACK");
+      try {
+        await client.query("ROLLBACK");
+      } catch (rollbackError) {
+        console.error(
+          "Lỗi rollback:",
+          rollbackError.message
+        );
+      }
 
-      console.error("Lỗi nhận yêu cầu:", error);
+      console.error(
+        "Lỗi nhận yêu cầu:",
+        error
+      );
 
       res.status(500).json({
         message: "Không thể nhận yêu cầu!",
+        error: error.message,
       });
 
     } finally {
+
       client.release();
+
     }
   });
 }
