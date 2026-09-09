@@ -1,21 +1,13 @@
 const { pool } = require("./db");
 
-// ======================================================
-// YÊU CẦU
-// ======================================================
+function YeuCau(app) {
 
-module.exports = function YeuCau(app) {
-
-  // ====================================================
-  // API ĐĂNG YÊU CẦU - KHÁCH HÀNG
-  // ====================================================
-
+  // =====================================================
+  // KHÁCH HÀNG - ĐĂNG YÊU CẦU
+  // =====================================================
   app.post("/api/requests", async (req, res) => {
     try {
-
-      const userId = Number(
-        req.headers["x-user-id"]
-      );
+      const userId = Number(req.headers["x-user-id"]);
 
       const {
         TieuDe,
@@ -24,520 +16,445 @@ module.exports = function YeuCau(app) {
         NganSach,
       } = req.body;
 
-      const title = String(
-        TieuDe || ""
-      ).trim();
-
-      const description = String(
-        MoTa || ""
-      ).trim();
-
-      const category = String(
-        DanhMuc || ""
-      ).trim();
-
-      const budget = Number(
-        NganSach
-      );
-
-      // ==========================================
-      // Kiểm tra người dùng
-      // ==========================================
+      const tieuDe = String(TieuDe || "").trim();
+      const moTa = String(MoTa || "").trim();
+      const danhMuc = String(DanhMuc || "").trim();
+      const nganSach = Number(NganSach);
 
       if (!userId) {
         return res.status(400).json({
-          message:
-            "Thiếu thông tin người dùng!",
+          message: "Thiếu thông tin người dùng!",
         });
       }
 
-      // ==========================================
-      // Kiểm tra dữ liệu
-      // ==========================================
-
-      if (
-        !title ||
-        !description ||
-        !category ||
-        NganSach === undefined ||
-        NganSach === ""
-      ) {
+      if (!tieuDe || !moTa || !danhMuc) {
         return res.status(400).json({
-          message:
-            "Vui lòng nhập đầy đủ thông tin!",
+          message: "Vui lòng nhập đầy đủ thông tin!",
         });
       }
 
-      if (
-        Number.isNaN(budget) ||
-        budget <= 0
-      ) {
+      if (Number.isNaN(nganSach) || nganSach < 0) {
         return res.status(400).json({
-          message:
-            "Ngân sách phải lớn hơn 0!",
+          message: "Ngân sách không hợp lệ!",
         });
       }
 
-      // ==========================================
-      // Kiểm tra tài khoản
-      // ==========================================
+      // Kiểm tra người dùng
+      const userResult = await pool.query(
+        `
+        SELECT
+          ma_nguoi_dung,
+          vai_tro
+        FROM nguoi_dung
+        WHERE ma_nguoi_dung = $1
+        `,
+        [userId]
+      );
 
-      const userResult =
-        await pool.query(
-          `
-          SELECT
-            ma_nguoi_dung,
-            vai_tro
-          FROM nguoi_dung
-          WHERE ma_nguoi_dung = $1
-          `,
-          [userId]
-        );
-
-      if (
-        userResult.rows.length === 0
-      ) {
+      if (userResult.rows.length === 0) {
         return res.status(404).json({
-          message:
-            "Không tìm thấy người dùng!",
+          message: "Không tìm thấy người dùng!",
         });
       }
 
-      // ==========================================
-      // Chỉ Khách hàng được đăng
-      // ==========================================
-
-      if (
-        userResult.rows[0].vai_tro !==
-        "KhachHang"
-      ) {
+      if (userResult.rows[0].vai_tro !== "KhachHang") {
         return res.status(403).json({
-          message:
-            "Chỉ Khách hàng mới được đăng yêu cầu!",
+          message: "Chỉ Khách hàng mới được đăng yêu cầu!",
         });
       }
 
-      // ==========================================
-      // Thêm yêu cầu
-      // ==========================================
-
-      const result =
-        await pool.query(
-          `
-          INSERT INTO yeu_cau
-          (
-            ma_nguoi_dang,
-            tieu_de,
-            mo_ta,
-            danh_muc,
-            ngan_sach,
-            trang_thai
-          )
-          VALUES
-          (
-            $1,
-            $2,
-            $3,
-            $4,
-            $5,
-            'DangTimFreelancer'
-          )
-          RETURNING
-            ma_yeu_cau,
-            ma_nguoi_dang,
-            tieu_de,
-            mo_ta,
-            danh_muc,
-            ngan_sach,
-            trang_thai,
-            ngay_dang
-          `,
-          [
-            userId,
-            title,
-            description,
-            category,
-            budget,
-          ]
-        );
+      // Tạo yêu cầu
+      const result = await pool.query(
+        `
+        INSERT INTO yeu_cau
+        (
+          ma_nguoi_dang,
+          tieu_de,
+          mo_ta,
+          danh_muc,
+          ngan_sach,
+          trang_thai
+        )
+        VALUES
+        (
+          $1,
+          $2,
+          $3,
+          $4,
+          $5,
+          'DangTimFreelancer'
+        )
+        RETURNING
+          ma_yeu_cau,
+          ma_nguoi_dang,
+          tieu_de,
+          mo_ta,
+          danh_muc,
+          ngan_sach,
+          trang_thai,
+          ngay_dang
+        `,
+        [
+          userId,
+          tieuDe,
+          moTa,
+          danhMuc,
+          nganSach,
+        ]
+      );
 
       res.status(201).json({
-        message:
-          "Đăng yêu cầu thành công!",
-        request:
-          result.rows[0],
+        message: "Đăng yêu cầu thành công!",
+        request: result.rows[0],
       });
 
     } catch (error) {
-
-      console.error(
-        "Lỗi đăng yêu cầu:",
-        error
-      );
+      console.error("Lỗi đăng yêu cầu:", error);
 
       res.status(500).json({
-        message:
-          "Không thể đăng yêu cầu!",
+        message: "Không thể đăng yêu cầu!",
       });
     }
   });
 
 
-  // ====================================================
-  // API LẤY YÊU CẦU CỦA TÔI - KHÁCH HÀNG
-  // ====================================================
+  // =====================================================
+  // KHÁCH HÀNG - XEM YÊU CẦU CỦA TÔI
+  // =====================================================
+  app.get("/api/requests/my", async (req, res) => {
+    try {
+      const userId = Number(req.headers["x-user-id"]);
 
-  app.get(
-    "/api/requests/my",
-    async (req, res) => {
-
-      try {
-
-        const userId = Number(
-          req.headers["x-user-id"]
-        );
-
-        if (!userId) {
-          return res.status(400).json({
-            message:
-              "Thiếu mã người dùng!",
-          });
-        }
-
-        // ==========================================
-        // Kiểm tra tài khoản
-        // ==========================================
-
-        const userResult =
-          await pool.query(
-            `
-            SELECT
-              ma_nguoi_dung,
-              vai_tro
-            FROM nguoi_dung
-            WHERE ma_nguoi_dung = $1
-            `,
-            [userId]
-          );
-
-        if (
-          userResult.rows.length === 0
-        ) {
-          return res.status(404).json({
-            message:
-              "Không tìm thấy người dùng!",
-          });
-        }
-
-        if (
-          userResult.rows[0].vai_tro !==
-          "KhachHang"
-        ) {
-          return res.status(403).json({
-            message:
-              "Chỉ Khách hàng mới được xem yêu cầu của mình!",
-          });
-        }
-
-        // ==========================================
-        // Lấy yêu cầu
-        // ==========================================
-
-        const result =
-          await pool.query(
-            `
-            SELECT
-              y.ma_yeu_cau AS "MaYeuCau",
-              y.ma_nguoi_dang AS "MaNguoiDang",
-              y.ma_freelancer AS "MaFreelancer",
-              y.tieu_de AS "TieuDe",
-              y.mo_ta AS "MoTa",
-              y.danh_muc AS "DanhMuc",
-              y.ngan_sach AS "NganSach",
-              y.trang_thai AS "TrangThai",
-              y.ngay_dang AS "NgayDang",
-
-              f.ho_ten AS "TenFreelancer"
-
-            FROM yeu_cau y
-
-            LEFT JOIN nguoi_dung f
-              ON y.ma_freelancer =
-                 f.ma_nguoi_dung
-
-            WHERE y.ma_nguoi_dang = $1
-
-            ORDER BY
-              y.ma_yeu_cau DESC
-            `,
-            [userId]
-          );
-
-        res.json({
-          role: "KhachHang",
-          requests:
-            result.rows,
-        });
-
-      } catch (error) {
-
-        console.error(
-          "Lỗi lấy yêu cầu:",
-          error
-        );
-
-        res.status(500).json({
-          message:
-            "Không thể lấy danh sách yêu cầu!",
+      if (!userId) {
+        return res.status(400).json({
+          message: "Thiếu thông tin người dùng!",
         });
       }
-    }
-  );
 
+      const userResult = await pool.query(
+        `
+        SELECT vai_tro
+        FROM nguoi_dung
+        WHERE ma_nguoi_dung = $1
+        `,
+        [userId]
+      );
 
-  // ====================================================
-  // API LẤY TẤT CẢ YÊU CẦU - FREELANCER
-  // ====================================================
-
-  app.get(
-    "/api/requests",
-    async (req, res) => {
-
-      try {
-
-        const userId = Number(
-          req.headers["x-user-id"]
-        );
-
-        if (!userId) {
-          return res.status(400).json({
-            message:
-              "Thiếu mã người dùng!",
-          });
-        }
-
-        // ==========================================
-        // Kiểm tra tài khoản
-        // ==========================================
-
-        const userResult =
-          await pool.query(
-            `
-            SELECT
-              ma_nguoi_dung,
-              vai_tro
-            FROM nguoi_dung
-            WHERE ma_nguoi_dung = $1
-            `,
-            [userId]
-          );
-
-        if (
-          userResult.rows.length === 0
-        ) {
-          return res.status(404).json({
-            message:
-              "Không tìm thấy người dùng!",
-          });
-        }
-
-        // Chỉ Freelancer
-        if (
-          userResult.rows[0].vai_tro !==
-          "Freelancer"
-        ) {
-          return res.status(403).json({
-            message:
-              "Chỉ Freelancer mới được xem yêu cầu!",
-          });
-        }
-
-        // ==========================================
-        // Lấy các yêu cầu đang tìm Freelancer
-        // ==========================================
-
-        const result =
-          await pool.query(
-            `
-            SELECT
-              y.ma_yeu_cau AS "MaYeuCau",
-              y.ma_nguoi_dang AS "MaNguoiDang",
-              y.tieu_de AS "TieuDe",
-              y.mo_ta AS "MoTa",
-              y.danh_muc AS "DanhMuc",
-              y.ngan_sach AS "NganSach",
-              y.trang_thai AS "TrangThai",
-              y.ngay_dang AS "NgayDang",
-
-              n.ho_ten AS "TenKhachHang"
-
-            FROM yeu_cau y
-
-            INNER JOIN nguoi_dung n
-              ON y.ma_nguoi_dang =
-                 n.ma_nguoi_dung
-
-            WHERE
-              y.trang_thai =
-              'DangTimFreelancer'
-
-            ORDER BY
-              y.ma_yeu_cau DESC
-            `
-          );
-
-        res.json({
-          role: "Freelancer",
-          requests:
-            result.rows,
-        });
-
-      } catch (error) {
-
-        console.error(
-          "Lỗi lấy danh sách yêu cầu Freelancer:",
-          error
-        );
-
-        res.status(500).json({
-          message:
-            "Không thể lấy danh sách yêu cầu!",
+      if (userResult.rows.length === 0) {
+        return res.status(404).json({
+          message: "Không tìm thấy người dùng!",
         });
       }
-    }
-  );
 
-
-  // ====================================================
-  // API FREELANCER NHẬN YÊU CẦU
-  // ====================================================
-
-  app.put(
-    "/api/requests/:id/accept",
-    async (req, res) => {
-
-      try {
-
-        const userId = Number(
-          req.headers["x-user-id"]
-        );
-
-        const requestId = Number(
-          req.params.id
-        );
-
-        if (
-          !userId ||
-          !requestId
-        ) {
-          return res.status(400).json({
-            message:
-              "Dữ liệu không hợp lệ!",
-          });
-        }
-
-        // ==========================================
-        // Kiểm tra tài khoản Freelancer
-        // ==========================================
-
-        const userResult =
-          await pool.query(
-            `
-            SELECT
-              ma_nguoi_dung,
-              vai_tro
-            FROM nguoi_dung
-            WHERE ma_nguoi_dung = $1
-            `,
-            [userId]
-          );
-
-        if (
-          userResult.rows.length === 0
-        ) {
-          return res.status(404).json({
-            message:
-              "Không tìm thấy người dùng!",
-          });
-        }
-
-        if (
-          userResult.rows[0].vai_tro !==
-          "Freelancer"
-        ) {
-          return res.status(403).json({
-            message:
-              "Chỉ Freelancer mới được nhận yêu cầu!",
-          });
-        }
-
-        // ==========================================
-        // Nhận yêu cầu
-        // Chỉ nhận nếu còn đang tìm Freelancer
-        // ==========================================
-
-        const result =
-          await pool.query(
-            `
-            UPDATE yeu_cau
-
-            SET
-              ma_freelancer = $1,
-              trang_thai = 'DaNhan'
-
-            WHERE
-              ma_yeu_cau = $2
-              AND trang_thai =
-                  'DangTimFreelancer'
-
-            RETURNING
-              ma_yeu_cau,
-              ma_freelancer,
-              trang_thai
-            `,
-            [
-              userId,
-              requestId,
-            ]
-          );
-
-        // ==========================================
-        // Không cập nhật được
-        // ==========================================
-
-        if (
-          result.rowCount === 0
-        ) {
-          return res.status(409).json({
-            message:
-              "Yêu cầu này đã được Freelancer khác nhận hoặc không còn tồn tại!",
-          });
-        }
-
-        // ==========================================
-        // Thành công
-        // ==========================================
-
-        res.json({
-          message:
-            "Nhận yêu cầu thành công!",
-          request:
-            result.rows[0],
-        });
-
-      } catch (error) {
-
-        console.error(
-          "Lỗi nhận yêu cầu:",
-          error
-        );
-
-        res.status(500).json({
-          message:
-            "Không thể nhận yêu cầu!",
+      if (userResult.rows[0].vai_tro !== "KhachHang") {
+        return res.status(403).json({
+          message: "Chỉ Khách hàng mới có thể xem yêu cầu của mình!",
         });
       }
-    }
-  );
 
-};
+      const result = await pool.query(
+        `
+        SELECT
+          y.ma_yeu_cau AS "MaYeuCau",
+          y.ma_nguoi_dang AS "MaNguoiDang",
+          y.tieu_de AS "TieuDe",
+          y.mo_ta AS "MoTa",
+          y.danh_muc AS "DanhMuc",
+          y.ngan_sach AS "NganSach",
+          y.trang_thai AS "TrangThai",
+          y.ngay_dang AS "NgayDang",
+
+          y.ma_freelancer AS "MaFreelancer",
+          f.ho_ten AS "TenFreelancer"
+
+        FROM yeu_cau y
+
+        LEFT JOIN nguoi_dung f
+          ON y.ma_freelancer = f.ma_nguoi_dung
+
+        WHERE y.ma_nguoi_dang = $1
+
+        ORDER BY y.ma_yeu_cau DESC
+        `,
+        [userId]
+      );
+
+      res.json(result.rows);
+
+    } catch (error) {
+      console.error("Lỗi lấy yêu cầu của tôi:", error);
+
+      res.status(500).json({
+        message: "Không thể lấy danh sách yêu cầu!",
+      });
+    }
+  });
+
+
+  // =====================================================
+  // FREELANCER - XEM CÁC YÊU CẦU ĐANG CHỜ
+  // =====================================================
+  app.get("/api/requests", async (req, res) => {
+    try {
+      const userId = Number(req.headers["x-user-id"]);
+
+      if (!userId) {
+        return res.status(400).json({
+          message: "Thiếu thông tin người dùng!",
+        });
+      }
+
+      const userResult = await pool.query(
+        `
+        SELECT vai_tro
+        FROM nguoi_dung
+        WHERE ma_nguoi_dung = $1
+        `,
+        [userId]
+      );
+
+      if (userResult.rows.length === 0) {
+        return res.status(404).json({
+          message: "Không tìm thấy người dùng!",
+        });
+      }
+
+      if (userResult.rows[0].vai_tro !== "Freelancer") {
+        return res.status(403).json({
+          message: "Chỉ Freelancer mới được xem danh sách yêu cầu!",
+        });
+      }
+
+      const result = await pool.query(
+        `
+        SELECT
+          y.ma_yeu_cau AS "MaYeuCau",
+          y.ma_nguoi_dang AS "MaKhachHang",
+
+          c.ho_ten AS "TenKhachHang",
+
+          y.tieu_de AS "TieuDe",
+          y.mo_ta AS "MoTa",
+          y.danh_muc AS "DanhMuc",
+          y.ngan_sach AS "NganSach",
+          y.trang_thai AS "TrangThai",
+          y.ngay_dang AS "NgayDang",
+
+          y.ma_freelancer AS "MaFreelancer"
+
+        FROM yeu_cau y
+
+        INNER JOIN nguoi_dung c
+          ON y.ma_nguoi_dang = c.ma_nguoi_dung
+
+        WHERE y.trang_thai = 'DangTimFreelancer'
+
+        ORDER BY y.ma_yeu_cau DESC
+        `
+      );
+
+      res.json(result.rows);
+
+    } catch (error) {
+      console.error("Lỗi lấy yêu cầu Freelancer:", error);
+
+      res.status(500).json({
+        message: "Không thể lấy danh sách yêu cầu!",
+      });
+    }
+  });
+
+
+  // =====================================================
+  // FREELANCER - NHẬN YÊU CẦU
+  // =====================================================
+  app.put("/api/requests/:id/accept", async (req, res) => {
+    const client = await pool.connect();
+
+    try {
+      const userId = Number(req.headers["x-user-id"]);
+      const requestId = Number(req.params.id);
+
+      if (!userId || !requestId) {
+        return res.status(400).json({
+          message: "Dữ liệu không hợp lệ!",
+        });
+      }
+
+      // =================================================
+      // 1. KIỂM TRA FREELANCER
+      // =================================================
+
+      const userResult = await client.query(
+        `
+        SELECT
+          ma_nguoi_dung,
+          vai_tro
+        FROM nguoi_dung
+        WHERE ma_nguoi_dung = $1
+        `,
+        [userId]
+      );
+
+      if (userResult.rows.length === 0) {
+        return res.status(404).json({
+          message: "Không tìm thấy người dùng!",
+        });
+      }
+
+      if (userResult.rows[0].vai_tro !== "Freelancer") {
+        return res.status(403).json({
+          message: "Chỉ Freelancer mới được nhận yêu cầu!",
+        });
+      }
+
+
+      // =================================================
+      // 2. BẮT ĐẦU TRANSACTION
+      // =================================================
+
+      await client.query("BEGIN");
+
+
+      // =================================================
+      // 3. LẤY YÊU CẦU VÀ KHÓA DÒNG
+      // =================================================
+
+      const requestResult = await client.query(
+        `
+        SELECT
+          ma_yeu_cau,
+          ma_nguoi_dang,
+          tieu_de,
+          mo_ta,
+          danh_muc,
+          ngan_sach,
+          trang_thai,
+          ma_freelancer
+        FROM yeu_cau
+        WHERE ma_yeu_cau = $1
+        FOR UPDATE
+        `,
+        [requestId]
+      );
+
+      if (requestResult.rows.length === 0) {
+        await client.query("ROLLBACK");
+
+        return res.status(404).json({
+          message: "Không tìm thấy yêu cầu!",
+        });
+      }
+
+      const request = requestResult.rows[0];
+
+
+      // =================================================
+      // 4. KIỂM TRA YÊU CẦU ĐÃ ĐƯỢC NHẬN CHƯA
+      // =================================================
+
+      if (request.trang_thai !== "DangTimFreelancer") {
+        await client.query("ROLLBACK");
+
+        return res.status(409).json({
+          message: "Yêu cầu này đã được Freelancer khác nhận!",
+        });
+      }
+
+
+      // =================================================
+      // 5. TẠO ĐƠN HÀNG
+      // =================================================
+
+      const orderResult = await client.query(
+        `
+        INSERT INTO don_hang
+        (
+          ma_nguoi_mua,
+          ma_dich_vu,
+          ma_yeu_cau,
+          ma_freelancer,
+          gia,
+          trang_thai
+        )
+        VALUES
+        (
+          $1,
+          NULL,
+          $2,
+          $3,
+          $4,
+          'ChoXuLy'
+        )
+        RETURNING
+          ma_don_hang,
+          ma_nguoi_mua,
+          ma_yeu_cau,
+          ma_freelancer,
+          gia,
+          trang_thai,
+          ngay_dat
+        `,
+        [
+          request.ma_nguoi_dang,
+          request.ma_yeu_cau,
+          userId,
+          request.ngan_sach,
+        ]
+      );
+
+
+      // =================================================
+      // 6. CẬP NHẬT YÊU CẦU
+      // =================================================
+
+      await client.query(
+        `
+        UPDATE yeu_cau
+        SET
+          ma_freelancer = $1,
+          trang_thai = 'DaNhan'
+        WHERE ma_yeu_cau = $2
+        `,
+        [
+          userId,
+          requestId,
+        ]
+      );
+
+
+      // =================================================
+      // 7. HOÀN TẤT TRANSACTION
+      // =================================================
+
+      await client.query("COMMIT");
+
+
+      res.json({
+        message: "Nhận yêu cầu thành công và đã tạo đơn hàng!",
+        request: {
+          ma_yeu_cau: request.ma_yeu_cau,
+          trang_thai: "DaNhan",
+          ma_freelancer: userId,
+        },
+        order: orderResult.rows[0],
+      });
+
+    } catch (error) {
+
+      await client.query("ROLLBACK");
+
+      console.error("Lỗi nhận yêu cầu:", error);
+
+      res.status(500).json({
+        message: "Không thể nhận yêu cầu!",
+      });
+
+    } finally {
+      client.release();
+    }
+  });
+}
+
+
+module.exports = YeuCau;
