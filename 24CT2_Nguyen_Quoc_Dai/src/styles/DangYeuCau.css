@@ -1,0 +1,140 @@
+/* ========================================
+   TRANG ĐĂNG YÊU CẦU
+======================================== */
+
+.request-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 0.7fr;
+    gap: 24px;
+    align-items: start;
+  }
+  
+  .request-card,
+  .request-help {
+    background: #ffffff;
+    border: 1px solid #e5e9f0;
+    border-radius: 18px;
+    padding: 28px;
+  }
+  
+  .request-card form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .request-card label {
+    margin-bottom: 8px;
+    color: #20283b;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  .request-card input,
+  .request-card textarea,
+  .request-card select {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 13px 14px;
+    border: 1px solid #dfe4ed;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #20283b;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .request-card input:focus,
+  .request-card textarea:focus,
+  .request-card select:focus {
+    border-color: #675cff;
+  }
+  
+  .request-card textarea {
+    resize: vertical;
+    min-height: 150px;
+  }
+  
+  .request-price {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .request-price input {
+    margin-bottom: 0;
+    padding-right: 65px;
+  }
+  
+  .request-price span {
+    position: absolute;
+    right: 14px;
+    color: #737b8d;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .request-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  
+  .request-help-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 18px;
+    background: #eeebff;
+    border-radius: 14px;
+    font-size: 25px;
+  }
+  
+  .request-help h3 {
+    margin: 0 0 10px;
+    color: #182238;
+    font-size: 20px;
+  }
+  
+  .request-help > p {
+    margin: 0 0 22px;
+    color: #727a8b;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .request-tip {
+    padding: 14px 0;
+    border-top: 1px solid #edf0f4;
+  }
+  
+  .request-tip strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #20283b;
+    font-size: 14px;
+  }
+  
+  .request-tip span {
+    color: #7b8393;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 800px) {
+    .request-layout {
+      grid-template-columns: 1fr;
+    }
+  
+    .request-actions {
+      flex-direction: column-reverse;
+    }
+  
+    .request-actions button {
+      width: 100%;
+    }
+  }
