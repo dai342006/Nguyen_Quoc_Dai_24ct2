@@ -18,6 +18,8 @@ import Freelancer from "./pages/Freelancer";
 import Orders from "./pages/Orders";
 import ManageServices from "./pages/ManageServices";
 import Payment from "./pages/Payment";
+import DangYeuCau from "./pages/DangYeuCau";
+import YeuCauCuaToi from "./pages/YeuCauCuaToi";
 
 // =========================
 // Data
@@ -37,6 +39,8 @@ import "./styles/freelancer.css";
 import "./styles/orders.css";
 import "./styles/payment.css";
 import "./styles/DangYeuCau.css";
+import "./styles/YeuCauCuaToi.css";
+
 // =========================
 // App
 // =========================
@@ -65,8 +69,13 @@ function App() {
       try {
         setCurrentUser(JSON.parse(saved));
       } catch {
-        localStorage.removeItem("skillhub_current_user");
-        sessionStorage.removeItem("skillhub_current_user");
+        localStorage.removeItem(
+          "skillhub_current_user"
+        );
+
+        sessionStorage.removeItem(
+          "skillhub_current_user"
+        );
       }
     }
   }, []);
@@ -81,6 +90,9 @@ function App() {
       "orders",
       "freelancer",
       "manage-services",
+      "create-request",
+      "my-requests",
+      "payment",
     ];
 
     // Nếu không phải trang cần đăng nhập
@@ -128,6 +140,47 @@ function App() {
 
       alert(
         "Chỉ Freelancer mới có quyền quản lý dịch vụ."
+      );
+
+      setPage("home");
+
+      return false;
+    }
+
+    // ========================================
+    // Khách hàng
+    // ========================================
+
+    if (
+      targetPage === "create-request" ||
+      targetPage === "my-requests"
+    ) {
+
+      if (currentUser.role === "KhachHang") {
+        return true;
+      }
+
+      alert(
+        "Chỉ Khách hàng mới được sử dụng chức năng này."
+      );
+
+      setPage("home");
+
+      return false;
+    }
+
+    // ========================================
+    // Thanh toán
+    // ========================================
+
+    if (targetPage === "payment") {
+
+      if (currentUser.role === "KhachHang") {
+        return true;
+      }
+
+      alert(
+        "Chỉ tài khoản Khách hàng mới có thể thanh toán."
       );
 
       setPage("home");
@@ -198,6 +251,28 @@ function App() {
           <Services
             setPage={navigateTo}
             setSelectedService={setSelectedService}
+          />
+        );
+
+      // ------------------------------------
+      // Đăng yêu cầu
+      // ------------------------------------
+      case "create-request":
+        return (
+          <DangYeuCau
+            setPage={navigateTo}
+            currentUser={currentUser}
+          />
+        );
+
+      // ------------------------------------
+      // Yêu cầu của tôi
+      // ------------------------------------
+      case "my-requests":
+        return (
+          <YeuCauCuaToi
+            setPage={navigateTo}
+            currentUser={currentUser}
           />
         );
 
