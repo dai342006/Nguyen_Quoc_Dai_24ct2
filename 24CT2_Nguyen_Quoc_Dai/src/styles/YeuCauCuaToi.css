@@ -2,103 +2,191 @@
    YÊU CẦU CỦA TÔI
 ======================================== */
 
+/* Danh sách các yêu cầu */
 .request-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
+  /* Hiển thị các yêu cầu theo dạng cột */
+  display: flex;
+
+  /* Xếp các phần tử theo chiều dọc */
+  flex-direction: column;
+
+  /* Khoảng cách giữa các yêu cầu */
+  gap: 16px;
+}
+
+/* Một yêu cầu */
+.request-item {
+  /* Chia nội dung thành 3 cột:
+     - Icon
+     - Nội dung
+     - Trạng thái */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+
+  /* Khoảng cách giữa các cột */
+  gap: 18px;
+
+  /* Căn giữa theo chiều dọc */
+  align-items: center;
+
+  /* Khoảng cách bên trong */
+  padding: 22px;
+
+  /* Màu nền */
+  background: #ffffff;
+
+  /* Viền */
+  border: 1px solid #e5e9f0;
+
+  /* Bo góc */
+  border-radius: 18px;
+
+  /* Hiệu ứng khi rê chuột */
+  transition: 0.2s ease;
+}
+
+/* Hiệu ứng khi rê chuột vào yêu cầu */
+.request-item:hover {
+  /* Yêu cầu nổi lên một chút */
+  transform: translateY(-2px);
+
+  /* Tạo bóng */
+  box-shadow: 0 8px 25px rgba(27, 39, 74, 0.06);
+}
+
+/* Icon của yêu cầu */
+.request-item-icon {
+  /* Chiều rộng */
+  width: 56px;
+
+  /* Chiều cao */
+  height: 56px;
+
+  /* Căn icon vào giữa */
+  display: grid;
+  place-items: center;
+
+  /* Màu nền của icon */
+  background: #eeebff;
+
+  /* Bo góc */
+  border-radius: 14px;
+
+  /* Kích thước icon */
+  font-size: 24px;
+}
+
+/* Phần nội dung chính */
+.request-item-main {
+  /* Cho phép nội dung co lại khi thiếu chỗ */
+  min-width: 0;
+}
+
+/* Mã của yêu cầu */
+.request-code {
+  /* Màu chữ */
+  color: #8a91a2;
+
+  /* Kích thước chữ */
+  font-size: 12px;
+
+  /* Chữ đậm */
+  font-weight: 700;
+}
+
+/* Tiêu đề yêu cầu */
+.request-item-main h3 {
+  /* Khoảng cách trên và dưới */
+  margin: 5px 0 7px;
+
+  /* Màu chữ */
+  color: #182238;
+
+  /* Kích thước chữ */
+  font-size: 18px;
+}
+
+/* Mô tả yêu cầu */
+.request-item-main p {
+  /* Xóa margin mặc định và tạo khoảng cách phía dưới */
+  margin: 0 0 12px;
+
+  /* Màu chữ */
+  color: #727a8b;
+
+  /* Kích thước chữ */
+  font-size: 14px;
+
+  /* Chiều cao dòng */
+  line-height: 1.5;
+
+  /* Hiển thị nội dung dạng nhiều dòng */
+  display: -webkit-box;
+
+  /* Giới hạn tối đa 2 dòng */
+  -webkit-line-clamp: 2;
+
+  /* Xác định hướng hiển thị */
+  -webkit-box-orient: vertical;
+
+  /* Ẩn phần nội dung vượt quá */
+  overflow: hidden;
+}
+
+/* Thông tin phụ của yêu cầu */
+.request-meta {
+  /* Hiển thị theo hàng */
+  display: flex;
+
+  /* Cho phép xuống dòng khi màn hình nhỏ */
+  flex-wrap: wrap;
+
+  /* Khoảng cách giữa các thông tin */
+  gap: 16px;
+
+  /* Màu chữ */
+  color: #7a8191;
+
+  /* Kích thước chữ */
+  font-size: 13px;
+}
+
+/* Các thông tin bên trong meta */
+.request-meta span {
+  /* Không cho chữ bị xuống dòng */
+  white-space: nowrap;
+}
+
+/* Nút thêm yêu cầu */
+.request-add-btn {
+  /* Tạo khoảng cách phía trên */
+  margin-top: 24px;
+}
+
+/* ========================================
+ RESPONSIVE
+ Áp dụng khi màn hình nhỏ hơn hoặc bằng 700px
+======================================== */
+
+@media (max-width: 700px) {
+
+  /* Thay đổi bố cục yêu cầu trên điện thoại */
   .request-item {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 18px;
-    align-items: center;
-  
-    padding: 22px;
-  
-    background: #ffffff;
-    border: 1px solid #e5e9f0;
-    border-radius: 18px;
-  
-    transition: 0.2s ease;
-  }
-  
-  .request-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(27, 39, 74, 0.06);
-  }
-  
-  .request-item-icon {
-    width: 56px;
-    height: 56px;
-  
-    display: grid;
-    place-items: center;
-  
-    background: #eeebff;
-    border-radius: 14px;
-  
-    font-size: 24px;
-  }
-  
-  .request-item-main {
-    min-width: 0;
-  }
-  
-  .request-code {
-    color: #8a91a2;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  
-  .request-item-main h3 {
-    margin: 5px 0 7px;
-  
-    color: #182238;
-    font-size: 18px;
-  }
-  
-  .request-item-main p {
-    margin: 0 0 12px;
-  
-    color: #727a8b;
-    font-size: 14px;
-    line-height: 1.5;
-  
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  .request-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  
-    color: #7a8191;
-    font-size: 13px;
-  }
-  
-  .request-meta span {
-    white-space: nowrap;
-  }
-  
-  .request-add-btn {
-    margin-top: 24px;
-  }
-  
-  @media (max-width: 700px) {
-    .request-item {
+      /* Chuyển từ 3 cột thành 1 cột */
       grid-template-columns: 1fr;
-    }
-  
-    .request-item-icon {
-      width: 48px;
-      height: 48px;
-    }
-  
-    .request-item > .status {
-      justify-self: start;
-    }
   }
+
+  /* Thu nhỏ icon trên điện thoại */
+  .request-item-icon {
+      /* Chiều rộng */
+      width: 48px;
+
+      /* Chiều cao */
+      height: 48px;
+  }
+
+  /* Đưa trạng thái về bên trái */
+  .request-item > .status {
+      justify-self: start;
+  }
+}

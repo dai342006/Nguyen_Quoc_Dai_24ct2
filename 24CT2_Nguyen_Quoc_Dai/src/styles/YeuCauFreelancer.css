@@ -2,100 +2,180 @@
    YÊU CẦU DÀNH CHO FREELANCER
 ======================================== */
 
+/* Danh sách các yêu cầu dành cho Freelancer */
 .freelancer-request-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
+  /* Sử dụng Flexbox */
+  display: flex;
+
+  /* Xếp các thẻ theo chiều dọc */
+  flex-direction: column;
+
+  /* Khoảng cách giữa các thẻ */
+  gap: 16px;
+}
+
+/* Một thẻ yêu cầu */
+.freelancer-request-card {
+  /* Chia thành 3 cột:
+     - Icon
+     - Nội dung
+     - Nút thao tác */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+
+  /* Khoảng cách giữa các cột */
+  gap: 20px;
+
+  /* Căn giữa nội dung theo chiều dọc */
+  align-items: center;
+
+  /* Khoảng cách bên trong thẻ */
+  padding: 24px;
+
+  /* Màu nền */
+  background: #ffffff;
+
+  /* Đường viền */
+  border: 1px solid #e5e9f0;
+
+  /* Bo tròn góc */
+  border-radius: 18px;
+
+  /* Tạo hiệu ứng chuyển động */
+  transition: 0.2s ease;
+}
+
+/* Hiệu ứng khi di chuột vào thẻ */
+.freelancer-request-card:hover {
+  /* Thẻ nổi lên một chút */
+  transform: translateY(-2px);
+
+  /* Tạo bóng phía dưới */
+  box-shadow:
+    0 8px 25px rgba(27, 39, 74, 0.07);
+}
+
+/* Icon của yêu cầu */
+.freelancer-request-icon {
+  /* Chiều rộng */
+  width: 58px;
+
+  /* Chiều cao */
+  height: 58px;
+
+  /* Căn icon vào chính giữa */
+  display: grid;
+  place-items: center;
+
+  /* Màu nền của icon */
+  background: #eeebff;
+
+  /* Bo góc */
+  border-radius: 15px;
+
+  /* Kích thước icon */
+  font-size: 25px;
+}
+
+/* Phần nội dung yêu cầu */
+.freelancer-request-content {
+  /* Cho phép nội dung co lại khi không đủ chỗ */
+  min-width: 0;
+}
+
+/* Tiêu đề yêu cầu */
+.freelancer-request-content h3 {
+  /* Khoảng cách trên và dưới */
+  margin: 5px 0 8px;
+
+  /* Màu chữ */
+  color: #182238;
+
+  /* Kích thước chữ */
+  font-size: 19px;
+}
+
+/* Mô tả yêu cầu */
+.freelancer-request-content p {
+  /* Khoảng cách phía dưới */
+  margin: 0 0 14px;
+
+  /* Màu chữ */
+  color: #727a8b;
+
+  /* Kích thước chữ */
+  font-size: 14px;
+
+  /* Khoảng cách giữa các dòng */
+  line-height: 1.6;
+}
+
+/* Các thông tin phụ của yêu cầu */
+.freelancer-request-meta {
+  /* Hiển thị theo hàng */
+  display: flex;
+
+  /* Cho phép xuống dòng trên màn hình nhỏ */
+  flex-wrap: wrap;
+
+  /* Khoảng cách giữa các thông tin */
+  gap: 14px;
+
+  /* Màu chữ */
+  color: #737b8d;
+
+  /* Kích thước chữ */
+  font-size: 13px;
+}
+
+/* Khu vực nút thao tác */
+.freelancer-request-action {
+  /* Sử dụng Flexbox */
+  display: flex;
+
+  /* Xếp các nút theo chiều dọc */
+  flex-direction: column;
+
+  /* Các phần tử kéo đầy chiều rộng */
+  align-items: stretch;
+
+  /* Khoảng cách giữa các nút */
+  gap: 12px;
+
+  /* Độ rộng tối thiểu */
+  min-width: 150px;
+}
+
+/* Nút chính trong khu vực thao tác */
+.freelancer-request-action .primary-btn {
+  /* Nút chiếm toàn bộ chiều rộng */
+  width: 100%;
+}
+
+/* ========================================
+ RESPONSIVE
+ Áp dụng khi màn hình nhỏ hơn hoặc bằng 800px
+======================================== */
+
+@media (max-width: 800px) {
+
+  /* Thay đổi bố cục thẻ trên màn hình nhỏ */
   .freelancer-request-card {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 20px;
-    align-items: center;
-  
-    padding: 24px;
-  
-    background: #ffffff;
-    border: 1px solid #e5e9f0;
-    border-radius: 18px;
-  
-    transition: 0.2s ease;
-  }
-  
-  .freelancer-request-card:hover {
-    transform: translateY(-2px);
-  
-    box-shadow:
-      0 8px 25px rgba(27, 39, 74, 0.07);
-  }
-  
-  .freelancer-request-icon {
-    width: 58px;
-    height: 58px;
-  
-    display: grid;
-    place-items: center;
-  
-    background: #eeebff;
-    border-radius: 15px;
-  
-    font-size: 25px;
-  }
-  
-  .freelancer-request-content {
-    min-width: 0;
-  }
-  
-  .freelancer-request-content h3 {
-    margin: 5px 0 8px;
-  
-    color: #182238;
-    font-size: 19px;
-  }
-  
-  .freelancer-request-content p {
-    margin: 0 0 14px;
-  
-    color: #727a8b;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  
-  .freelancer-request-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-  
-    color: #737b8d;
-    font-size: 13px;
-  }
-  
-  .freelancer-request-action {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  
-    min-width: 150px;
-  }
-  
-  .freelancer-request-action .primary-btn {
-    width: 100%;
-  }
-  
-  @media (max-width: 800px) {
-  
-    .freelancer-request-card {
+      /* Chuyển từ 3 cột thành 1 cột */
       grid-template-columns: 1fr;
-    }
-  
-    .freelancer-request-icon {
-      width: 50px;
-      height: 50px;
-    }
-  
-    .freelancer-request-action {
-      width: 100%;
-    }
   }
+
+  /* Thu nhỏ icon */
+  .freelancer-request-icon {
+      /* Chiều rộng */
+      width: 50px;
+
+      /* Chiều cao */
+      height: 50px;
+  }
+
+  /* Khu vực nút thao tác chiếm toàn bộ chiều rộng */
+  .freelancer-request-action {
+      width: 100%;
+  }
+}

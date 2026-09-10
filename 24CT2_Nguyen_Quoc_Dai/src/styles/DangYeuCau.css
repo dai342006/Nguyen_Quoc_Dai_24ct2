@@ -1,140 +1,367 @@
 /* ========================================
    TRANG ĐĂNG YÊU CẦU
+   ======================================== */
+
+
+/* ========================================
+   BỐ CỤC CHÍNH
+   Chia trang thành 2 cột:
+   - Cột trái: Form đăng yêu cầu
+   - Cột phải: Hướng dẫn
 ======================================== */
 
 .request-layout {
-    display: grid;
-    grid-template-columns: 1.5fr 0.7fr;
-    gap: 24px;
-    align-items: start;
-  }
-  
-  .request-card,
-  .request-help {
-    background: #ffffff;
-    border: 1px solid #e5e9f0;
-    border-radius: 18px;
-    padding: 28px;
-  }
-  
-  .request-card form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .request-card label {
-    margin-bottom: 8px;
-    color: #20283b;
-    font-size: 14px;
-    font-weight: 700;
-  }
-  
-  .request-card input,
-  .request-card textarea,
-  .request-card select {
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    padding: 13px 14px;
-    border: 1px solid #dfe4ed;
-    border-radius: 11px;
-    background: #ffffff;
-    color: #20283b;
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-  }
-  
-  .request-card input:focus,
-  .request-card textarea:focus,
-  .request-card select:focus {
-    border-color: #675cff;
-  }
-  
-  .request-card textarea {
-    resize: vertical;
-    min-height: 150px;
-  }
-  
-  .request-price {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .request-price input {
-    margin-bottom: 0;
-    padding-right: 65px;
-  }
-  
-  .request-price span {
-    position: absolute;
-    right: 14px;
-    color: #737b8d;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  
-  .request-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 8px;
-  }
-  
-  .request-help-icon {
-    width: 52px;
-    height: 52px;
-    display: grid;
-    place-items: center;
-    margin-bottom: 18px;
-    background: #eeebff;
-    border-radius: 14px;
-    font-size: 25px;
-  }
-  
-  .request-help h3 {
-    margin: 0 0 10px;
-    color: #182238;
-    font-size: 20px;
-  }
-  
-  .request-help > p {
-    margin: 0 0 22px;
-    color: #727a8b;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  
-  .request-tip {
-    padding: 14px 0;
-    border-top: 1px solid #edf0f4;
-  }
-  
-  .request-tip strong {
-    display: block;
-    margin-bottom: 5px;
-    color: #20283b;
-    font-size: 14px;
-  }
-  
-  .request-tip span {
-    color: #7b8393;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  
-  @media (max-width: 800px) {
-    .request-layout {
+  display: grid;
+
+  /* Cột trái rộng hơn cột phải */
+  grid-template-columns: 1.5fr 0.7fr;
+
+  /* Khoảng cách giữa 2 cột */
+  gap: 24px;
+
+  /* Căn nội dung từ phía trên */
+  align-items: start;
+}
+
+
+/* ========================================
+ KHUNG FORM VÀ KHUNG HƯỚNG DẪN
+======================================== */
+
+.request-card,
+.request-help {
+  /* Màu nền trắng */
+  background: #ffffff;
+
+  /* Viền */
+  border: 1px solid #e5e9f0;
+
+  /* Bo góc */
+  border-radius: 18px;
+
+  /* Khoảng cách bên trong */
+  padding: 28px;
+}
+
+
+/* ========================================
+ FORM ĐĂNG YÊU CẦU
+======================================== */
+
+.request-card form {
+  /* Xếp các thành phần theo chiều dọc */
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* ========================================
+ NHÃN CỦA FORM
+======================================== */
+
+.request-card label {
+  /* Khoảng cách phía dưới label */
+  margin-bottom: 8px;
+
+  /* Màu chữ */
+  color: #20283b;
+
+  /* Kích thước chữ */
+  font-size: 14px;
+
+  /* Chữ đậm */
+  font-weight: 700;
+}
+
+
+/* ========================================
+ Ô NHẬP DỮ LIỆU
+ input / textarea / select
+======================================== */
+
+.request-card input,
+.request-card textarea,
+.request-card select {
+  /* Chiếm toàn bộ chiều rộng */
+  width: 100%;
+
+  /* Tính cả padding + border vào width */
+  box-sizing: border-box;
+
+  /* Khoảng cách phía dưới */
+  margin-bottom: 20px;
+
+  /* Khoảng cách bên trong */
+  padding: 13px 14px;
+
+  /* Viền */
+  border: 1px solid #dfe4ed;
+
+  /* Bo góc */
+  border-radius: 11px;
+
+  /* Màu nền */
+  background: #ffffff;
+
+  /* Màu chữ */
+  color: #20283b;
+
+  /* Sử dụng font của trang */
+  font-family: inherit;
+
+  /* Kích thước chữ */
+  font-size: 14px;
+
+  /* Bỏ đường viền mặc định khi focus */
+  outline: none;
+}
+
+
+/* ========================================
+ KHI NGƯỜI DÙNG CLICK VÀO Ô NHẬP
+======================================== */
+
+.request-card input:focus,
+.request-card textarea:focus,
+.request-card select:focus {
+  /* Đổi màu viền khi đang nhập */
+  border-color: #675cff;
+}
+
+
+/* ========================================
+ Ô MÔ TẢ
+======================================== */
+
+.request-card textarea {
+  /* Cho phép kéo thay đổi chiều cao */
+  resize: vertical;
+
+  /* Chiều cao tối thiểu */
+  min-height: 150px;
+}
+
+
+/* ========================================
+ Ô NHẬP NGÂN SÁCH
+======================================== */
+
+.request-price {
+  /* Tạo vị trí tương đối
+     để đặt chữ "đ" bên trong */
+  position: relative;
+
+  /* Hiển thị theo hàng ngang */
+  display: flex;
+
+  /* Căn giữa theo chiều dọc */
+  align-items: center;
+
+  /* Khoảng cách phía dưới */
+  margin-bottom: 20px;
+}
+
+
+/* ========================================
+ Ô NHẬP GIÁ
+======================================== */
+
+.request-price input {
+  /* Bỏ margin-bottom vì phần cha đã có */
+  margin-bottom: 0;
+
+  /* Chừa khoảng trống bên phải
+     cho chữ "đ" */
+  padding-right: 65px;
+}
+
+
+/* ========================================
+ KÝ HIỆU "đ"
+======================================== */
+
+.request-price span {
+  /* Đặt tuyệt đối bên trong ô */
+  position: absolute;
+
+  /* Cách mép phải 14px */
+  right: 14px;
+
+  /* Màu chữ */
+  color: #737b8d;
+
+  /* Kích thước chữ */
+  font-size: 13px;
+
+  /* Chữ đậm */
+  font-weight: 700;
+}
+
+
+/* ========================================
+ KHU VỰC NÚT
+======================================== */
+
+.request-actions {
+  /* Hiển thị theo hàng ngang */
+  display: flex;
+
+  /* Đưa nút về bên phải */
+  justify-content: flex-end;
+
+  /* Khoảng cách giữa các nút */
+  gap: 12px;
+
+  /* Khoảng cách phía trên */
+  margin-top: 8px;
+}
+
+
+/* ========================================
+ ICON CỦA KHUNG HƯỚNG DẪN
+======================================== */
+
+.request-help-icon {
+  /* Chiều rộng */
+  width: 52px;
+
+  /* Chiều cao */
+  height: 52px;
+
+  /* Dùng Grid để căn giữa */
+  display: grid;
+
+  place-items: center;
+
+  /* Khoảng cách phía dưới */
+  margin-bottom: 18px;
+
+  /* Màu nền */
+  background: #eeebff;
+
+  /* Bo góc */
+  border-radius: 14px;
+
+  /* Kích thước icon */
+  font-size: 25px;
+}
+
+
+/* ========================================
+ TIÊU ĐỀ KHUNG HƯỚNG DẪN
+======================================== */
+
+.request-help h3 {
+  /* Xóa margin mặc định
+     và tạo khoảng cách phía dưới */
+  margin: 0 0 10px;
+
+  /* Màu chữ */
+  color: #182238;
+
+  /* Kích thước chữ */
+  font-size: 20px;
+}
+
+
+/* ========================================
+ ĐOẠN MÔ TẢ KHUNG HƯỚNG DẪN
+======================================== */
+
+.request-help > p {
+  /* Xóa margin phía trên
+     và tạo khoảng cách phía dưới */
+  margin: 0 0 22px;
+
+  /* Màu chữ */
+  color: #727a8b;
+
+  /* Kích thước chữ */
+  font-size: 14px;
+
+  /* Khoảng cách giữa các dòng */
+  line-height: 1.6;
+}
+
+
+/* ========================================
+ TỪNG GỢI Ý / MẸO
+======================================== */
+
+.request-tip {
+  /* Khoảng cách bên trong trên dưới */
+  padding: 14px 0;
+
+  /* Đường kẻ phía trên */
+  border-top: 1px solid #edf0f4;
+}
+
+
+/* ========================================
+ TIÊU ĐỀ CỦA MẸO
+======================================== */
+
+.request-tip strong {
+  /* Hiển thị thành một dòng riêng */
+  display: block;
+
+  /* Khoảng cách phía dưới */
+  margin-bottom: 5px;
+
+  /* Màu chữ */
+  color: #20283b;
+
+  /* Kích thước chữ */
+  font-size: 14px;
+}
+
+
+/* ========================================
+ NỘI DUNG CỦA MẸO
+======================================== */
+
+.request-tip span {
+  /* Màu chữ */
+  color: #7b8393;
+
+  /* Kích thước chữ */
+  font-size: 13px;
+
+  /* Khoảng cách giữa các dòng */
+  line-height: 1.5;
+}
+
+
+/* ========================================
+ RESPONSIVE - ĐIỆN THOẠI / MÀN HÌNH NHỎ
+======================================== */
+
+@media (max-width: 800px) {
+
+  /* ------------------------------------
+     Chuyển từ 2 cột thành 1 cột
+  ------------------------------------ */
+
+  .request-layout {
       grid-template-columns: 1fr;
-    }
-  
-    .request-actions {
-      flex-direction: column-reverse;
-    }
-  
-    .request-actions button {
-      width: 100%;
-    }
   }
+
+
+  /* ------------------------------------
+     Nút chuyển thành dạng dọc
+  ------------------------------------ */
+
+  .request-actions {
+      flex-direction: column-reverse;
+  }
+
+
+  /* ------------------------------------
+     Các nút chiếm toàn bộ chiều rộng
+  ------------------------------------ */
+
+  .request-actions button {
+      width: 100%;
+  }
+}
