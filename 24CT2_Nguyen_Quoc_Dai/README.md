@@ -1,4 +1,4 @@
-# SkillHub - Digital Skill Marketplace
+# # SkillHub - Digital Skill Marketplace (Kết nối việc làm người có kỹ năng số với khách hàng)
 # link Dự án: https://skillhub-digital.vercel.app/
 
 ## Giới thiệu
