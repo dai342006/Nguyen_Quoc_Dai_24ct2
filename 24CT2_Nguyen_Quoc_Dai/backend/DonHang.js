@@ -7,7 +7,7 @@ const { pool } = require("./db");
 module.exports = function DonHang(app) {
 
   // ====================================================
-  // API TẠO ĐƠN HÀNG
+  // API TẠO ĐƠN HÀNG TỪ DỊCH VỤ
   // ====================================================
 
   app.post("/api/orders", async (req, res) => {
@@ -21,17 +21,18 @@ module.exports = function DonHang(app) {
         req.body.MaDichVu
       );
 
-      if (
-        !userId ||
-        !serviceId
-      ) {
+      if (!userId || !serviceId) {
         return res.status(400).json({
           message:
             "Thiếu thông tin khách hàng hoặc dịch vụ!",
         });
       }
 
+
+      // ================================================
       // Kiểm tra người dùng
+      // ================================================
+
       const customerResult =
         await pool.query(
           `
@@ -53,6 +54,7 @@ module.exports = function DonHang(app) {
         });
       }
 
+
       if (
         customerResult.rows[0].vai_tro !==
         "KhachHang"
@@ -63,7 +65,11 @@ module.exports = function DonHang(app) {
         });
       }
 
+
+      // ================================================
       // Lấy dịch vụ
+      // ================================================
+
       const serviceResult =
         await pool.query(
           `
@@ -77,6 +83,7 @@ module.exports = function DonHang(app) {
           [serviceId]
         );
 
+
       if (
         serviceResult.rows.length === 0
       ) {
@@ -86,10 +93,15 @@ module.exports = function DonHang(app) {
         });
       }
 
+
       const service =
         serviceResult.rows[0];
 
+
+      // ================================================
       // Không cho tự mua dịch vụ
+      // ================================================
+
       if (
         service.ma_nguoi_dung ===
         userId
@@ -100,13 +112,17 @@ module.exports = function DonHang(app) {
         });
       }
 
+
+      // ================================================
       // Kiểm tra đơn đang xử lý
+      // ================================================
+
       const existingOrder =
         await pool.query(
           `
-          SELECT ma_don_hang
+          SELECT
+            ma_don_hang
           FROM don_hang
-
           WHERE
             ma_nguoi_mua = $1
             AND ma_dich_vu = $2
@@ -121,6 +137,7 @@ module.exports = function DonHang(app) {
           ]
         );
 
+
       if (
         existingOrder.rows.length > 0
       ) {
@@ -130,19 +147,28 @@ module.exports = function DonHang(app) {
         });
       }
 
-      // Tạo đơn
+
+      // ================================================
+      // Tạo đơn hàng
+      // ================================================
+
       await pool.query(
         `
         INSERT INTO don_hang
         (
           ma_nguoi_mua,
           ma_dich_vu,
+          ma_yeu_cau,
+          ma_freelancer,
           gia,
           trang_thai
         )
-        VALUES (
+        VALUES
+        (
           $1,
           $2,
+          NULL,
+          NULL,
           $3,
           'ChoXuLy'
         )
@@ -153,6 +179,7 @@ module.exports = function DonHang(app) {
           service.gia,
         ]
       );
+
 
       res.status(201).json({
         message:
@@ -185,12 +212,18 @@ module.exports = function DonHang(app) {
         req.headers["x-user-id"]
       );
 
+
       if (!userId) {
         return res.status(400).json({
           message:
             "Thiếu mã người dùng!",
         });
       }
+
+
+      // ================================================
+      // Kiểm tra người dùng
+      // ================================================
 
       const userResult =
         await pool.query(
@@ -205,6 +238,7 @@ module.exports = function DonHang(app) {
           [userId]
         );
 
+
       if (
         userResult.rows.length === 0
       ) {
@@ -213,6 +247,7 @@ module.exports = function DonHang(app) {
             "Không tìm thấy người dùng!",
         });
       }
+
 
       const user =
         userResult.rows[0];
@@ -231,35 +266,69 @@ module.exports = function DonHang(app) {
             `
             SELECT
               d.ma_don_hang AS "MaDonHang",
+
               d.ma_nguoi_mua AS "MaKhachHang",
+
               d.ma_dich_vu AS "MaDichVu",
-              dv.ma_nguoi_dung AS "MaFreelancer",
+
+              d.ma_yeu_cau AS "MaYeuCau",
+
+              d.ma_freelancer AS "MaFreelancer",
+
               d.gia AS "Gia",
+
               d.trang_thai AS "TrangThai",
+
               d.ngay_dat AS "NgayDat",
 
-              dv.ten_dich_vu AS "TenDichVu",
+
+              -- Nếu là dịch vụ có sẵn
+              -- lấy tên dịch vụ
+              -- Nếu là yêu cầu
+              -- lấy tiêu đề yêu cầu
+
+              COALESCE(
+                dv.ten_dich_vu,
+                y.tieu_de
+              ) AS "TenDichVu",
+
+
+              y.tieu_de AS "TieuDeYeuCau",
+
 
               f.ho_ten AS "TenFreelancer"
 
             FROM don_hang d
 
-            INNER JOIN dich_vu dv
+
+            LEFT JOIN dich_vu dv
               ON d.ma_dich_vu =
                  dv.ma_dich_vu
 
-            INNER JOIN nguoi_dung f
-              ON dv.ma_nguoi_dung =
-                 f.ma_nguoi_dung
+
+            LEFT JOIN yeu_cau y
+              ON d.ma_yeu_cau =
+                 y.ma_yeu_cau
+
+
+            LEFT JOIN nguoi_dung f
+              ON f.ma_nguoi_dung =
+                 COALESCE(
+                   d.ma_freelancer,
+                   dv.ma_nguoi_dung
+                 )
+
 
             WHERE
               d.ma_nguoi_mua = $1
+
 
             ORDER BY
               d.ma_don_hang DESC
             `,
             [userId]
           );
+
 
         return res.json({
           role: "KhachHang",
@@ -281,29 +350,63 @@ module.exports = function DonHang(app) {
             `
             SELECT
               d.ma_don_hang AS "MaDonHang",
+
               d.ma_nguoi_mua AS "MaKhachHang",
+
               d.ma_dich_vu AS "MaDichVu",
-              dv.ma_nguoi_dung AS "MaFreelancer",
+
+              d.ma_yeu_cau AS "MaYeuCau",
+
+              d.ma_freelancer AS "MaFreelancer",
+
               d.gia AS "Gia",
+
               d.trang_thai AS "TrangThai",
+
               d.ngay_dat AS "NgayDat",
 
-              dv.ten_dich_vu AS "TenDichVu",
+
+              -- Tên dịch vụ nếu có
+              -- Nếu là yêu cầu thì lấy tiêu đề yêu cầu
+
+              COALESCE(
+                dv.ten_dich_vu,
+                y.tieu_de
+              ) AS "TenDichVu",
+
+
+              y.tieu_de AS "TieuDeYeuCau",
+
 
               c.ho_ten AS "TenKhachHang"
 
             FROM don_hang d
 
-            INNER JOIN dich_vu dv
+
+            LEFT JOIN dich_vu dv
               ON d.ma_dich_vu =
                  dv.ma_dich_vu
+
+
+            LEFT JOIN yeu_cau y
+              ON d.ma_yeu_cau =
+                 y.ma_yeu_cau
+
 
             INNER JOIN nguoi_dung c
               ON d.ma_nguoi_mua =
                  c.ma_nguoi_dung
 
+
             WHERE
+              -- Đơn từ dịch vụ của Freelancer
               dv.ma_nguoi_dung = $1
+
+              OR
+
+              -- Đơn từ yêu cầu mà Freelancer đã nhận
+              d.ma_freelancer = $1
+
 
             ORDER BY
               d.ma_don_hang DESC
@@ -311,12 +414,17 @@ module.exports = function DonHang(app) {
             [userId]
           );
 
+
         return res.json({
           role: "Freelancer",
           orders: result.rows,
         });
       }
 
+
+      // ==================================================
+      // Vai trò không hợp lệ
+      // ==================================================
 
       return res.status(403).json({
         message:
@@ -352,13 +460,16 @@ module.exports = function DonHang(app) {
           req.headers["x-user-id"]
         );
 
+
         const orderId = Number(
           req.params.id
         );
 
+
         let {
           TrangThai,
         } = req.body;
+
 
         if (
           !userId ||
@@ -371,7 +482,11 @@ module.exports = function DonHang(app) {
           });
         }
 
+
+        // ==============================================
         // Tương thích trạng thái cũ
+        // ==============================================
+
         if (
           TrangThai ===
           "ChoXacNhan"
@@ -380,12 +495,18 @@ module.exports = function DonHang(app) {
             "ChoXuLy";
         }
 
+
+        // ==============================================
+        // Trạng thái cho phép
+        // ==============================================
+
         const allowedStatuses = [
           "ChoXuLy",
           "DangThucHien",
           "HoanThanh",
           "DaHuy",
         ];
+
 
         if (
           !allowedStatuses.includes(
@@ -398,16 +519,22 @@ module.exports = function DonHang(app) {
           });
         }
 
-        // Kiểm tra Freelancer
+
+        // ==============================================
+        // Kiểm tra tài khoản Freelancer
+        // ==============================================
+
         const userResult =
           await pool.query(
             `
-            SELECT vai_tro
+            SELECT
+              vai_tro
             FROM nguoi_dung
             WHERE ma_nguoi_dung = $1
             `,
             [userId]
           );
+
 
         if (
           userResult.rows.length === 0
@@ -417,6 +544,7 @@ module.exports = function DonHang(app) {
               "Không tìm thấy người dùng!",
           });
         }
+
 
         if (
           userResult.rows[0].vai_tro !==
@@ -428,25 +556,42 @@ module.exports = function DonHang(app) {
           });
         }
 
-        // Chỉ sửa đơn của dịch vụ mình
+
+        // ==============================================
+        // Cập nhật cho cả 2 loại đơn
+        // ==============================================
+
         const result =
           await pool.query(
             `
             UPDATE don_hang d
 
-            SET trang_thai = $1
-
-            FROM dich_vu dv
+            SET
+              trang_thai = $1
 
             WHERE
-              d.ma_dich_vu =
-                dv.ma_dich_vu
+              d.ma_don_hang = $2
 
-              AND d.ma_don_hang =
-                $2
+              AND
+              (
+                -- Đơn từ yêu cầu khách hàng
+                d.ma_freelancer = $3
 
-              AND dv.ma_nguoi_dung =
-                $3
+                OR
+
+                -- Đơn từ dịch vụ có sẵn
+                EXISTS (
+                  SELECT 1
+                  FROM dich_vu dv
+                  WHERE
+                    dv.ma_dich_vu =
+                      d.ma_dich_vu
+
+                    AND
+                    dv.ma_nguoi_dung =
+                      $3
+                )
+              )
             `,
             [
               TrangThai,
@@ -454,6 +599,7 @@ module.exports = function DonHang(app) {
               userId,
             ]
           );
+
 
         if (
           result.rowCount === 0
@@ -463,6 +609,47 @@ module.exports = function DonHang(app) {
               "Không tìm thấy đơn hàng hoặc bạn không có quyền!",
           });
         }
+
+
+        // ==============================================
+        // Nếu đơn xuất phát từ yêu cầu
+        // thì cập nhật luôn trạng thái yêu cầu
+        // ==============================================
+
+        await pool.query(
+          `
+          UPDATE yeu_cau y
+
+          SET
+            trang_thai =
+              CASE
+                WHEN $1 = 'DangThucHien'
+                  THEN 'DangThucHien'
+
+                WHEN $1 = 'HoanThanh'
+                  THEN 'HoanThanh'
+
+                WHEN $1 = 'DaHuy'
+                  THEN 'DaHuy'
+
+                ELSE trang_thai
+              END
+
+          WHERE
+            y.ma_yeu_cau = (
+              SELECT
+                d.ma_yeu_cau
+              FROM don_hang d
+              WHERE
+                d.ma_don_hang = $2
+            )
+          `,
+          [
+            TrangThai,
+            orderId,
+          ]
+        );
+
 
         res.json({
           message:
