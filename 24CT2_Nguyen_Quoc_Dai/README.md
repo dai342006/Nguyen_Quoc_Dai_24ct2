@@ -1,16 +1,129 @@
-# React + Vite
+# SkillHub - Digital Skill Marketplace
+# link Dự án: https://skillhub-digital.vercel.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Giới thiệu
 
-Currently, two official plugins are available:
+**SkillHub** là website **mua bán và thuê kỹ năng số**, được xây dựng nhằm kết nối khách hàng với các Freelancer.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Khách hàng có thể tìm kiếm dịch vụ, đặt dịch vụ hoặc đăng yêu cầu riêng. Freelancer có thể đăng dịch vụ, quản lý dịch vụ và nhận các yêu cầu từ khách hàng.
 
-## React Compiler
+## Mục tiêu
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Kết nối khách hàng với Freelancer.
+- Hỗ trợ tìm kiếm và lựa chọn dịch vụ số.
+- Cho phép khách hàng đăng yêu cầu công việc.
+- Cho phép Freelancer nhận và quản lý yêu cầu.
+- Quản lý đơn hàng và thanh toán dịch vụ.
+- Hỗ trợ đánh giá dịch vụ sau khi hoàn thành.
 
-## Expanding the ESLint configuration
+## Chức năng chính
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Khách hàng
+
+- Đăng ký tài khoản.
+- Đăng nhập.
+- Xem trang chủ.
+- Xem danh sách dịch vụ.
+- Tìm kiếm và lọc dịch vụ.
+- Xem chi tiết dịch vụ.
+- Đặt dịch vụ.
+- Quản lý đơn hàng.
+- Đăng yêu cầu tìm Freelancer.
+- Xem các yêu cầu đã đăng.
+- Thanh toán dịch vụ.
+- Đánh giá dịch vụ.
+
+### Freelancer
+
+- Đăng ký tài khoản Freelancer.
+- Đăng nhập.
+- Xem hồ sơ Freelancer.
+- Quản lý dịch vụ.
+- Thêm dịch vụ.
+- Cập nhật dịch vụ.
+- Xóa dịch vụ.
+- Xem yêu cầu của khách hàng.
+- Nhận yêu cầu.
+- Quản lý đơn hàng.
+
+## Công nghệ sử dụng
+
+### Frontend
+
+- React
+- Vite
+- JavaScript
+- HTML
+- CSS
+
+### Backend
+
+- Node.js
+- Express.js
+
+### Database
+
+- PostgreSQL
+- Supabase
+
+### Deploy
+
+- Vercel
+- Render
+
+## Cấu trúc thư mục
+
+```text
+24CT2_Nguyen_Quoc_Dai/
+│
+├── backend/
+│   ├── server.js
+│   ├── db.js
+│   ├── NguoiDung.js
+│   ├── DichVu.js
+│   ├── DonHang.js
+│   ├── DanhGia.js
+│   └── YeuCau.js
+│
+├── src/
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   ├── Footer.jsx
+│   │   └── ServiceCard.jsx
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Services.jsx
+│   │   ├── ServiceDetail.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Freelancer.jsx
+│   │   ├── Orders.jsx
+│   │   ├── ManageServices.jsx
+│   │   ├── Payment.jsx
+│   │   ├── DangYeuCau.jsx
+│   │   ├── YeuCauCuaToi.jsx
+│   │   └── YeuCauFreelancer.jsx
+│   │
+│   ├── data/
+│   │   └── services.js
+│   │
+│   ├── styles/
+│   │   ├── global.css
+│   │   ├── header.css
+│   │   ├── home.css
+│   │   ├── services.css
+│   │   ├── detail.css
+│   │   ├── auth.css
+│   │   ├── freelancer.css
+│   │   ├── orders.css
+│   │   ├── payment.css
+│   │   ├── DangYeuCau.css
+│   │   ├── YeuCauCuaToi.css
+│   │   └── YeuCauFreelancer.css
+│   │
+│   └── App.jsx
+│
+├── package.json
+└── README.md
+
