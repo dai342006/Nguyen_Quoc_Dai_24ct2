@@ -69,8 +69,15 @@ function YeuCauFreelancer({
         return;
       }
 
+      // ====================================
+      // Backend đang trả về mảng trực tiếp
+      // hoặc có thể trả về { requests: [] }
+      // ====================================
+
       setRequests(
-        Array.isArray(data.requests)
+        Array.isArray(data)
+          ? data
+          : Array.isArray(data.requests)
           ? data.requests
           : []
       );
@@ -109,7 +116,6 @@ function YeuCauFreelancer({
     setAcceptingId(requestId);
 
     try {
-
       const response = await fetch(
         `https://nguyen-quoc-dai-24ct2.onrender.com/api/requests/${requestId}/accept`,
         {
@@ -163,7 +169,7 @@ function YeuCauFreelancer({
   }
 
   // ========================================
-  // Kiểm tra quyền
+  // Kiểm tra đăng nhập
   // ========================================
 
   if (!currentUser) {
@@ -203,6 +209,10 @@ function YeuCauFreelancer({
       </main>
     );
   }
+
+  // ========================================
+  // Kiểm tra quyền Freelancer
+  // ========================================
 
   if (
     currentUser.role !==
@@ -289,6 +299,10 @@ function YeuCauFreelancer({
     );
   }
 
+  // ========================================
+  // Giao diện chính
+  // ========================================
+
   return (
     <main className="page">
 
@@ -367,14 +381,18 @@ function YeuCauFreelancer({
                 key={request.MaYeuCau}
               >
 
-                {/* Icon */}
+                {/* ==================================
+                    ICON
+                ================================== */}
 
                 <div className="freelancer-request-icon">
                   📝
                 </div>
 
 
-                {/* Nội dung */}
+                {/* ==================================
+                    NỘI DUNG
+                ================================== */}
 
                 <div className="freelancer-request-content">
 
@@ -394,11 +412,16 @@ function YeuCauFreelancer({
                   </p>
 
 
+                  {/* ==================================
+                      THÔNG TIN
+                  ================================== */}
+
                   <div className="freelancer-request-meta">
 
                     <span>
                       👤{" "}
-                      {request.TenKhachHang}
+                      {request.TenKhachHang ||
+                        "Khách hàng"}
                     </span>
 
                     <span>
@@ -418,11 +441,13 @@ function YeuCauFreelancer({
 
                     <span>
                       📅{" "}
-                      {new Date(
-                        request.NgayDang
-                      ).toLocaleDateString(
-                        "vi-VN"
-                      )}
+                      {request.NgayDang
+                        ? new Date(
+                            request.NgayDang
+                          ).toLocaleDateString(
+                            "vi-VN"
+                          )
+                        : ""}
                     </span>
 
                   </div>
@@ -430,7 +455,9 @@ function YeuCauFreelancer({
                 </div>
 
 
-                {/* Trạng thái + nhận */}
+                {/* ==================================
+                    TRẠNG THÁI + NHẬN ĐƠN
+                ================================== */}
 
                 <div className="freelancer-request-action">
 
