@@ -9,6 +9,7 @@ const DichVu = require("./DichVu");
 const DonHang = require("./DonHang");
 const DanhGia = require("./DanhGia");
 const YeuCau = require("./YeuCau");
+const DanhGia = require("./DanhGia");
 
 // ======================================================
 // KHỞI TẠO APP
@@ -44,7 +45,7 @@ DichVu(app);
 DonHang(app);
 DanhGia(app);
 YeuCau(app);
-
+DanhGia(app);
 // ======================================================
 // KHỞI ĐỘNG SERVER
 // ======================================================

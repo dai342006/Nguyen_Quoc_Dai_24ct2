@@ -1,0 +1,196 @@
+/* ========================================
+   FORM ĐÁNH GIÁ
+======================================== */
+
+/* Lớp nền phủ toàn màn hình */
+.review-overlay {
+    position: fixed;
+    inset: 0;
+  
+    display: grid;
+    place-items: center;
+  
+    background: rgba(15, 23, 42, 0.45);
+  
+    padding: 20px;
+  
+    z-index: 1000;
+  }
+  
+  /* Hộp đánh giá */
+  .review-modal {
+    position: relative;
+  
+    width: min(520px, 100%);
+  
+    background: #ffffff;
+  
+    border-radius: 20px;
+  
+    padding: 30px;
+  
+    box-shadow:
+      0 20px 60px rgba(20, 28, 45, 0.2);
+  }
+  
+  /* Nút đóng */
+  .review-close {
+    position: absolute;
+  
+    top: 14px;
+    right: 16px;
+  
+    width: 36px;
+    height: 36px;
+  
+    border-radius: 50%;
+  
+    background: #f1f2f6;
+  
+    color: #4d5668;
+  
+    font-size: 24px;
+  }
+  
+  /* Tiêu đề */
+  .review-modal h2 {
+    margin: 8px 40px 8px 0;
+  
+    color: #182238;
+  
+    font-size: 24px;
+  }
+  
+  /* Mô tả */
+  .review-description {
+    color: #747d8d;
+  
+    font-size: 14px;
+  
+    line-height: 1.6;
+  
+    margin-bottom: 20px;
+  }
+  
+  /* Khu vực sao */
+  .review-stars {
+    display: flex;
+  
+    justify-content: center;
+  
+    gap: 8px;
+  
+    margin: 20px 0 8px;
+  }
+  
+  /* Một ngôi sao */
+  .star {
+    background: transparent;
+  
+    color: #d5d8e1;
+  
+    font-size: 38px;
+  
+    padding: 0;
+  
+    line-height: 1;
+  }
+  
+  /* Sao được chọn */
+  .star.active {
+    color: #f6b800;
+  }
+  
+  /* Số điểm */
+  .review-rating-text {
+    text-align: center;
+  
+    color: #667084;
+  
+    font-size: 14px;
+  
+    margin-bottom: 20px;
+  }
+  
+  /* Nhãn */
+  .review-label {
+    display: block;
+  
+    margin-bottom: 8px;
+  
+    font-weight: 700;
+  
+    font-size: 14px;
+  
+    color: #273042;
+  }
+  
+  /* Ô bình luận */
+  .review-textarea {
+    width: 100%;
+  
+    min-height: 120px;
+  
+    resize: vertical;
+  
+    padding: 13px 14px;
+  
+    border: 1px solid #dfe3ec;
+  
+    border-radius: 10px;
+  
+    outline: none;
+  
+    font: inherit;
+  }
+  
+  /* Khi click vào textarea */
+  .review-textarea:focus {
+    border-color: #8a85ff;
+  
+    box-shadow:
+      0 0 0 3px rgba(99, 91, 255, 0.12);
+  }
+  
+  /* Hai nút */
+  .review-buttons {
+    display: flex;
+  
+    gap: 10px;
+  
+    justify-content: flex-end;
+  
+    margin-top: 20px;
+  }
+  
+  /* Chỉnh chiều rộng */
+  .review-buttons .primary-btn,
+  .review-buttons .secondary-btn {
+    width: auto;
+  
+    padding: 12px 18px;
+  }
+  
+  /* Trên màn hình nhỏ */
+  @media (max-width: 600px) {
+  
+    .review-modal {
+      padding: 24px 20px;
+    }
+  
+    .review-stars {
+      gap: 4px;
+    }
+  
+    .star {
+      font-size: 32px;
+    }
+  
+    .review-buttons {
+      flex-direction: column;
+    }
+  
+    .review-buttons button {
+      width: 100%;
+    }
+  }
