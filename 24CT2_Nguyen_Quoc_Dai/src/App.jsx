@@ -21,6 +21,7 @@ import Payment from "./pages/Payment";
 import DangYeuCau from "./pages/DangYeuCau";
 import YeuCauCuaToi from "./pages/YeuCauCuaToi";
 import YeuCauFreelancer from "./pages/YeuCauFreelancer";
+import Admin from "./pages/Admin";
 
 // =========================
 // Data
@@ -42,6 +43,7 @@ import "./styles/payment.css";
 import "./styles/DangYeuCau.css";
 import "./styles/YeuCauCuaToi.css";
 import "./styles/YeuCauFreelancer.css";
+import "./styles/admin.css";
 
 // =========================
 // App
@@ -62,15 +64,23 @@ function App() {
   // ========================================
   // Kiểm tra đăng nhập khi mở website
   // ========================================
+
   useEffect(() => {
+
     const saved =
       localStorage.getItem("skillhub_current_user") ||
       sessionStorage.getItem("skillhub_current_user");
 
     if (saved) {
+
       try {
-        setCurrentUser(JSON.parse(saved));
+
+        setCurrentUser(
+          JSON.parse(saved)
+        );
+
       } catch {
+
         localStorage.removeItem(
           "skillhub_current_user"
         );
@@ -78,13 +88,18 @@ function App() {
         sessionStorage.removeItem(
           "skillhub_current_user"
         );
+
       }
+
     }
+
   }, []);
+
 
   // ========================================
   // Kiểm tra quyền truy cập
   // ========================================
+
   function checkPermission(targetPage) {
 
     // Các trang yêu cầu đăng nhập
@@ -96,15 +111,26 @@ function App() {
       "my-requests",
       "payment",
       "freelancer-requests",
+      "admin",
     ];
 
+
     // Nếu không phải trang cần đăng nhập
-    if (!protectedPages.includes(targetPage)) {
+    if (
+      !protectedPages.includes(targetPage)
+    ) {
+
       return true;
+
     }
 
+
+    // ========================================
     // Chưa đăng nhập
+    // ========================================
+
     if (!currentUser) {
+
       alert(
         "Vui lòng đăng nhập để sử dụng chức năng này."
       );
@@ -112,16 +138,51 @@ function App() {
       setPage("login");
 
       return false;
+
     }
+
+
+    // ========================================
+    // Chỉ Admin
+    // ========================================
+
+    if (
+      targetPage === "admin"
+    ) {
+
+      if (
+        currentUser.role === "Admin"
+      ) {
+
+        return true;
+
+      }
+
+      alert(
+        "Chỉ Admin mới có thể truy cập trang quản trị."
+      );
+
+      setPage("home");
+
+      return false;
+
+    }
+
 
     // ========================================
     // Chỉ Freelancer
     // ========================================
 
-    if (targetPage === "freelancer") {
+    if (
+      targetPage === "freelancer"
+    ) {
 
-      if (currentUser.role === "Freelancer") {
+      if (
+        currentUser.role === "Freelancer"
+      ) {
+
         return true;
+
       }
 
       alert(
@@ -131,12 +192,20 @@ function App() {
       setPage("home");
 
       return false;
+
     }
 
-    if (targetPage === "manage-services") {
 
-      if (currentUser.role === "Freelancer") {
+    if (
+      targetPage === "manage-services"
+    ) {
+
+      if (
+        currentUser.role === "Freelancer"
+      ) {
+
         return true;
+
       }
 
       alert(
@@ -146,7 +215,9 @@ function App() {
       setPage("home");
 
       return false;
+
     }
+
 
     // ========================================
     // Yêu cầu dành cho Freelancer
@@ -159,7 +230,9 @@ function App() {
       if (
         currentUser.role === "Freelancer"
       ) {
+
         return true;
+
       }
 
       alert(
@@ -169,7 +242,9 @@ function App() {
       setPage("home");
 
       return false;
+
     }
+
 
     // ========================================
     // Chỉ Khách hàng
@@ -183,7 +258,9 @@ function App() {
       if (
         currentUser.role === "KhachHang"
       ) {
+
         return true;
+
       }
 
       alert(
@@ -193,7 +270,9 @@ function App() {
       setPage("home");
 
       return false;
+
     }
+
 
     // ========================================
     // Thanh toán
@@ -206,7 +285,9 @@ function App() {
       if (
         currentUser.role === "KhachHang"
       ) {
+
         return true;
+
       }
 
       alert(
@@ -216,7 +297,9 @@ function App() {
       setPage("home");
 
       return false;
+
     }
+
 
     // ========================================
     // Đơn hàng
@@ -230,9 +313,13 @@ function App() {
         currentUser.role === "KhachHang" ||
         currentUser.role === "Freelancer"
       ) {
+
         return true;
+
       }
+
     }
+
 
     // ========================================
     // Không có quyền
@@ -245,23 +332,31 @@ function App() {
     setPage("home");
 
     return false;
+
   }
+
 
   // ========================================
   // Hàm chuyển trang
   // ========================================
+
   function navigateTo(targetPage) {
 
     if (
       checkPermission(targetPage)
     ) {
+
       setPage(targetPage);
+
     }
+
   }
+
 
   // ========================================
   // Hiển thị trang
   // ========================================
+
   const renderPage = () => {
 
     switch (page) {
@@ -269,7 +364,9 @@ function App() {
       // ------------------------------------
       // Trang chủ
       // ------------------------------------
+
       case "home":
+
         return (
           <Home
             setPage={navigateTo}
@@ -279,10 +376,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Danh sách dịch vụ
       // ------------------------------------
+
       case "services":
+
         return (
           <Services
             setPage={navigateTo}
@@ -292,10 +392,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Đăng yêu cầu
       // ------------------------------------
+
       case "create-request":
+
         return (
           <DangYeuCau
             setPage={navigateTo}
@@ -303,10 +406,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Yêu cầu của tôi
       // ------------------------------------
+
       case "my-requests":
+
         return (
           <YeuCauCuaToi
             setPage={navigateTo}
@@ -314,11 +420,14 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Yêu cầu khách hàng
       // Dành cho Freelancer
       // ------------------------------------
+
       case "freelancer-requests":
+
         return (
           <YeuCauFreelancer
             setPage={navigateTo}
@@ -326,10 +435,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Chi tiết dịch vụ
       // ------------------------------------
+
       case "detail":
+
         return (
           <ServiceDetail
             service={selectedService}
@@ -338,10 +450,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Thanh toán
       // ------------------------------------
+
       case "payment":
+
         return (
           <Payment
             setPage={navigateTo}
@@ -352,10 +467,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Đăng nhập
       // ------------------------------------
+
       case "login":
+
         return (
           <Login
             setPage={navigateTo}
@@ -365,20 +483,26 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Đăng ký
       // ------------------------------------
+
       case "register":
+
         return (
           <Register
             setPage={navigateTo}
           />
         );
 
+
       // ------------------------------------
       // Hồ sơ Freelancer
       // ------------------------------------
+
       case "freelancer":
+
         return (
           <Freelancer
             setPage={navigateTo}
@@ -386,20 +510,39 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Quản lý dịch vụ Freelancer
       // ------------------------------------
+
       case "manage-services":
+
         return (
           <ManageServices
             currentUser={currentUser}
           />
         );
 
+
+      // ------------------------------------
+      // Trang quản trị Admin
+      // ------------------------------------
+
+      case "admin":
+
+        return (
+          <Admin
+            currentUser={currentUser}
+          />
+        );
+
+
       // ------------------------------------
       // Đơn hàng
       // ------------------------------------
+
       case "orders":
+
         return (
           <Orders
             setPage={navigateTo}
@@ -407,10 +550,13 @@ function App() {
           />
         );
 
+
       // ------------------------------------
       // Mặc định
       // ------------------------------------
+
       default:
+
         return (
           <Home
             setPage={navigateTo}
@@ -419,20 +565,27 @@ function App() {
             }
           />
         );
+
     }
+
   };
+
 
   // ========================================
   // Trang đăng nhập / đăng ký
   // ========================================
+
   const authPage =
     page === "login" ||
     page === "register";
 
+
   // ========================================
   // Giao diện
   // ========================================
+
   return (
+
     <div className="app">
 
       {/* =========================
@@ -440,17 +593,27 @@ function App() {
       ========================= */}
 
       {!authPage && (
+
         <Header
+
           page={page}
+
           setPage={navigateTo}
+
           currentUser={currentUser}
 
           onLogout={() => {
+
             setCurrentUser(null);
+
             setPage("home");
+
           }}
+
         />
+
       )}
+
 
       {/* =========================
           WELCOME BAR
@@ -464,15 +627,26 @@ function App() {
           <div className="container">
 
             <strong>
+
               👋 Xin chào,{" "}
+
               {currentUser.name}!
+
             </strong>
+
 
             <span>
 
               {currentUser.role ===
               "Freelancer"
+
                 ? "Bạn đang sử dụng tài khoản Freelancer."
+
+                : currentUser.role ===
+                  "Admin"
+
+                ? "Bạn đang sử dụng tài khoản quản trị viên."
+
                 : "Chúc bạn có một ngày thật hiệu quả trên SkillHub."}
 
             </span>
@@ -480,7 +654,9 @@ function App() {
           </div>
 
         </div>
+
       )}
+
 
       {/* =========================
           PAGE CONTENT
@@ -488,18 +664,23 @@ function App() {
 
       {renderPage()}
 
+
       {/* =========================
           FOOTER
       ========================= */}
 
       {!authPage && (
+
         <Footer
           setPage={navigateTo}
         />
+
       )}
 
     </div>
+
   );
+
 }
 
 export default App;
