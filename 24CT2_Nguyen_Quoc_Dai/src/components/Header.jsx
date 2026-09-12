@@ -179,6 +179,28 @@ function Header({
           )}
 
 
+          {/* =================================
+              CHỈ ADMIN MỚI THẤY
+          ================================= */}
+          {currentUser?.role ===
+            "Admin" && (
+
+            <button
+              className={
+                page === "admin"
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                setPage("admin")
+              }
+            >
+              Quản trị
+            </button>
+
+          )}
+
+
           {/* Đơn hàng */}
           <button
             className={
