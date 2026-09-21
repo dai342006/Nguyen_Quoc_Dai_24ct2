@@ -352,3 +352,93 @@
     }
   
   }
+  /* =========================
+   PHẦN THANH TOÁN QR
+========================= */
+
+.qr-payment-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.qr-payment-section h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #111827;
+}
+
+.qr-description {
+  margin: 0 0 20px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.qr-image-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.qr-image {
+  width: 320px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  padding: 8px;
+}
+
+.qr-info {
+  margin-top: 20px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: left;
+}
+
+.qr-info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.qr-info-row:last-child {
+  border-bottom: none;
+}
+
+.qr-info-row span {
+  color: #6b7280;
+}
+
+.qr-info-row strong {
+  color: #111827;
+  text-align: right;
+}
+
+.qr-info-row .qr-amount {
+  color: #635bff;
+  font-size: 18px;
+}
+
+.qr-back-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.qr-back-btn:hover {
+  background: #f9fafb;
+}

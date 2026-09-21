@@ -1,49 +1,33 @@
 import { useState } from "react";
 
+function Payment({ setPage, selectedService, currentUser }) {
+  const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showQR, setShowQR] = useState(false);
 
-function Payment({
-  setPage,
-  selectedService,
-  currentUser,
-}) {
-  const [paymentMethod, setPaymentMethod] =
-    useState("bank");
+  // =========================
+  // THÔNG TIN TÀI KHOẢN NHẬN
+  // =========================
+  const bankId = "VCB";
+  const accountNumber = "1032829115";
+  const accountName = "NGUYEN QUOC DAI";
 
-  const [loading, setLoading] =
-    useState(false);
-
-  const [message, setMessage] =
-    useState("");
-
-  // ========================================
-  // Nếu chưa có dịch vụ
-  // ========================================
-
+  // =========================
+  // KIỂM TRA DỊCH VỤ
+  // =========================
   if (!selectedService) {
     return (
       <main className="payment-page">
         <div className="payment-container">
-          <div className="payment-empty">
-            <div className="payment-empty-icon">
-              📦
-            </div>
-
-            <h2>
-              Không có dịch vụ để thanh toán
-            </h2>
-
-            <p>
-              Vui lòng chọn một dịch vụ trước
-              khi thanh toán.
-            </p>
+          <div className="payment-card">
+            <h2>Không có dịch vụ để thanh toán</h2>
 
             <button
-              className="payment-btn"
-              onClick={() =>
-                setPage("services")
-              }
+              className="payment-back-btn"
+              onClick={() => setPage("services")}
             >
-              Xem dịch vụ
+              ← Quay lại dịch vụ
             </button>
           </div>
         </div>
@@ -51,16 +35,58 @@ function Payment({
     );
   }
 
-  // ========================================
-  // Thanh toán
-  // ========================================
+  // =========================
+  // CHUYỂN GIÁ DỊCH VỤ THÀNH SỐ
+  // Ví dụ: "300.000đ" → 300000
+  // =========================
+  const amount = Number(
+    String(selectedService.price).replace(/[^\d]/g, "")
+  );
 
-  async function handlePayment() {
+  // =========================
+  // TẠO NỘI DUNG CHUYỂN KHOẢN
+  // =========================
+  const transferContent = `SKILLHUB DV${selectedService.id}`;
+
+  // =========================
+  // TẠO LINK QR VIETQR
+  // =========================
+  const qrUrl =
+    `https://img.vietqr.io/image/${bankId}-${accountNumber}-compact2.png` +
+    `?amount=${amount}` +
+    `&addInfo=${encodeURIComponent(transferContent)}` +
+    `&accountName=${encodeURIComponent(accountName)}`;
+
+  // =========================
+  // BẤM THANH TOÁN
+  // Lần đầu → hiện QR
+  // =========================
+  function handlePayment() {
     if (!currentUser?.id) {
-      setMessage(
-        "Vui lòng đăng nhập trước khi thanh toán."
-      );
+      setMessage("Vui lòng đăng nhập trước khi thanh toán.");
+      return;
+    }
 
+    if (paymentMethod !== "bank") {
+      setMessage("Hiện tại hệ thống hỗ trợ thanh toán bằng QR ngân hàng.");
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      setMessage("Giá dịch vụ không hợp lệ.");
+      return;
+    }
+
+    setMessage("");
+    setShowQR(true);
+  }
+
+  // =========================
+  // XÁC NHẬN ĐÃ CHUYỂN KHOẢN
+  // =========================
+  async function confirmPayment() {
+    if (!currentUser?.id) {
+      setMessage("Vui lòng đăng nhập trước khi thanh toán.");
       return;
     }
 
@@ -72,48 +98,33 @@ function Payment({
         "https://nguyen-quoc-dai-24ct2.onrender.com/api/orders",
         {
           method: "POST",
-
           headers: {
             "Content-Type": "application/json",
-            "X-User-Id": String(
-              currentUser.id
-            ),
+            "X-User-Id": String(currentUser.id),
           },
-
           body: JSON.stringify({
-            MaDichVu:
-              selectedService.id,
+            MaDichVu: selectedService.id,
           }),
         }
       );
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
         setMessage(
-          data.message ||
-            "Thanh toán thất bại."
+          data.message || "Không thể tạo đơn hàng."
         );
-
         return;
       }
 
       alert(
-        "Thanh toán thành công! Đơn hàng đã được tạo."
+        "Đã ghi nhận thanh toán và tạo đơn hàng thành công!"
       );
 
       setPage("orders");
-
     } catch (error) {
-      console.error(
-        "Lỗi thanh toán:",
-        error
-      );
-
-      setMessage(
-        "Không thể kết nối đến máy chủ."
-      );
+      console.log(error);
+      setMessage("Không thể kết nối đến máy chủ.");
     } finally {
       setLoading(false);
     }
@@ -121,297 +132,173 @@ function Payment({
 
   return (
     <main className="payment-page">
-
       <div className="payment-container">
 
-        {/* ========================================
-            HEADER
-        ======================================== */}
-
+        {/* =========================
+            PHẦN TIÊU ĐỀ
+        ========================= */}
         <div className="payment-heading">
-
           <button
-            className="payment-back"
-            onClick={() =>
-              setPage("detail")
-            }
+            className="payment-back-btn"
+            onClick={() => setPage("services")}
           >
             ← Quay lại
           </button>
 
           <p className="payment-eyebrow">
-            THANH TOÁN
+            SKILLHUB PAYMENT
           </p>
 
-          <h1>
-            Hoàn tất đơn hàng
-          </h1>
+          <h1>Thanh toán dịch vụ</h1>
 
           <p>
-            Kiểm tra thông tin và chọn
-            phương thức thanh toán.
+            Kiểm tra thông tin và thực hiện thanh toán
+            cho dịch vụ bạn đã chọn.
           </p>
-
         </div>
-
-
-        {/* ========================================
-            CONTENT
-        ======================================== */}
 
         <div className="payment-grid">
 
-          {/* ======================================
+          {/* =========================
               THÔNG TIN DỊCH VỤ
-          ====================================== */}
-
+          ========================= */}
           <section className="payment-card">
+            <h2>Thông tin dịch vụ</h2>
 
-            <div className="payment-card-title">
-              <h2>
-                Thông tin dịch vụ
-              </h2>
+            <div className="payment-service">
+              <h3>
+                {selectedService.title ||
+                  selectedService.TieuDe ||
+                  "Dịch vụ"}
+              </h3>
+
+              <p>
+                {selectedService.category ||
+                  selectedService.LoaiDichVu ||
+                  "Dịch vụ số"}
+              </p>
             </div>
 
-            <div className="service-payment">
-
-              <div className="service-payment-icon">
-                💼
-              </div>
-
-              <div className="service-payment-info">
-
-                <span>
-                  DỊCH VỤ
-                </span>
-
-                <h3>
-                  {selectedService.title}
-                </h3>
-
-                <p>
-                  Freelancer:{" "}
-                  <strong>
-                    {selectedService.freelancer ||
-                      "Freelancer"}
-                  </strong>
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="payment-divider" />
-
-            <div className="payment-info-row">
-              <span>
-                Danh mục
-              </span>
+            <div className="payment-price-box">
+              <span>Giá dịch vụ</span>
 
               <strong>
-                {selectedService.category}
+                {selectedService.price}
               </strong>
             </div>
-
-            <div className="payment-info-row">
-              <span>
-                Người mua
-              </span>
-
-              <strong>
-                {currentUser?.name ||
-                  "Khách hàng"}
-              </strong>
-            </div>
-
           </section>
 
-
-          {/* ======================================
+          {/* =========================
               PHƯƠNG THỨC THANH TOÁN
-          ====================================== */}
-
+          ========================= */}
           <section className="payment-card">
+            <h2>Phương thức thanh toán</h2>
 
-            <div className="payment-card-title">
+            <div className="payment-methods">
 
-              <h2>
-                Phương thức thanh toán
-              </h2>
+              <button
+                type="button"
+                className={`payment-method ${
+                  paymentMethod === "bank"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setPaymentMethod("bank")
+                }
+              >
+                <div className="payment-method-icon">
+                  🏦
+                </div>
 
-              <span>
-                🔒 An toàn
-              </span>
+                <div>
+                  <strong>
+                    Chuyển khoản ngân hàng
+                  </strong>
+
+                  <span>
+                    Quét mã QR VietQR
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className={`payment-method ${
+                  paymentMethod === "wallet"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setPaymentMethod("wallet")
+                }
+              >
+                <div className="payment-method-icon">
+                  💳
+                </div>
+
+                <div>
+                  <strong>
+                    Ví điện tử
+                  </strong>
+
+                  <span>
+                    Phương thức demo
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className={`payment-method ${
+                  paymentMethod === "card"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setPaymentMethod("card")
+                }
+              >
+                <div className="payment-method-icon">
+                  💰
+                </div>
+
+                <div>
+                  <strong>
+                    Thẻ ngân hàng
+                  </strong>
+
+                  <span>
+                    Phương thức demo
+                  </span>
+                </div>
+              </button>
 
             </div>
-
-
-            {/* Ngân hàng */}
-
-            <button
-              className={
-                paymentMethod === "bank"
-                  ? "payment-method active"
-                  : "payment-method"
-              }
-              onClick={() =>
-                setPaymentMethod("bank")
-              }
-            >
-
-              <div className="payment-method-icon">
-                🏦
-              </div>
-
-              <div className="payment-method-content">
-
-                <strong>
-                  Chuyển khoản ngân hàng
-                </strong>
-
-                <span>
-                  Thanh toán qua tài khoản ngân hàng
-                </span>
-
-              </div>
-
-              <div className="payment-radio">
-                {paymentMethod === "bank"
-                  ? "●"
-                  : "○"}
-              </div>
-
-            </button>
-
-
-            {/* Ví điện tử */}
-
-            <button
-              className={
-                paymentMethod === "wallet"
-                  ? "payment-method active"
-                  : "payment-method"
-              }
-              onClick={() =>
-                setPaymentMethod("wallet")
-              }
-            >
-
-              <div className="payment-method-icon">
-                📱
-              </div>
-
-              <div className="payment-method-content">
-
-                <strong>
-                  Ví điện tử
-                </strong>
-
-                <span>
-                  Thanh toán bằng ví điện tử
-                </span>
-
-              </div>
-
-              <div className="payment-radio">
-                {paymentMethod === "wallet"
-                  ? "●"
-                  : "○"}
-              </div>
-
-            </button>
-
-
-            {/* Thẻ */}
-
-            <button
-              className={
-                paymentMethod === "card"
-                  ? "payment-method active"
-                  : "payment-method"
-              }
-              onClick={() =>
-                setPaymentMethod("card")
-              }
-            >
-
-              <div className="payment-method-icon">
-                💳
-              </div>
-
-              <div className="payment-method-content">
-
-                <strong>
-                  Thẻ ngân hàng
-                </strong>
-
-                <span>
-                  Visa, Mastercard, ATM
-                </span>
-
-              </div>
-
-              <div className="payment-radio">
-                {paymentMethod === "card"
-                  ? "●"
-                  : "○"}
-              </div>
-
-            </button>
-
           </section>
 
-
-          {/* ======================================
-              TÓM TẮT THANH TOÁN
-          ====================================== */}
-
+          {/* =========================
+              TỔNG THANH TOÁN
+          ========================= */}
           <section className="payment-card payment-summary">
+            <h2>Chi tiết thanh toán</h2>
 
-            <div className="payment-card-title">
-
-              <h2>
-                Tóm tắt thanh toán
-              </h2>
-
+            <div className="payment-row">
+              <span>Giá dịch vụ</span>
+              <strong>{selectedService.price}</strong>
             </div>
 
-            <div className="summary-row">
+            <div className="payment-row">
+              <span>Phí thanh toán</span>
+              <strong>0đ</strong>
+            </div>
 
-              <span>
-                Giá dịch vụ
-              </span>
+            <div className="payment-total">
+              <span>Tổng thanh toán</span>
 
               <strong>
                 {selectedService.price}
               </strong>
-
-            </div>
-
-            <div className="summary-row">
-
-              <span>
-                Phí dịch vụ
-              </span>
-
-              <strong>
-                0đ
-              </strong>
-
-            </div>
-
-            <div className="payment-divider" />
-
-            <div className="summary-total">
-
-              <span>
-                Tổng thanh toán
-              </span>
-
-              <strong>
-                {selectedService.price}
-              </strong>
-
             </div>
 
             {message && (
@@ -420,27 +307,111 @@ function Payment({
               </div>
             )}
 
-            <button
-              className="payment-btn payment-btn-large"
-              onClick={handlePayment}
-              disabled={loading}
-            >
-              {loading
-                ? "Đang xử lý..."
-                : "🔒 Thanh toán ngay"}
-            </button>
+            {!showQR ? (
+              <button
+                className="payment-submit-btn"
+                onClick={handlePayment}
+                disabled={loading}
+              >
+                {loading
+                  ? "Đang xử lý..."
+                  : "Thanh toán ngay"}
+              </button>
+            ) : (
+              <div className="qr-payment-section">
 
-            <p className="payment-note">
-              Bằng việc thanh toán, bạn đồng ý
-              với điều khoản sử dụng của SkillHub.
-            </p>
+                <h3>
+                  Quét mã QR để thanh toán
+                </h3>
+
+                <p className="qr-description">
+                  Mở ứng dụng ngân hàng và quét mã QR
+                  bên dưới.
+                </p>
+
+                {/* =========================
+                    QR CODE
+                ========================= */}
+                <div className="qr-image-box">
+                  <img
+                    src={qrUrl}
+                    alt="Mã QR thanh toán SkillHub"
+                    className="qr-image"
+                  />
+                </div>
+
+                {/* =========================
+                    THÔNG TIN CHUYỂN KHOẢN
+                ========================= */}
+                <div className="qr-info">
+
+                  <div className="qr-info-row">
+                    <span>Ngân hàng</span>
+                    <strong>
+                      Vietcombank
+                    </strong>
+                  </div>
+
+                  <div className="qr-info-row">
+                    <span>Số tài khoản</span>
+                    <strong>
+                      {accountNumber}
+                    </strong>
+                  </div>
+
+                  <div className="qr-info-row">
+                    <span>Chủ tài khoản</span>
+                    <strong>
+                      {accountName}
+                    </strong>
+                  </div>
+
+                  <div className="qr-info-row">
+                    <span>Số tiền</span>
+                    <strong className="qr-amount">
+                      {selectedService.price}
+                    </strong>
+                  </div>
+
+                  <div className="qr-info-row">
+                    <span>Nội dung</span>
+                    <strong>
+                      {transferContent}
+                    </strong>
+                  </div>
+
+                </div>
+
+                {/* =========================
+                    XÁC NHẬN
+                ========================= */}
+                <button
+                  className="payment-submit-btn"
+                  onClick={confirmPayment}
+                  disabled={loading}
+                >
+                  {loading
+                    ? "Đang tạo đơn hàng..."
+                    : "✓ Tôi đã thanh toán"}
+                </button>
+
+                <button
+                  className="qr-back-btn"
+                  onClick={() => {
+                    setShowQR(false);
+                    setMessage("");
+                  }}
+                >
+                  ← Thay đổi phương thức
+                </button>
+
+              </div>
+            )}
 
           </section>
 
         </div>
-
       </div>
-
     </main>
   );
 }
