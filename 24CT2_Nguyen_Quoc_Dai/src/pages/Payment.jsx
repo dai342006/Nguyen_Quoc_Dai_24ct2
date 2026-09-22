@@ -243,7 +243,7 @@ function Payment({ setPage, selectedService, currentUser }) {
                   </strong>
 
                   <span>
-                    Phương thức demo
+                  
                   </span>
                 </div>
               </button>
@@ -265,11 +265,11 @@ function Payment({ setPage, selectedService, currentUser }) {
 
                 <div>
                   <strong>
-                    Thẻ ngân hàng
+                    
                   </strong>
 
                   <span>
-                    Phương thức demo
+                    
                   </span>
                 </div>
               </button>
@@ -281,20 +281,20 @@ function Payment({ setPage, selectedService, currentUser }) {
               TỔNG THANH TOÁN
           ========================= */}
           <section className="payment-card payment-summary">
-            <h2>Chi tiết thanh toán</h2>
+            <h2>Chi tiết thanh toán </h2>
 
             <div className="payment-row">
-              <span>Giá dịch vụ</span>
+              <span>Giá dịch vụ </span>
               <strong>{selectedService.price}</strong>
             </div>
 
             <div className="payment-row">
-              <span>Phí thanh toán</span>
+              <span>Phí thanh toán </span>
               <strong>0đ</strong>
             </div>
 
             <div className="payment-total">
-              <span>Tổng thanh toán</span>
+              <span>Tổng thanh toán </span>
 
               <strong>
                 {selectedService.price}
