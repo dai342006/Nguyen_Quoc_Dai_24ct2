@@ -1,422 +1,890 @@
-/* ========================================
-   TRANG THANH TOÁN
-======================================== */
+/* =========================================================
+   SKILLHUB - TRANG THANH TOÁN
+   File: payment.css
+   Mục đích:
+   - Thiết kế giao diện trang thanh toán
+   - Hiển thị thông tin dịch vụ
+   - Hiển thị phương thức thanh toán
+   - Hiển thị tổng tiền
+   - Hiển thị mã QR VietQR
+   - Responsive cho máy tính, tablet và điện thoại
+========================================================= */
 
+
+/* =========================================================
+   1. TRANG THANH TOÁN
+========================================================= */
+
+/* Khung lớn bao quanh toàn bộ trang thanh toán */
 .payment-page {
-    min-height: 100vh;
-    background: #f7f8fc;
-    padding: 48px 0 70px;
-  }
-  
-  .payment-container {
-    width: min(1120px, 92%);
-    margin: 0 auto;
-  }
-  
-  /* ========================================
-     HEADER
-  ======================================== */
-  
-  .payment-heading {
-    margin-bottom: 32px;
-  }
-  
-  .payment-back {
-    border: none;
-    background: transparent;
-    color: #675cff;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 0;
-    margin-bottom: 22px;
-  }
-  
-  .payment-eyebrow {
-    margin: 0 0 8px;
-    color: #675cff;
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-  }
-  
-  .payment-heading h1 {
-    margin: 0;
-    color: #182238;
-    font-size: 42px;
-    line-height: 1.15;
-  }
-  
-  .payment-heading > p:last-child {
-    margin-top: 12px;
-    color: #6d7587;
-    font-size: 16px;
-  }
-  
-  /* ========================================
-     GRID
-  ======================================== */
-  
-  .payment-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 24px;
-  }
-  
-  /* ========================================
-     CARD
-  ======================================== */
-  
-  .payment-card {
-    background: #ffffff;
-    border: 1px solid #e4e8f0;
-    border-radius: 20px;
-    padding: 26px;
-    box-shadow: 0 8px 30px rgba(27, 39, 74, 0.05);
-  }
-  
-  .payment-card-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  
-  .payment-card-title h2 {
-    margin: 0;
-    color: #182238;
-    font-size: 20px;
-  }
-  
-  .payment-card-title span {
-    color: #27a269;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  
-  /* ========================================
-     SERVICE
-  ======================================== */
-  
-  .service-payment {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .service-payment-icon {
-    width: 68px;
-    height: 68px;
-    display: grid;
-    place-items: center;
-    background: #eeebff;
-    border-radius: 16px;
-    font-size: 30px;
-  }
-  
-  .service-payment-info span {
-    color: #8a91a2;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-  }
-  
-  .service-payment-info h3 {
-    margin: 5px 0 7px;
-    color: #182238;
-    font-size: 18px;
-  }
-  
-  .service-payment-info p {
-    margin: 0;
-    color: #71798c;
-    font-size: 14px;
-  }
-  
-  /* ========================================
-     INFO
-  ======================================== */
-  
-  .payment-divider {
-    height: 1px;
-    background: #eceff4;
-    margin: 22px 0;
-  }
-  
-  .payment-info-row,
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 8px 0;
-  }
-  
-  .payment-info-row span,
-  .summary-row span {
-    color: #747c8f;
-    font-size: 14px;
-  }
-  
-  .payment-info-row strong,
-  .summary-row strong {
-    color: #20283b;
-    font-size: 14px;
-  }
-  
-  /* ========================================
-     PHƯƠNG THỨC
-  ======================================== */
-  
-  .payment-method {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px;
-    margin-bottom: 12px;
-    background: #ffffff;
-    border: 1.5px solid #e2e6ee;
-    border-radius: 16px;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.2s ease;
-  }
-  
-  .payment-method:hover {
-    border-color: #8b84ff;
-    transform: translateY(-1px);
-  }
-  
-  .payment-method.active {
-    border-color: #675cff;
-    background: #f7f6ff;
-  }
-  
-  .payment-method-icon {
-    width: 46px;
-    height: 46px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    background: #eeebff;
-    border-radius: 12px;
-    font-size: 22px;
-  }
-  
-  .payment-method-content {
-    flex: 1;
-  }
-  
-  .payment-method-content strong {
-    display: block;
-    color: #1c2539;
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-  
-  .payment-method-content span {
-    color: #7a8191;
-    font-size: 13px;
-  }
-  
-  .payment-radio {
-    color: #675cff;
-    font-size: 22px;
-    font-weight: 700;
-  }
-  
-  /* ========================================
-     SUMMARY
-  ======================================== */
-  
-  .payment-summary {
-    grid-column: 2;
-  }
-  
-  .summary-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 22px;
-  }
-  
-  .summary-total span {
-    color: #20283b;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  
-  .summary-total strong {
-    color: #675cff;
-    font-size: 26px;
-  }
-  
-  /* ========================================
-     BUTTON
-  ======================================== */
-  
-  .payment-btn {
-    border: none;
-    background: #675cff;
-    color: #ffffff;
-    border-radius: 12px;
-    padding: 13px 20px;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.2s ease;
-  }
-  
-  .payment-btn:hover {
-    background: #584de8;
-    transform: translateY(-1px);
-  }
-  
-  .payment-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-  
-  .payment-btn-large {
-    width: 100%;
-    padding: 16px;
-    font-size: 16px;
-  }
-  
-  .payment-note {
-    margin: 14px 0 0;
-    color: #8a91a2;
-    font-size: 12px;
-    line-height: 1.5;
-    text-align: center;
-  }
-  
-  .payment-message {
-    background: #fff1f1;
-    border: 1px solid #ffd4d4;
-    color: #d64545;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 14px;
-    font-size: 14px;
-  }
-  
-  /* ========================================
-     EMPTY
-  ======================================== */
-  
-  .payment-empty {
-    max-width: 560px;
-    margin: 80px auto;
-    padding: 40px;
-    text-align: center;
-    background: #ffffff;
-    border: 1px solid #e4e8f0;
-    border-radius: 20px;
-  }
-  
-  .payment-empty-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-  }
-  
-  .payment-empty h2 {
-    margin: 0 0 10px;
-    color: #182238;
-  }
-  
-  .payment-empty p {
-    color: #737b8d;
-    margin-bottom: 22px;
-  }
-  
-  /* ========================================
-     RESPONSIVE
-  ======================================== */
-  
-  @media (max-width: 800px) {
-  
-    .payment-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    .payment-summary {
-      grid-column: auto;
-    }
-  
-    .payment-heading h1 {
-      font-size: 34px;
-    }
-  
-  }
- /* ========================================
-   THANH TOÁN QR - SKILLHUB
-======================================== */
+  min-height: 100vh;
 
-/* Khung tổng phần QR */
-.qr-payment-section {
-  margin-top: 28px;
-  padding: 28px;
-  border: 1px solid #e6e8f0;
-  border-radius: 20px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
-  box-shadow: 0 10px 30px rgba(31, 35, 60, 0.08);
-  text-align: center;
-  animation: qrFadeIn 0.35s ease;
+  /* Màu nền nhẹ giúp card nổi bật */
+  background: #f7f8fc;
+
+  /* Khoảng cách trên và dưới trang */
+  padding: 48px 0 70px;
+
+  /* Tránh tràn ngang */
+  overflow-x: hidden;
 }
 
-/* Tiêu đề */
-.qr-payment-section h3 {
-  margin: 0;
-  font-size: 24px;
+
+/* Khung chứa nội dung chính */
+.payment-container {
+  width: min(1120px, 92%);
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   2. PHẦN TIÊU ĐỀ
+========================================================= */
+
+/* Khu vực tiêu đề của trang */
+.payment-heading {
+  margin-bottom: 32px;
+}
+
+
+/* Nút quay lại */
+.payment-back,
+.payment-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+  background: transparent;
+
+  color: #675cff;
+
+  font-size: 15px;
   font-weight: 700;
-  color: #1f2937;
-  letter-spacing: -0.3px;
+
+  cursor: pointer;
+
+  padding: 0;
+  margin-bottom: 22px;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-/* Mô tả */
-.qr-description {
-  margin: 8px 0 24px;
-  color: #6b7280;
-  font-size: 14px;
+
+/* Hiệu ứng khi rê chuột vào nút quay lại */
+.payment-back:hover,
+.payment-back-btn:hover {
+  color: #5147db;
+  transform: translateX(-3px);
+}
+
+
+/* Dòng chữ nhỏ phía trên tiêu đề */
+.payment-eyebrow {
+  margin: 0 0 8px;
+
+  color: #675cff;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* Tiêu đề chính */
+.payment-heading h1 {
+  margin: 0;
+
+  color: #182238;
+
+  font-size: 42px;
+  line-height: 1.15;
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+}
+
+
+/* Mô tả bên dưới tiêu đề */
+.payment-heading > p:last-child {
+  margin-top: 12px;
+
+  color: #6d7587;
+
+  font-size: 16px;
   line-height: 1.6;
 }
 
-/* ========================================
-   KHUNG QR
-======================================== */
+
+/* =========================================================
+   3. BỐ CỤC GRID
+========================================================= */
+
+/*
+   Sử dụng Grid để chia trang thanh toán thành 2 cột:
+
+   Cột trái:
+   - Thông tin dịch vụ
+   - Phương thức thanh toán
+
+   Cột phải:
+   - Tổng thanh toán
+*/
+.payment-grid {
+  display: grid;
+
+  grid-template-columns: 1.1fr 0.9fr;
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   4. CARD CHUNG
+========================================================= */
+
+/* Card trắng dùng cho từng khu vực */
+.payment-card {
+  background: #ffffff;
+
+  border: 1px solid #e4e8f0;
+
+  border-radius: 20px;
+
+  padding: 26px;
+
+  /*
+     Đổ bóng nhẹ để tạo cảm giác card nổi
+  */
+  box-shadow:
+    0 8px 30px rgba(27, 39, 74, 0.05);
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Hiệu ứng nhẹ khi hover */
+.payment-card:hover {
+  box-shadow:
+    0 12px 35px rgba(27, 39, 74, 0.08);
+}
+
+
+/* Tiêu đề bên trong card */
+.payment-card-title {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+
+/* Tiêu đề h2 */
+.payment-card-title h2 {
+  margin: 0;
+
+  color: #182238;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* Trạng thái nhỏ bên cạnh tiêu đề */
+.payment-card-title span {
+  color: #27a269;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* Trường hợp JSX dùng h2 trực tiếp */
+.payment-card > h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+
+  color: #182238;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   5. THÔNG TIN DỊCH VỤ
+========================================================= */
+
+/* Khu vực thông tin dịch vụ */
+.service-payment,
+.payment-service {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+
+/* Icon dịch vụ */
+.service-payment-icon {
+  width: 68px;
+  height: 68px;
+
+  flex-shrink: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  background: #eeebff;
+
+  border-radius: 16px;
+
+  font-size: 30px;
+}
+
+
+/* Phần nội dung dịch vụ */
+.service-payment-info {
+  min-width: 0;
+}
+
+
+/* Nhãn nhỏ */
+.service-payment-info span {
+  color: #8a91a2;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+/* Tên dịch vụ */
+.service-payment-info h3 {
+  margin: 5px 0 7px;
+
+  color: #182238;
+
+  font-size: 18px;
+
+  line-height: 1.4;
+}
+
+
+/* Mô tả / danh mục */
+.service-payment-info p {
+  margin: 0;
+
+  color: #71798c;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/*
+   Các class dùng trong Payment.jsx mới
+   được hỗ trợ thêm để không bị lệch giao diện.
+*/
+.payment-service {
+  align-items: flex-start;
+}
+
+
+/* Tên dịch vụ trong payment-service */
+.payment-service h3 {
+  margin: 0 0 6px;
+
+  color: #182238;
+
+  font-size: 19px;
+
+  line-height: 1.4;
+}
+
+
+/* Danh mục dịch vụ */
+.payment-service p {
+  margin: 0;
+
+  color: #71798c;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   6. KHUNG GIÁ DỊCH VỤ
+========================================================= */
+
+/* Khung hiển thị giá */
+.payment-price-box {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  margin-top: 22px;
+
+  padding: 16px 18px;
+
+  background: #f7f6ff;
+
+  border: 1px solid #e7e4ff;
+
+  border-radius: 14px;
+}
+
+
+/* Chữ "Giá dịch vụ" */
+.payment-price-box span {
+  color: #6d7587;
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+
+/* Giá tiền */
+.payment-price-box strong {
+  color: #675cff;
+
+  font-size: 22px;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   7. ĐƯỜNG KẺ PHÂN CÁCH
+========================================================= */
+
+.payment-divider {
+  height: 1px;
+
+  background: #eceff4;
+
+  margin: 22px 0;
+}
+
+
+/* =========================================================
+   8. DÒNG THÔNG TIN
+========================================================= */
+
+.payment-info-row,
+.summary-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 9px 0;
+}
+
+
+/* Tên thông tin */
+.payment-info-row span,
+.summary-row span {
+  color: #747c8f;
+
+  font-size: 14px;
+}
+
+
+/* Giá trị thông tin */
+.payment-info-row strong,
+.summary-row strong {
+  color: #20283b;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   9. PHƯƠNG THỨC THANH TOÁN
+========================================================= */
+
+/* Mỗi phương thức thanh toán */
+.payment-method {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 16px;
+
+  margin-bottom: 12px;
+
+  background: #ffffff;
+
+  border: 1.5px solid #e2e6ee;
+
+  border-radius: 16px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* Hover phương thức */
+.payment-method:hover {
+  border-color: #8b84ff;
+
+  background: #fbfaff;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 15px rgba(99, 91, 255, 0.08);
+}
+
+
+/* Phương thức đang được chọn */
+.payment-method.active {
+  border-color: #675cff;
+
+  background: #f7f6ff;
+
+  box-shadow:
+    0 5px 16px rgba(99, 91, 255, 0.08);
+}
+
+
+/* Icon của phương thức */
+.payment-method-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  background: #eeebff;
+
+  border-radius: 12px;
+
+  font-size: 22px;
+}
+
+
+/* Nội dung phương thức */
+.payment-method-content {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+/* Tên phương thức */
+.payment-method-content strong {
+  display: block;
+
+  color: #1c2539;
+
+  font-size: 15px;
+
+  margin-bottom: 4px;
+}
+
+
+/* Mô tả phương thức */
+.payment-method-content span {
+  color: #7a8191;
+
+  font-size: 13px;
+
+  line-height: 1.4;
+}
+
+
+/* Radio / dấu chọn */
+.payment-radio {
+  color: #675cff;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   10. PHẦN TỔNG THANH TOÁN
+========================================================= */
+
+/* Card tổng tiền */
+.payment-summary {
+  grid-column: 2;
+
+  position: sticky;
+
+  top: 20px;
+}
+
+
+/* Tổng tiền */
+.summary-total {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+
+/* Chữ tổng thanh toán */
+.summary-total span {
+  color: #20283b;
+
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+
+/* Giá tổng */
+.summary-total strong {
+  color: #675cff;
+
+  font-size: 26px;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   11. NÚT THANH TOÁN
+========================================================= */
+
+/* Nút thanh toán cơ bản */
+.payment-btn,
+.payment-submit-btn {
+  border: none;
+
+  background: linear-gradient(
+    135deg,
+    #675cff,
+    #786fff
+  );
+
+  color: #ffffff;
+
+  border-radius: 12px;
+
+  padding: 13px 20px;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* Hover nút */
+.payment-btn:hover,
+.payment-submit-btn:hover {
+  background: linear-gradient(
+    135deg,
+    #584de8,
+    #665de8
+  );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 18px rgba(99, 91, 255, 0.22);
+}
+
+
+/* Khi nhấn nút */
+.payment-btn:active,
+.payment-submit-btn:active {
+  transform: translateY(0);
+}
+
+
+/* Khi button bị disabled */
+.payment-btn:disabled,
+.payment-submit-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* Nút lớn chiếm toàn bộ chiều rộng */
+.payment-btn-large {
+  width: 100%;
+
+  padding: 16px;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   12. GHI CHÚ THANH TOÁN
+========================================================= */
+
+.payment-note {
+  margin: 14px 0 0;
+
+  color: #8a91a2;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   13. THÔNG BÁO LỖI
+========================================================= */
+
+.payment-message {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  background: #fff1f1;
+
+  border: 1px solid #ffd4d4;
+
+  color: #d64545;
+
+  border-radius: 10px;
+
+  padding: 12px;
+
+  margin-bottom: 14px;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   14. TRANG KHÔNG CÓ DỊCH VỤ
+========================================================= */
+
+/* Card khi chưa chọn dịch vụ */
+.payment-empty {
+  max-width: 560px;
+
+  margin: 80px auto;
+
+  padding: 40px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e4e8f0;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 8px 30px rgba(27, 39, 74, 0.05);
+}
+
+
+/* Icon */
+.payment-empty-icon {
+  font-size: 48px;
+
+  margin-bottom: 15px;
+}
+
+
+/* Tiêu đề */
+.payment-empty h2 {
+  margin: 0 0 10px;
+
+  color: #182238;
+
+  font-size: 24px;
+}
+
+
+/* Nội dung */
+.payment-empty p {
+  color: #737b8d;
+
+  margin-bottom: 22px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   15. KHU VỰC THANH TOÁN QR
+========================================================= */
+
+/*
+   Đây là phần được hiển thị sau khi
+   người dùng bấm "Thanh toán ngay".
+*/
+.qr-payment-section {
+  margin-top: 28px;
+
+  padding: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8f9ff 100%
+    );
+
+  border: 1px solid #e6e8f0;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 30px rgba(31, 35, 60, 0.08);
+
+  animation: qrFadeIn 0.35s ease;
+}
+
+
+/* =========================================================
+   16. TIÊU ĐỀ QR
+========================================================= */
+
+.qr-payment-section h3 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
+}
+
+
+/* Dòng hướng dẫn */
+.qr-description {
+  margin: 8px 0 24px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   17. KHUNG ẢNH QR
+========================================================= */
 
 .qr-image-box {
   display: flex;
+
   justify-content: center;
+
   align-items: center;
+
   margin: 0 auto 24px;
 }
 
-/* QR */
+
+/* Hình QR */
 .qr-image {
   width: 300px;
+
   max-width: 100%;
+
   height: auto;
+
   display: block;
 
   padding: 14px;
 
   background: #ffffff;
+
   border: 1px solid #e5e7eb;
+
   border-radius: 18px;
 
+  /*
+     Đổ bóng để QR nổi bật
+  */
   box-shadow:
     0 8px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.04);
 
-  transition: transform 0.25s ease,
-              box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
+
+/* Hiệu ứng hover QR */
 .qr-image:hover {
   transform: translateY(-4px);
 
@@ -425,12 +893,15 @@
     0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* ========================================
-   THÔNG TIN CHUYỂN KHOẢN
-======================================== */
 
+/* =========================================================
+   18. THÔNG TIN CHUYỂN KHOẢN
+========================================================= */
+
+/* Card chứa thông tin ngân hàng */
 .qr-info {
   width: 100%;
+
   box-sizing: border-box;
 
   margin-top: 20px;
@@ -440,17 +911,22 @@
   background: #ffffff;
 
   border: 1px solid #e8eaf2;
+
   border-radius: 16px;
 
   text-align: left;
 
-  box-shadow: 0 4px 14px rgba(31, 35, 60, 0.05);
+  box-shadow:
+    0 4px 14px rgba(31, 35, 60, 0.05);
 }
+
 
 /* Một dòng thông tin */
 .qr-info-row {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   gap: 20px;
@@ -460,60 +936,88 @@
   border-bottom: 1px solid #eef0f5;
 }
 
+
+/* Bỏ khoảng cách trên dòng đầu tiên */
 .qr-info-row:first-child {
   padding-top: 2px;
 }
 
+
+/* Bỏ đường kẻ dưới dòng cuối */
 .qr-info-row:last-child {
   padding-bottom: 2px;
+
   border-bottom: none;
 }
+
 
 /* Tên thuộc tính */
 .qr-info-row span {
   color: #6b7280;
+
   font-size: 14px;
+
   font-weight: 500;
 }
+
 
 /* Giá trị */
 .qr-info-row strong {
   color: #1f2937;
+
   font-size: 14px;
+
   font-weight: 600;
+
   text-align: right;
+
   word-break: break-word;
 }
 
-/* Số tiền */
+
+/* =========================================================
+   19. SỐ TIỀN TRONG QR
+========================================================= */
+
 .qr-info-row .qr-amount {
   color: #635bff;
+
   font-size: 20px;
+
   font-weight: 800;
 }
 
-/* ========================================
-   NÚT XÁC NHẬN ĐÃ THANH TOÁN
-======================================== */
 
+/* =========================================================
+   20. NÚT "TÔI ĐÃ THANH TOÁN"
+========================================================= */
+
+/*
+   Nút này dùng để người dùng xác nhận
+   sau khi đã chuyển khoản.
+*/
 .qr-payment-section .payment-submit-btn {
   width: 100%;
+
   margin-top: 20px;
 
   padding: 14px 20px;
 
   border: none;
+
   border-radius: 12px;
 
-  background: linear-gradient(
-    135deg,
-    #635bff,
-    #7c73ff
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #635bff,
+      #7c73ff
+    );
 
   color: #ffffff;
 
   font-size: 15px;
+
   font-weight: 700;
 
   cursor: pointer;
@@ -527,6 +1031,8 @@
     opacity 0.2s ease;
 }
 
+
+/* Hover */
 .qr-payment-section .payment-submit-btn:hover {
   transform: translateY(-2px);
 
@@ -534,19 +1040,28 @@
     0 12px 26px rgba(99, 91, 255, 0.32);
 }
 
+
+/* Khi click */
 .qr-payment-section .payment-submit-btn:active {
   transform: translateY(0);
 }
 
+
+/* Khi đang xử lý */
 .qr-payment-section .payment-submit-btn:disabled {
   opacity: 0.65;
+
   cursor: not-allowed;
+
   transform: none;
+
+  box-shadow: none;
 }
 
-/* ========================================
-   NÚT QUAY LẠI
-======================================== */
+
+/* =========================================================
+   21. NÚT THAY ĐỔI PHƯƠNG THỨC
+========================================================= */
 
 .qr-back-btn {
   width: 100%;
@@ -556,12 +1071,15 @@
   padding: 13px 18px;
 
   border: 1px solid #dfe2ea;
+
   border-radius: 12px;
 
   background: #ffffff;
+
   color: #4b5563;
 
   font-size: 14px;
+
   font-weight: 600;
 
   cursor: pointer;
@@ -572,105 +1090,282 @@
     transform 0.2s ease;
 }
 
+
+/* Hover */
 .qr-back-btn:hover {
   background: #f5f6fa;
+
   border-color: #cfd3df;
+
   transform: translateY(-1px);
 }
 
-/* ========================================
-   HIỆU ỨNG
-======================================== */
 
+/* =========================================================
+   22. ANIMATION QR
+========================================================= */
+
+/*
+   Khi QR xuất hiện:
+   - Mờ từ từ
+   - Trượt nhẹ từ dưới lên
+*/
 @keyframes qrFadeIn {
   from {
     opacity: 0;
+
     transform: translateY(12px);
   }
 
   to {
     opacity: 1;
+
     transform: translateY(0);
   }
 }
 
-/* ========================================
-   RESPONSIVE - TABLET
-======================================== */
+
+/* =========================================================
+   23. RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  /*
+     Khi màn hình nhỏ:
+     Chuyển từ 2 cột thành 1 cột
+  */
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* Card tổng tiền không còn nằm riêng cột 2 */
+  .payment-summary {
+    grid-column: auto;
+
+    position: static;
+  }
+
+
+  /* Tiêu đề nhỏ lại */
+  .payment-heading h1 {
+    font-size: 34px;
+  }
+}
+
+
+/* =========================================================
+   24. RESPONSIVE - MÁY TÍNH BẢNG
+========================================================= */
 
 @media (max-width: 768px) {
+
+  /* Thu nhỏ khu vực QR */
   .qr-payment-section {
     padding: 22px 18px;
+
     border-radius: 16px;
   }
 
+
+  /* Tiêu đề QR */
   .qr-payment-section h3 {
     font-size: 21px;
   }
 
+
+  /* QR nhỏ hơn */
   .qr-image {
     width: 270px;
+
     padding: 10px;
+
     border-radius: 16px;
   }
 
+
+  /* Card thông tin */
   .qr-info {
     padding: 15px;
   }
 
+
+  /* Giảm khoảng cách */
   .qr-info-row {
     gap: 12px;
   }
 }
 
-/* ========================================
-   RESPONSIVE - ĐIỆN THOẠI
-======================================== */
+
+/* =========================================================
+   25. RESPONSIVE - ĐIỆN THOẠI
+========================================================= */
 
 @media (max-width: 480px) {
-  .qr-payment-section {
-    margin-top: 20px;
-    padding: 18px 14px;
+
+  /* Trang thanh toán */
+  .payment-page {
+    padding-top: 30px;
+
+    padding-bottom: 40px;
   }
 
+
+  /* Container */
+  .payment-container {
+    width: 94%;
+  }
+
+
+  /* Card */
+  .payment-card {
+    padding: 20px;
+
+    border-radius: 16px;
+  }
+
+
+  /* Tiêu đề */
+  .payment-heading h1 {
+    font-size: 29px;
+  }
+
+
+  /* Mô tả */
+  .payment-heading > p:last-child {
+    font-size: 14px;
+  }
+
+
+  /* Phần QR */
+  .qr-payment-section {
+    margin-top: 20px;
+
+    padding: 18px 14px;
+
+    border-radius: 16px;
+  }
+
+
+  /* Tiêu đề QR */
   .qr-payment-section h3 {
     font-size: 19px;
   }
 
+
+  /* Mô tả QR */
   .qr-description {
     font-size: 13px;
+
     margin-bottom: 18px;
   }
 
+
+  /* QR */
   .qr-image {
     width: 230px;
+
     padding: 8px;
+
     border-radius: 14px;
   }
 
+
+  /* Thông tin tài khoản */
   .qr-info {
     padding: 12px 14px;
+
     border-radius: 14px;
   }
 
+
+  /*
+     Trên điện thoại:
+     Mỗi dòng hiển thị theo chiều dọc
+  */
   .qr-info-row {
     flex-direction: column;
+
     align-items: flex-start;
+
     gap: 5px;
+
     padding: 11px 0;
   }
 
+
+  /* Giá trị không căn phải nữa */
   .qr-info-row strong {
     text-align: left;
   }
 
+
+  /* Số tiền */
   .qr-info-row .qr-amount {
     font-size: 18px;
   }
 
+
+  /* Nút */
   .qr-payment-section .payment-submit-btn,
   .qr-back-btn {
     padding: 12px 16px;
+
     font-size: 14px;
+  }
+
+
+  /* Thông tin dịch vụ */
+  .payment-service,
+  .service-payment {
+    align-items: flex-start;
+  }
+
+
+  /* Giá dịch vụ */
+  .payment-price-box {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 6px;
+  }
+
+
+  /* Phương thức thanh toán */
+  .payment-method {
+    padding: 13px;
+  }
+}
+
+
+/* =========================================================
+   26. RESPONSIVE - ĐIỆN THOẠI RẤT NHỎ
+========================================================= */
+
+@media (max-width: 360px) {
+
+  /* Tiêu đề nhỏ hơn */
+  .payment-heading h1 {
+    font-size: 26px;
+  }
+
+
+  /* QR */
+  .qr-image {
+    width: 205px;
+  }
+
+
+  /* Card */
+  .payment-card {
+    padding: 16px;
+  }
+
+
+  /* Phần QR */
+  .qr-payment-section {
+    padding: 16px 10px;
   }
 }
