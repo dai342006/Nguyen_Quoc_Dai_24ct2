@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // ========================================
-// Freelancer xem yêu cầu khách hàng
+// Freelancer xem yêu cầu của khách hàng và nhận yêu cầu
 // ========================================
 
 function YeuCauFreelancer({

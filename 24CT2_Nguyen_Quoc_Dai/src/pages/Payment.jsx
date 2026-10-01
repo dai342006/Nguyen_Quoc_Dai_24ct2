@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+//============================Trang thanh toan=============
 function Payment({ setPage, selectedService, currentUser }) {
   const [paymentMethod, setPaymentMethod] = useState("bank");
   const [loading, setLoading] = useState(false);

@@ -1,36 +1,69 @@
-/* ========================================
-   YÊU CẦU CỦA TÔI
-======================================== */
+/* =========================================================
+   SKILLHUB - YÊU CẦU KHACH HÀNG
 
-/* Danh sách các yêu cầu */
+   Chức năng:
+   - Hiển thị danh sách yêu cầu của khách hàng
+   - Thiết kế card yêu cầu
+   - Hiển thị mã yêu cầu
+   - Hiển thị tiêu đề và mô tả
+   - Hiển thị thông tin phụ
+   - Hiển thị trạng thái
+   - Nút thêm yêu cầu
+   - Responsive trên nhiều kích thước màn hình
+========================================================= */
+
+
+/* =========================================================
+   1. DANH SÁCH YÊU CẦU
+========================================================= */
+
 .request-list {
-  /* Hiển thị các yêu cầu theo dạng cột */
+  /* Xếp các yêu cầu theo chiều dọc */
   display: flex;
 
-  /* Xếp các phần tử theo chiều dọc */
   flex-direction: column;
 
-  /* Khoảng cách giữa các yêu cầu */
-  gap: 16px;
-}
-
-/* Một yêu cầu */
-.request-item {
-  /* Chia nội dung thành 3 cột:
-     - Icon
-     - Nội dung
-     - Trạng thái */
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-
-  /* Khoảng cách giữa các cột */
+  /* Khoảng cách giữa các card */
   gap: 18px;
 
-  /* Căn giữa theo chiều dọc */
+  /* Chiếm toàn bộ chiều rộng */
+  width: 100%;
+}
+
+
+/* =========================================================
+   2. CARD YÊU CẦU
+========================================================= */
+
+.request-item {
+  /*
+     Bố cục gồm:
+
+     1. Icon
+     2. Nội dung
+     3. Trạng thái
+  */
+  display: grid;
+
+  grid-template-columns:
+    62px
+    minmax(0, 1fr)
+    auto;
+
+  /* Khoảng cách giữa các cột */
+  gap: 20px;
+
+  /* Căn các thành phần theo chiều dọc */
   align-items: center;
 
-  /* Khoảng cách bên trong */
-  padding: 22px;
+  /* Chiếm toàn bộ chiều rộng */
+  width: 100%;
+
+  /* Tính cả padding vào width */
+  box-sizing: border-box;
+
+  /* Khoảng cách bên trong card */
+  padding: 24px;
 
   /* Màu nền */
   background: #ffffff;
@@ -39,154 +72,773 @@
   border: 1px solid #e5e9f0;
 
   /* Bo góc */
-  border-radius: 18px;
+  border-radius: 20px;
 
-  /* Hiệu ứng khi rê chuột */
-  transition: 0.2s ease;
+  /* Bóng nhẹ */
+  box-shadow:
+    0 5px 20px rgba(27, 39, 74, 0.04);
+
+  /* Hiệu ứng */
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
 }
 
-/* Hiệu ứng khi rê chuột vào yêu cầu */
+
+/* =========================================================
+   3. HIỆU ỨNG KHI DI CHUỘT
+========================================================= */
+
 .request-item:hover {
-  /* Yêu cầu nổi lên một chút */
-  transform: translateY(-2px);
+  /* Card nổi lên */
+  transform: translateY(-4px);
 
-  /* Tạo bóng */
-  box-shadow: 0 8px 25px rgba(27, 39, 74, 0.06);
+  /* Viền tím nhẹ */
+  border-color: #d9d5ff;
+
+  /* Bóng rõ hơn */
+  box-shadow:
+    0 14px 35px rgba(27, 39, 74, 0.09);
 }
 
-/* Icon của yêu cầu */
+
+/* =========================================================
+   4. ICON YÊU CẦU
+========================================================= */
+
 .request-item-icon {
-  /* Chiều rộng */
-  width: 56px;
+  /* Kích thước */
+  width: 62px;
+  height: 62px;
 
-  /* Chiều cao */
-  height: 56px;
+  /* Không cho icon bị co */
+  flex-shrink: 0;
 
-  /* Căn icon vào giữa */
+  /* Căn icon giữa */
   display: grid;
   place-items: center;
 
-  /* Màu nền của icon */
-  background: #eeebff;
+  /* Nền gradient tím */
+  background:
+    linear-gradient(
+      135deg,
+      #f0eeff,
+      #e8e5ff
+    );
+
+  /* Viền */
+  border: 1px solid #dedaff;
 
   /* Bo góc */
-  border-radius: 14px;
+  border-radius: 17px;
 
   /* Kích thước icon */
-  font-size: 24px;
+  font-size: 26px;
+
+  /* Bóng nhẹ */
+  box-shadow:
+    0 5px 14px rgba(99, 91, 255, 0.08);
+
+  /* Hiệu ứng */
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
-/* Phần nội dung chính */
+
+/* Icon chuyển động khi hover card */
+
+.request-item:hover
+.request-item-icon {
+  transform:
+    scale(1.06)
+    rotate(-2deg);
+
+  box-shadow:
+    0 8px 20px rgba(99, 91, 255, 0.15);
+}
+
+
+/* =========================================================
+   5. PHẦN NỘI DUNG
+========================================================= */
+
 .request-item-main {
-  /* Cho phép nội dung co lại khi thiếu chỗ */
+  /* Cho phép nội dung co lại */
   min-width: 0;
 }
 
-/* Mã của yêu cầu */
+
+/* =========================================================
+   6. MÃ YÊU CẦU
+========================================================= */
+
 .request-code {
+  display: inline-flex;
+
+  align-items: center;
+
+  /* Padding */
+  padding: 5px 9px;
+
+  /* Nền */
+  background: #f7f8fb;
+
+  /* Viền */
+  border: 1px solid #eceef3;
+
+  /* Bo tròn */
+  border-radius: 7px;
+
   /* Màu chữ */
-  color: #8a91a2;
+  color: #7d8597;
 
-  /* Kích thước chữ */
-  font-size: 12px;
+  /* Font */
+  font-size: 11px;
 
-  /* Chữ đậm */
-  font-weight: 700;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
 }
 
-/* Tiêu đề yêu cầu */
-.request-item-main h3 {
-  /* Khoảng cách trên và dưới */
-  margin: 5px 0 7px;
 
-  /* Màu chữ */
+/* =========================================================
+   7. TIÊU ĐỀ YÊU CẦU
+========================================================= */
+
+.request-item-main h3 {
+  /* Khoảng cách */
+  margin: 8px 0 8px;
+
+  /* Màu */
   color: #182238;
 
-  /* Kích thước chữ */
-  font-size: 18px;
+  /* Kích thước */
+  font-size: 19px;
+
+  /* Độ đậm */
+  font-weight: 750;
+
+  /* Chiều cao dòng */
+  line-height: 1.4;
+
+  /* Khoảng cách chữ */
+  letter-spacing: -0.2px;
+
+  /* Không phá layout */
+  word-break: break-word;
+
+  /* Hiệu ứng */
+  transition: color 0.2s ease;
 }
 
-/* Mô tả yêu cầu */
-.request-item-main p {
-  /* Xóa margin mặc định và tạo khoảng cách phía dưới */
-  margin: 0 0 12px;
 
-  /* Màu chữ */
+/* Khi hover */
+
+.request-item:hover
+.request-item-main h3 {
+  color: #5c54e9;
+}
+
+
+/* =========================================================
+   8. MÔ TẢ
+========================================================= */
+
+.request-item-main p {
+  /* Xóa margin mặc định */
+  margin: 0 0 14px;
+
+  /* Màu */
   color: #727a8b;
 
-  /* Kích thước chữ */
+  /* Kích thước */
   font-size: 14px;
 
   /* Chiều cao dòng */
-  line-height: 1.5;
+  line-height: 1.65;
 
-  /* Hiển thị nội dung dạng nhiều dòng */
+  /* Chỉ hiển thị tối đa 2 dòng */
   display: -webkit-box;
 
-  /* Giới hạn tối đa 2 dòng */
   -webkit-line-clamp: 2;
 
-  /* Xác định hướng hiển thị */
   -webkit-box-orient: vertical;
 
-  /* Ẩn phần nội dung vượt quá */
   overflow: hidden;
 }
 
-/* Thông tin phụ của yêu cầu */
+
+/* =========================================================
+   9. THÔNG TIN PHỤ
+========================================================= */
+
 .request-meta {
   /* Hiển thị theo hàng */
   display: flex;
 
-  /* Cho phép xuống dòng khi màn hình nhỏ */
+  /* Cho phép xuống dòng */
   flex-wrap: wrap;
 
-  /* Khoảng cách giữa các thông tin */
-  gap: 16px;
+  /* Khoảng cách */
+  gap: 8px;
 
-  /* Màu chữ */
-  color: #7a8191;
+  /* Màu */
+  color: #747c8e;
 
-  /* Kích thước chữ */
+  /* Kích thước */
   font-size: 13px;
 }
 
-/* Các thông tin bên trong meta */
+
+/* =========================================================
+   10. TỪNG THÔNG TIN META
+========================================================= */
+
 .request-meta span {
-  /* Không cho chữ bị xuống dòng */
+  /* Hiển thị đẹp hơn */
+  display: inline-flex;
+
+  align-items: center;
+
+  /* Không xuống dòng */
   white-space: nowrap;
+
+  /* Chiều cao */
+  min-height: 29px;
+
+  /* Padding */
+  padding: 5px 10px;
+
+  /* Nền */
+  background: #f7f8fb;
+
+  /* Viền */
+  border: 1px solid #eceef3;
+
+  /* Bo tròn */
+  border-radius: 8px;
+
+  /* Màu */
+  color: #687286;
+
+  /* Hiệu ứng */
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
-/* Nút thêm yêu cầu */
+
+/* Hover meta */
+
+.request-meta span:hover {
+  background: #f3f2ff;
+
+  border-color: #ddd9ff;
+
+  color: #5c54e9;
+}
+
+
+/* =========================================================
+   11. TRẠNG THÁI
+========================================================= */
+
+/*
+   Class .status có thể được sử dụng trong JSX
+   để hiển thị trạng thái yêu cầu.
+*/
+
+.request-item > .status {
+  /* Hiển thị dạng inline-flex */
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  /* Không cho co nhỏ */
+  flex-shrink: 0;
+
+  /* Padding */
+  padding: 8px 13px;
+
+  /* Bo tròn dạng pill */
+  border-radius: 999px;
+
+  /* Nền mặc định */
+  background: #f3f4f8;
+
+  /* Màu chữ */
+  color: #667084;
+
+  /* Kích thước */
+  font-size: 12px;
+
+  font-weight: 700;
+
+  /* Trắng */
+  white-space: nowrap;
+
+  /* Viền */
+  border: 1px solid transparent;
+}
+
+
+/* Chấm tròn phía trước trạng thái */
+
+.request-item > .status::before {
+  content: "";
+
+  width: 7px;
+
+  height: 7px;
+
+  margin-right: 7px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+
+/* =========================================================
+   12. CÁC LOẠI TRẠNG THÁI
+========================================================= */
+
+/* Trạng thái đang chờ */
+
+.request-item > .status.pending {
+  background: #fff8e5;
+
+  color: #a96f00;
+
+  border-color: #ffe8aa;
+}
+
+
+/* Trạng thái đã nhận */
+
+.request-item > .status.accepted {
+  background: #ebf8f0;
+
+  color: #248153;
+
+  border-color: #cdeedb;
+}
+
+
+/* Trạng thái hoàn thành */
+
+.request-item > .status.completed {
+  background: #eaf2ff;
+
+  color: #3b6fc4;
+
+  border-color: #d4e3ff;
+}
+
+
+/* Trạng thái đã hủy */
+
+.request-item > .status.cancelled {
+  background: #fff0f0;
+
+  color: #cb4c4c;
+
+  border-color: #ffd5d5;
+}
+
+
+/* =========================================================
+   13. NÚT THÊM YÊU CẦU
+========================================================= */
+
 .request-add-btn {
-  /* Tạo khoảng cách phía trên */
+  /* Khoảng cách phía trên */
   margin-top: 24px;
+
+  /* Căn giữa */
+  display: flex;
+
+  justify-content: center;
 }
 
-/* ========================================
- RESPONSIVE
- Áp dụng khi màn hình nhỏ hơn hoặc bằng 700px
-======================================== */
+
+/* Nút bên trong */
+
+.request-add-btn button {
+  /* Khoảng cách */
+  padding: 13px 22px;
+
+  /* Viền */
+  border: none;
+
+  /* Bo góc */
+  border-radius: 12px;
+
+  /* Màu SkillHub */
+  background:
+    linear-gradient(
+      135deg,
+      #635bff,
+      #7a72ff
+    );
+
+  /* Màu chữ */
+  color: #ffffff;
+
+  /* Font */
+  font-size: 14px;
+
+  font-weight: 700;
+
+  /* Con trỏ */
+  cursor: pointer;
+
+  /* Bóng */
+  box-shadow:
+    0 8px 18px rgba(99, 91, 255, 0.20);
+
+  /* Hiệu ứng */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* Hover nút thêm */
+
+.request-add-btn button:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #554be8,
+      #6d64ed
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px rgba(99, 91, 255, 0.28);
+}
+
+
+/* Khi click */
+
+.request-add-btn button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   14. TRƯỜNG HỢP NÚT CÓ CLASS primary-btn
+========================================================= */
+
+.request-add-btn .primary-btn {
+  width: auto;
+
+  min-height: 46px;
+
+  padding: 12px 22px;
+}
+
+
+/* =========================================================
+   15. TRẠNG THÁI DANH SÁCH TRỐNG
+========================================================= */
+
+.request-empty {
+  /* Khoảng cách */
+  padding: 50px 30px;
+
+  /* Căn giữa */
+  text-align: center;
+
+  /* Nền */
+  background: #ffffff;
+
+  /* Viền nét đứt */
+  border: 1px dashed #dfe3ec;
+
+  /* Bo góc */
+  border-radius: 18px;
+
+  /* Màu */
+  color: #747d8d;
+}
+
+
+/* Icon */
+
+.request-empty-icon {
+  font-size: 45px;
+
+  margin-bottom: 12px;
+}
+
+
+/* Tiêu đề */
+
+.request-empty h3 {
+  margin: 0 0 8px;
+
+  color: #273042;
+
+  font-size: 20px;
+}
+
+
+/* Nội dung */
+
+.request-empty p {
+  margin: 0;
+
+  color: #7b8495;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   16. RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .request-item {
+    /*
+       Thu nhỏ bố cục
+    */
+    grid-template-columns:
+      56px
+      minmax(0, 1fr)
+      auto;
+
+    gap: 16px;
+
+    padding: 20px;
+  }
+
+
+  .request-item-icon {
+    width: 56px;
+
+    height: 56px;
+
+    font-size: 24px;
+  }
+
+
+  .request-item-main h3 {
+    font-size: 18px;
+  }
+
+
+  .request-item > .status {
+    padding: 7px 10px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   17. RESPONSIVE - MÀN HÌNH NHỎ
+========================================================= */
 
 @media (max-width: 700px) {
 
-  /* Thay đổi bố cục yêu cầu trên điện thoại */
+  /*
+     Card chuyển từ 3 cột sang 1 cột
+  */
   .request-item {
-      /* Chuyển từ 3 cột thành 1 cột */
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    padding: 20px;
+
+    align-items: start;
   }
 
-  /* Thu nhỏ icon trên điện thoại */
+
+  /*
+     Icon
+  */
   .request-item-icon {
-      /* Chiều rộng */
-      width: 48px;
+    width: 52px;
 
-      /* Chiều cao */
-      height: 48px;
+    height: 52px;
+
+    font-size: 22px;
+
+    border-radius: 14px;
   }
 
-  /* Đưa trạng thái về bên trái */
+
+  /*
+     Nội dung
+  */
+  .request-item-main h3 {
+    font-size: 18px;
+  }
+
+
+  /*
+     Mô tả
+  */
+  .request-item-main p {
+    font-size: 13px;
+  }
+
+
+  /*
+     Trạng thái đưa về bên trái
+  */
   .request-item > .status {
-      justify-self: start;
+    justify-self: start;
+  }
+
+
+  /*
+     Meta có thể xuống dòng
+  */
+  .request-meta {
+    gap: 6px;
+  }
+
+
+  .request-meta span {
+    font-size: 12px;
+
+    min-height: 27px;
+
+    padding: 5px 8px;
+  }
+
+
+  /*
+     Nút thêm yêu cầu
+  */
+  .request-add-btn {
+    width: 100%;
+  }
+
+
+  .request-add-btn button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   18. RESPONSIVE - ĐIỆN THOẠI NHỎ
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .request-list {
+    gap: 14px;
+  }
+
+
+  .request-item {
+    padding: 17px;
+
+    border-radius: 16px;
+  }
+
+
+  .request-item-icon {
+    width: 48px;
+
+    height: 48px;
+
+    font-size: 21px;
+  }
+
+
+  .request-code {
+    font-size: 10px;
+
+    padding: 4px 8px;
+  }
+
+
+  .request-item-main h3 {
+    font-size: 17px;
+
+    margin-top: 7px;
+  }
+
+
+  .request-item-main p {
+    margin-bottom: 11px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+  }
+
+
+  .request-meta span {
+    font-size: 11px;
+
+    padding: 5px 8px;
+  }
+
+
+  .request-item > .status {
+    padding: 7px 10px;
+
+    font-size: 11px;
+  }
+
+
+  .request-add-btn {
+    margin-top: 18px;
+  }
+}
+
+
+/* =========================================================
+   19. ĐIỆN THOẠI RẤT NHỎ
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .request-item {
+    padding: 14px;
+  }
+
+
+  .request-item-main h3 {
+    font-size: 16px;
+  }
+
+
+  .request-item-main p {
+    font-size: 12px;
+  }
+
+
+  .request-item-icon {
+    width: 44px;
+
+    height: 44px;
+
+    font-size: 19px;
+  }
+
+
+  .request-meta span {
+    font-size: 10px;
   }
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+//========================= trang dang ky tai khoản =========================
 function Register({ setPage }) {
   const [form, setForm] = useState({
     HoTen: "",

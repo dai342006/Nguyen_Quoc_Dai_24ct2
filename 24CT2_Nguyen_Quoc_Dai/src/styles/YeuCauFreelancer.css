@@ -1,181 +1,802 @@
-/* ========================================
-   YÊU CẦU DÀNH CHO FREELANCER
-======================================== */
+/* =========================================================
+   SKILLHUB - YÊU CẦU DÀNH CHO FREELANCER
 
-/* Danh sách các yêu cầu dành cho Freelancer */
+   Chức năng:
+   - Hiển thị danh sách yêu cầu khách hàng
+   - Thiết kế card yêu cầu
+   - Hiển thị icon
+   - Hiển thị nội dung và thông tin phụ
+   - Hiển thị nút thao tác
+   - Responsive trên tablet và điện thoại
+========================================================= */
+
+
+/* =========================================================
+   1. DANH SÁCH YÊU CẦU
+========================================================= */
+
+/*
+   Các yêu cầu được xếp theo chiều dọc.
+*/
 .freelancer-request-list {
-  /* Sử dụng Flexbox */
   display: flex;
 
-  /* Xếp các thẻ theo chiều dọc */
   flex-direction: column;
 
-  /* Khoảng cách giữa các thẻ */
-  gap: 16px;
-}
+  gap: 18px;
 
-/* Một thẻ yêu cầu */
-.freelancer-request-card {
-  /* Chia thành 3 cột:
-     - Icon
-     - Nội dung
-     - Nút thao tác */
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-
-  /* Khoảng cách giữa các cột */
-  gap: 20px;
-
-  /* Căn giữa nội dung theo chiều dọc */
-  align-items: center;
-
-  /* Khoảng cách bên trong thẻ */
-  padding: 24px;
-
-  /* Màu nền */
-  background: #ffffff;
-
-  /* Đường viền */
-  border: 1px solid #e5e9f0;
-
-  /* Bo tròn góc */
-  border-radius: 18px;
-
-  /* Tạo hiệu ứng chuyển động */
-  transition: 0.2s ease;
-}
-
-/* Hiệu ứng khi di chuột vào thẻ */
-.freelancer-request-card:hover {
-  /* Thẻ nổi lên một chút */
-  transform: translateY(-2px);
-
-  /* Tạo bóng phía dưới */
-  box-shadow:
-    0 8px 25px rgba(27, 39, 74, 0.07);
-}
-
-/* Icon của yêu cầu */
-.freelancer-request-icon {
-  /* Chiều rộng */
-  width: 58px;
-
-  /* Chiều cao */
-  height: 58px;
-
-  /* Căn icon vào chính giữa */
-  display: grid;
-  place-items: center;
-
-  /* Màu nền của icon */
-  background: #eeebff;
-
-  /* Bo góc */
-  border-radius: 15px;
-
-  /* Kích thước icon */
-  font-size: 25px;
-}
-
-/* Phần nội dung yêu cầu */
-.freelancer-request-content {
-  /* Cho phép nội dung co lại khi không đủ chỗ */
-  min-width: 0;
-}
-
-/* Tiêu đề yêu cầu */
-.freelancer-request-content h3 {
-  /* Khoảng cách trên và dưới */
-  margin: 5px 0 8px;
-
-  /* Màu chữ */
-  color: #182238;
-
-  /* Kích thước chữ */
-  font-size: 19px;
-}
-
-/* Mô tả yêu cầu */
-.freelancer-request-content p {
-  /* Khoảng cách phía dưới */
-  margin: 0 0 14px;
-
-  /* Màu chữ */
-  color: #727a8b;
-
-  /* Kích thước chữ */
-  font-size: 14px;
-
-  /* Khoảng cách giữa các dòng */
-  line-height: 1.6;
-}
-
-/* Các thông tin phụ của yêu cầu */
-.freelancer-request-meta {
-  /* Hiển thị theo hàng */
-  display: flex;
-
-  /* Cho phép xuống dòng trên màn hình nhỏ */
-  flex-wrap: wrap;
-
-  /* Khoảng cách giữa các thông tin */
-  gap: 14px;
-
-  /* Màu chữ */
-  color: #737b8d;
-
-  /* Kích thước chữ */
-  font-size: 13px;
-}
-
-/* Khu vực nút thao tác */
-.freelancer-request-action {
-  /* Sử dụng Flexbox */
-  display: flex;
-
-  /* Xếp các nút theo chiều dọc */
-  flex-direction: column;
-
-  /* Các phần tử kéo đầy chiều rộng */
-  align-items: stretch;
-
-  /* Khoảng cách giữa các nút */
-  gap: 12px;
-
-  /* Độ rộng tối thiểu */
-  min-width: 150px;
-}
-
-/* Nút chính trong khu vực thao tác */
-.freelancer-request-action .primary-btn {
-  /* Nút chiếm toàn bộ chiều rộng */
   width: 100%;
 }
 
-/* ========================================
- RESPONSIVE
- Áp dụng khi màn hình nhỏ hơn hoặc bằng 800px
-======================================== */
+
+/* =========================================================
+   2. CARD YÊU CẦU
+========================================================= */
+
+.freelancer-request-card {
+  /*
+     Chia card thành 3 phần:
+
+     1. Icon
+     2. Nội dung
+     3. Nút thao tác
+  */
+  display: grid;
+
+  grid-template-columns: 64px minmax(0, 1fr) 165px;
+
+  align-items: center;
+
+  gap: 20px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e9f0;
+
+  border-radius: 20px;
+
+  /*
+     Bóng nhẹ
+  */
+  box-shadow:
+    0 5px 20px rgba(27, 39, 74, 0.04);
+
+  /*
+     Hiệu ứng chuyển động
+  */
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+
+/* =========================================================
+   3. HIỆU ỨNG CARD
+========================================================= */
+
+.freelancer-request-card:hover {
+  /*
+     Card nổi lên
+  */
+  transform: translateY(-4px);
+
+  /*
+     Viền tím nhẹ
+  */
+  border-color: #d7d3ff;
+
+  /*
+     Bóng rõ hơn khi hover
+  */
+  box-shadow:
+    0 14px 35px rgba(27, 39, 74, 0.09);
+}
+
+
+/* =========================================================
+   4. ICON YÊU CẦU
+========================================================= */
+
+.freelancer-request-icon {
+  /*
+     Kích thước icon
+  */
+  width: 64px;
+
+  height: 64px;
+
+  flex-shrink: 0;
+
+  /*
+     Căn icon chính giữa
+  */
+  display: grid;
+
+  place-items: center;
+
+  /*
+     Nền tím rất nhạt
+  */
+  background:
+    linear-gradient(
+      135deg,
+      #efedff,
+      #e7e4ff
+    );
+
+  /*
+     Viền nhẹ
+  */
+  border: 1px solid #dedaff;
+
+  /*
+     Bo góc
+  */
+  border-radius: 17px;
+
+  /*
+     Kích thước emoji/icon
+  */
+  font-size: 27px;
+
+  /*
+     Bóng nhẹ
+  */
+  box-shadow:
+    0 5px 12px rgba(99, 91, 255, 0.08);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+
+/*
+   Khi hover card thì icon cũng chuyển động.
+*/
+.freelancer-request-card:hover
+.freelancer-request-icon {
+  transform: scale(1.06) rotate(-2deg);
+
+  box-shadow:
+    0 8px 18px rgba(99, 91, 255, 0.14);
+}
+
+
+/* =========================================================
+   5. PHẦN NỘI DUNG
+========================================================= */
+
+.freelancer-request-content {
+  /*
+     Cho phép nội dung co lại
+     khi màn hình không đủ rộng.
+  */
+  min-width: 0;
+}
+
+
+/* =========================================================
+   6. TIÊU ĐỀ YÊU CẦU
+========================================================= */
+
+.freelancer-request-content h3 {
+  margin: 0 0 9px;
+
+  color: #182238;
+
+  font-size: 19px;
+
+  font-weight: 750;
+
+  line-height: 1.4;
+
+  letter-spacing: -0.2px;
+
+  /*
+     Nếu tiêu đề quá dài thì không phá layout.
+  */
+  word-break: break-word;
+}
+
+
+/*
+   Hiệu ứng nhẹ cho tiêu đề khi hover.
+*/
+.freelancer-request-card:hover
+.freelancer-request-content h3 {
+  color: #5b52e8;
+}
+
+
+/* =========================================================
+   7. MÔ TẢ YÊU CẦU
+========================================================= */
+
+.freelancer-request-content p {
+  margin: 0 0 15px;
+
+  color: #70798c;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  /*
+     Không để text làm vỡ giao diện.
+  */
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   8. THÔNG TIN PHỤ
+========================================================= */
+
+.freelancer-request-meta {
+  /*
+     Hiển thị các thông tin theo hàng.
+  */
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  color: #737b8d;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   9. TỪNG THÔNG TIN META
+
+   Ví dụ:
+   👤 Nguyễn Văn A
+   💰 500.000đ
+   📅 01/10/2026
+========================================================= */
+
+.freelancer-request-meta span {
+  display: inline-flex;
+
+  align-items: center;
+
+  min-height: 30px;
+
+  box-sizing: border-box;
+
+  padding: 5px 10px;
+
+  background: #f7f8fb;
+
+  border: 1px solid #eceef3;
+
+  border-radius: 8px;
+
+  color: #667084;
+
+  line-height: 1.2;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/*
+   Hover từng thông tin.
+*/
+.freelancer-request-meta span:hover {
+  background: #f3f2ff;
+
+  border-color: #ddd9ff;
+
+  color: #5d55e7;
+}
+
+
+/* =========================================================
+   10. KHU VỰC NÚT THAO TÁC
+========================================================= */
+
+.freelancer-request-action {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: stretch;
+
+  gap: 10px;
+
+  min-width: 165px;
+}
+
+
+/* =========================================================
+   11. NÚT CHÍNH
+========================================================= */
+
+.freelancer-request-action .primary-btn {
+  width: 100%;
+
+  min-height: 46px;
+
+  box-sizing: border-box;
+
+  padding: 12px 16px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  /*
+     Gradient màu thương hiệu SkillHub
+  */
+  background:
+    linear-gradient(
+      135deg,
+      #635bff,
+      #786fff
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 16px rgba(99, 91, 255, 0.20);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* Hover nút */
+.freelancer-request-action .primary-btn:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #554be8,
+      #6960ed
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 11px 22px rgba(99, 91, 255, 0.28);
+}
+
+
+/* Khi click */
+.freelancer-request-action .primary-btn:active {
+  transform: translateY(0);
+
+  box-shadow:
+    0 5px 12px rgba(99, 91, 255, 0.20);
+}
+
+
+/* Nút bị disabled */
+.freelancer-request-action .primary-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   12. NÚT PHỤ NẾU CÓ
+========================================================= */
+
+/*
+   Nếu JSX có secondary-btn thì phần này
+   sẽ giúp nút phụ đồng bộ giao diện.
+*/
+.freelancer-request-action .secondary-btn {
+  width: 100%;
+
+  min-height: 44px;
+
+  box-sizing: border-box;
+
+  padding: 11px 16px;
+
+  border: 1px solid #dfe3ec;
+
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  color: #525c6e;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Hover */
+.freelancer-request-action .secondary-btn:hover {
+  background: #f6f7fa;
+
+  border-color: #cfd4df;
+
+  color: #30394b;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   13. TRẠNG THÁI / BADGE
+========================================================= */
+
+/*
+   Nếu danh sách yêu cầu có trạng thái,
+   các class bên dưới có thể sử dụng trực tiếp.
+*/
+
+.freelancer-request-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: fit-content;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: #f3f4f8;
+
+  color: #667084;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+/* Trạng thái chờ */
+.freelancer-request-status.pending {
+  background: #fff7df;
+
+  color: #a56a00;
+}
+
+
+/* Trạng thái đã nhận */
+.freelancer-request-status.accepted {
+  background: #eaf8f0;
+
+  color: #218052;
+}
+
+
+/* =========================================================
+   14. DẤU CHẤM TRẠNG THÁI
+========================================================= */
+
+.freelancer-request-status::before {
+  content: "";
+
+  width: 7px;
+
+  height: 7px;
+
+  margin-right: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+
+/* =========================================================
+   15. KHI DANH SÁCH TRỐNG
+========================================================= */
+
+/*
+   Dùng trong trường hợp Freelancer chưa có yêu cầu.
+*/
+.freelancer-request-empty {
+  padding: 50px 30px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px dashed #dfe3ec;
+
+  border-radius: 18px;
+
+  color: #747d8d;
+}
+
+
+/* Icon trạng thái trống */
+.freelancer-request-empty-icon {
+  margin-bottom: 12px;
+
+  font-size: 45px;
+}
+
+
+/* Tiêu đề */
+.freelancer-request-empty h3 {
+  margin: 0 0 8px;
+
+  color: #273042;
+
+  font-size: 20px;
+}
+
+
+/* Nội dung */
+.freelancer-request-empty p {
+  margin: 0;
+
+  color: #7b8495;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   16. RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .freelancer-request-card {
+    /*
+       Thu nhỏ cột nút
+    */
+    grid-template-columns:
+      58px minmax(0, 1fr) 145px;
+
+    gap: 16px;
+
+    padding: 20px;
+  }
+
+
+  .freelancer-request-icon {
+    width: 58px;
+
+    height: 58px;
+
+    font-size: 24px;
+  }
+
+
+  .freelancer-request-action {
+    min-width: 145px;
+  }
+}
+
+
+/* =========================================================
+   17. RESPONSIVE - MÀN HÌNH NHỎ
+========================================================= */
 
 @media (max-width: 800px) {
 
-  /* Thay đổi bố cục thẻ trên màn hình nhỏ */
+  /*
+     Chuyển card thành bố cục dọc.
+  */
   .freelancer-request-card {
-      /* Chuyển từ 3 cột thành 1 cột */
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+
+    padding: 20px;
   }
 
-  /* Thu nhỏ icon */
+
+  /*
+     Icon
+  */
   .freelancer-request-icon {
-      /* Chiều rộng */
-      width: 50px;
+    width: 52px;
 
-      /* Chiều cao */
-      height: 50px;
+    height: 52px;
+
+    font-size: 22px;
+
+    border-radius: 14px;
   }
 
-  /* Khu vực nút thao tác chiếm toàn bộ chiều rộng */
+
+  /*
+     Nội dung
+  */
+  .freelancer-request-content h3 {
+    font-size: 18px;
+  }
+
+
+  /*
+     Khu vực nút chiếm toàn bộ chiều rộng
+  */
   .freelancer-request-action {
-      width: 100%;
+    width: 100%;
+
+    min-width: 0;
+  }
+
+
+  /*
+     Nút lớn hơn để dễ bấm bằng tay
+  */
+  .freelancer-request-action .primary-btn,
+  .freelancer-request-action .secondary-btn {
+    min-height: 48px;
+  }
+}
+
+
+/* =========================================================
+   18. RESPONSIVE - ĐIỆN THOẠI
+========================================================= */
+
+@media (max-width: 480px) {
+
+  /*
+     Danh sách
+  */
+  .freelancer-request-list {
+    gap: 14px;
+  }
+
+
+  /*
+     Card
+  */
+  .freelancer-request-card {
+    padding: 17px;
+
+    border-radius: 16px;
+
+    gap: 13px;
+  }
+
+
+  /*
+     Icon
+  */
+  .freelancer-request-icon {
+    width: 48px;
+
+    height: 48px;
+
+    font-size: 21px;
+
+    border-radius: 13px;
+  }
+
+
+  /*
+     Tiêu đề
+  */
+  .freelancer-request-content h3 {
+    margin-bottom: 7px;
+
+    font-size: 17px;
+  }
+
+
+  /*
+     Mô tả
+  */
+  .freelancer-request-content p {
+    margin-bottom: 12px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+  }
+
+
+  /*
+     Meta
+  */
+  .freelancer-request-meta {
+    gap: 6px;
+
+    font-size: 12px;
+  }
+
+
+  /*
+     Badge meta
+  */
+  .freelancer-request-meta span {
+    padding: 5px 8px;
+
+    min-height: 28px;
+  }
+
+
+  /*
+     Nút
+  */
+  .freelancer-request-action {
+    gap: 8px;
+  }
+
+
+  .freelancer-request-action .primary-btn,
+  .freelancer-request-action .secondary-btn {
+    min-height: 46px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   19. ĐIỆN THOẠI RẤT NHỎ
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .freelancer-request-card {
+    padding: 14px;
+  }
+
+
+  .freelancer-request-content h3 {
+    font-size: 16px;
+  }
+
+
+  .freelancer-request-content p {
+    font-size: 12px;
+  }
+
+
+  .freelancer-request-icon {
+    width: 44px;
+
+    height: 44px;
+
+    font-size: 20px;
   }
 }
