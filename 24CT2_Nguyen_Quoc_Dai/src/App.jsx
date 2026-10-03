@@ -19,7 +19,7 @@ import Orders from "./pages/Orders";
 import ManageServices from "./pages/ManageServices";
 import Payment from "./pages/Payment";
 import DangYeuCau from "./pages/DangYeuCau";
-import YeuCauCuaToi from "./pages/YeuCauCuaToi";
+import YeuCauCuaToi from "./pages/YeuCauCuakhach";
 import YeuCauFreelancer from "./pages/YeuCauFreelancer";
 import Admin from "./pages/Admin";
 
@@ -41,7 +41,7 @@ import "./styles/freelancer.css";
 import "./styles/orders.css";
 import "./styles/payment.css";
 import "./styles/DangYeuCau.css";
-import "./styles/YeuCauCuaToi.css";
+import "./styles/YeuCauCuakhach.css";
 import "./styles/YeuCauFreelancer.css";
 import "./styles/admin.css";
 import "./styles/danhgia.css";
