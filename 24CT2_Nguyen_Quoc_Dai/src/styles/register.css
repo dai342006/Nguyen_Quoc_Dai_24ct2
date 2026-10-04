@@ -4,7 +4,9 @@
 ========================================================= */
 
 
-/* ==================== TRANG ĐĂNG KÝ ==================== */
+/* =========================================================
+   1. TRANG ĐĂNG KÝ
+========================================================= */
 
 .register-page {
     min-height: 100vh;
@@ -40,7 +42,9 @@
   }
   
   
-  /* Trang trí nền */
+  /* =========================================================
+     2. TRANG TRÍ NỀN
+  ========================================================= */
   
   .register-page::before {
     content: "";
@@ -48,9 +52,11 @@
     position: absolute;
   
     width: 300px;
+  
     height: 300px;
   
     top: -150px;
+  
     left: -100px;
   
     background: rgba(99, 91, 255, 0.08);
@@ -67,9 +73,11 @@
     position: absolute;
   
     width: 240px;
+  
     height: 240px;
   
     right: -90px;
+  
     bottom: -130px;
   
     background: rgba(120, 111, 255, 0.07);
@@ -80,7 +88,9 @@
   }
   
   
-  /* ==================== CARD ==================== */
+  /* =========================================================
+     3. CARD ĐĂNG KÝ
+  ========================================================= */
   
   .register-card {
     position: relative;
@@ -107,7 +117,9 @@
   }
   
   
-  /* ==================== LOGO ==================== */
+  /* =========================================================
+     4. LOGO
+  ========================================================= */
   
   .register-brand {
     display: inline-block;
@@ -138,7 +150,9 @@
   }
   
   
-  /* ==================== TIÊU ĐỀ ==================== */
+  /* =========================================================
+     5. TIÊU ĐỀ
+  ========================================================= */
   
   .register-heading {
     margin-bottom: 24px;
@@ -186,9 +200,11 @@
   }
   
   
-  /* ==================== LABEL ==================== */
+  /* =========================================================
+     6. LABEL
+  ========================================================= */
   
-  .register-card label:not(.register-terms) {
+  .register-card label:not(.register-terms):not(.role-option) {
     display: block;
   
     margin: 15px 0 8px;
@@ -201,9 +217,16 @@
   }
   
   
-  /* ==================== INPUT ==================== */
+  /* =========================================================
+     7. INPUT THƯỜNG
+  ========================================================= */
   
-  .register-card input:not([type="checkbox"]) {
+  /*
+     QUAN TRỌNG:
+     Không áp dụng style input này cho radio.
+  */
+  
+  .register-card input:not([type="checkbox"]):not([type="radio"]) {
     width: 100%;
   
     min-height: 48px;
@@ -231,17 +254,28 @@
   }
   
   
-  .register-card input::placeholder {
+  /* Placeholder */
+  
+  .register-card
+  input:not([type="checkbox"]):not([type="radio"])::placeholder {
     color: #a1a7b4;
+  
+    opacity: 1;
   }
   
   
-  .register-card input:not([type="checkbox"]):hover {
+  /* Hover */
+  
+  .register-card
+  input:not([type="checkbox"]):not([type="radio"]):hover {
     border-color: #cfd4df;
   }
   
   
-  .register-card input:not([type="checkbox"]):focus {
+  /* Focus */
+  
+  .register-card
+  input:not([type="checkbox"]):not([type="radio"]):focus {
     border-color: #7e77ff;
   
     background: #fcfcff;
@@ -251,7 +285,9 @@
   }
   
   
-  /* ==================== INPUT LỖI ==================== */
+  /* =========================================================
+     8. INPUT LỖI
+  ========================================================= */
   
   .register-card input.input-error {
     border-color: #ed5a6b;
@@ -260,13 +296,18 @@
   }
   
   
-  .register-card input.input-error:focus {
+  /* Focus khi input bị lỗi */
+  
+  .register-card
+  input.input-error:not([type="radio"]):focus {
     box-shadow:
       0 0 0 4px rgba(237, 90, 107, 0.10);
   }
   
   
-  /* ==================== LỖI ==================== */
+  /* =========================================================
+     9. THÔNG BÁO LỖI
+  ========================================================= */
   
   .register-field-error {
     display: block;
@@ -281,7 +322,9 @@
   }
   
   
-  /* ==================== MẬT KHẨU ==================== */
+  /* =========================================================
+     10. KHUNG MẬT KHẨU
+  ========================================================= */
   
   .register-password-field {
     position: relative;
@@ -295,10 +338,15 @@
   }
   
   
+  /* =========================================================
+     11. NÚT HIỆN / ẨN MẬT KHẨU
+  ========================================================= */
+  
   .register-password-toggle {
     position: absolute;
   
     top: 50%;
+  
     right: 10px;
   
     transform: translateY(-50%);
@@ -320,6 +368,11 @@
     font-weight: 800;
   
     cursor: pointer;
+  
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
   }
   
   
@@ -327,10 +380,207 @@
     background: #eae8ff;
   
     color: #5148d7;
+  
+    transform:
+      translateY(-50%)
+      scale(1.03);
   }
   
   
-  /* ==================== ĐIỀU KHOẢN ==================== */
+  /* =========================================================
+     12. CHỌN VAI TRÒ
+  ========================================================= */
+  
+  /*
+     Hai lựa chọn:
+  
+     🛒 Khách hàng
+     💼 Freelancer
+  */
+  
+  .role-options {
+    display: grid;
+  
+    grid-template-columns: 1fr 1fr;
+  
+    gap: 12px;
+  
+    margin-top: 10px;
+  }
+  
+  
+  /* =========================================================
+     13. MỘT Ô VAI TRÒ
+  ========================================================= */
+  
+  .role-option {
+    display: flex !important;
+  
+    flex-direction: row !important;
+  
+    align-items: center;
+  
+    justify-content: flex-start;
+  
+    gap: 10px;
+  
+    width: 100%;
+  
+    min-height: 50px;
+  
+    box-sizing: border-box;
+  
+    margin: 0 !important;
+  
+    padding: 12px 14px;
+  
+    background: #ffffff;
+  
+    border: 1.5px solid #dfe3ec;
+  
+    border-radius: 12px;
+  
+    color: #465064;
+  
+    font-size: 14px !important;
+  
+    font-weight: 700 !important;
+  
+    cursor: pointer;
+  
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  
+  /* Hover */
+  
+  .role-option:hover {
+    background: #f8f8ff;
+  
+    border-color: #bbb6ff;
+  
+    color: #5c54e9;
+  
+    transform: translateY(-1px);
+  }
+  
+  
+  /* =========================================================
+     14. RADIO BUTTON
+  ========================================================= */
+  
+  /*
+     Reset radio mặc định của trình duyệt.
+     Giúp radio không còn bị kéo thành hình tròn rất lớn.
+  */
+  
+  .role-option input[type="radio"] {
+    appearance: none !important;
+  
+    -webkit-appearance: none !important;
+  
+    width: 18px !important;
+  
+    min-width: 18px !important;
+  
+    max-width: 18px !important;
+  
+    height: 18px !important;
+  
+    min-height: 18px !important;
+  
+    max-height: 18px !important;
+  
+    flex: 0 0 18px !important;
+  
+    margin: 0 !important;
+  
+    padding: 0 !important;
+  
+    border: 2px solid #c9cdd7 !important;
+  
+    border-radius: 50% !important;
+  
+    background: #ffffff !important;
+  
+    box-shadow: none !important;
+  
+    outline: none !important;
+  
+    cursor: pointer;
+  
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  
+  /* Radio khi hover */
+  
+  .role-option input[type="radio"]:hover {
+    border-color: #817aff !important;
+  }
+  
+  
+  /* Radio được chọn */
+  
+  .role-option input[type="radio"]:checked {
+    border-color: #635bff !important;
+  
+    background:
+      radial-gradient(
+        circle,
+        #635bff 0 45%,
+        #ffffff 47% 100%
+      ) !important;
+  
+    box-shadow:
+      0 0 0 3px rgba(99, 91, 255, 0.10) !important;
+  }
+  
+  
+  /* =========================================================
+     15. VAI TRÒ ĐANG ĐƯỢC CHỌN
+  ========================================================= */
+  
+  /*
+     Khi khách hàng chọn:
+     → cả ô sẽ đổi nền và viền.
+  
+     Khi Freelancer chọn:
+     → cả ô cũng đổi nền và viền.
+  */
+  
+  .role-option:has(
+    input[type="radio"]:checked
+  ) {
+    background: #f4f2ff;
+  
+    border-color: #635bff;
+  
+    color: #554be8;
+  
+    box-shadow:
+      0 5px 16px rgba(99, 91, 255, 0.09);
+  }
+  
+  
+  /* Chữ trong lựa chọn */
+  
+  .role-option span {
+    line-height: 1.3;
+  }
+  
+  
+  /* =========================================================
+     16. CHECKBOX ĐIỀU KHOẢN
+  ========================================================= */
   
   .register-terms {
     display: flex !important;
@@ -354,11 +604,17 @@
   .register-terms input[type="checkbox"] {
     width: 17px !important;
   
+    min-width: 17px !important;
+  
     height: 17px !important;
   
-    flex: 0 0 auto;
+    min-height: 17px !important;
+  
+    flex: 0 0 17px;
   
     margin: 1px 0 0;
+  
+    padding: 0;
   
     accent-color: #635bff;
   
@@ -366,7 +622,9 @@
   }
   
   
-  /* ==================== THÔNG BÁO ==================== */
+  /* =========================================================
+     17. THÔNG BÁO
+  ========================================================= */
   
   .register-message {
     padding: 12px 14px;
@@ -387,7 +645,9 @@
   }
   
   
-  /* ==================== NÚT ĐĂNG KÝ ==================== */
+  /* =========================================================
+     18. NÚT ĐĂNG KÝ
+  ========================================================= */
   
   .register-submit {
     width: 100%;
@@ -418,11 +678,21 @@
   
     transition:
       transform 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      background 0.2s ease;
   }
   
   
+  /* Hover */
+  
   .register-submit:hover {
+    background:
+      linear-gradient(
+        135deg,
+        #554be8,
+        #6a61ee
+      );
+  
     transform: translateY(-2px);
   
     box-shadow:
@@ -430,10 +700,14 @@
   }
   
   
+  /* Click */
+  
   .register-submit:active {
     transform: translateY(0);
   }
   
+  
+  /* Disabled */
   
   .register-submit:disabled {
     opacity: 0.6;
@@ -446,7 +720,9 @@
   }
   
   
-  /* ==================== PHÂN CÁCH ==================== */
+  /* =========================================================
+     19. PHÂN CÁCH
+  ========================================================= */
   
   .register-divider {
     position: relative;
@@ -463,6 +739,7 @@
     position: absolute;
   
     left: 0;
+  
     right: 0;
   
     top: 50%;
@@ -488,7 +765,9 @@
   }
   
   
-  /* ==================== NÚT QUAY LẠI ĐĂNG NHẬP ==================== */
+  /* =========================================================
+     20. NÚT QUAY LẠI ĐĂNG NHẬP
+  ========================================================= */
   
   .register-login-btn {
     width: 100%;
@@ -530,9 +809,12 @@
   }
   
   
-  /* ==================== ANIMATION ==================== */
+  /* =========================================================
+     21. ANIMATION
+  ========================================================= */
   
   @keyframes registerShow {
+  
     from {
       opacity: 0;
   
@@ -551,7 +833,55 @@
   }
   
   
-  /* ==================== RESPONSIVE ==================== */
+  /* =========================================================
+     22. RESPONSIVE - TABLET
+  ========================================================= */
+  
+  @media (max-width: 600px) {
+  
+    .register-page {
+      padding: 25px 14px;
+    }
+  
+  
+    .register-card {
+      padding: 30px 22px;
+  
+      border-radius: 20px;
+    }
+  
+  
+    .register-brand {
+      font-size: 23px;
+    }
+  
+  
+    .register-heading h1 {
+      font-size: 29px;
+    }
+  
+  
+    /*
+       Hai vai trò vẫn nằm ngang
+       nếu màn hình còn đủ rộng.
+    */
+  
+    .role-options {
+      gap: 9px;
+    }
+  
+  
+    .role-option {
+      padding: 11px 10px;
+  
+      font-size: 13px !important;
+    }
+  }
+  
+  
+  /* =========================================================
+     23. RESPONSIVE - ĐIỆN THOẠI
+  ========================================================= */
   
   @media (max-width: 500px) {
   
@@ -563,6 +893,8 @@
   
   
     .register-card {
+      width: 100%;
+  
       padding: 27px 19px;
   
       border-radius: 19px;
@@ -571,6 +903,8 @@
   
     .register-brand {
       font-size: 22px;
+  
+      margin-bottom: 20px;
     }
   
   
@@ -584,15 +918,37 @@
     }
   
   
-    .register-card input:not([type="checkbox"]) {
+    /*
+       Input thường nhỏ lại
+    */
+  
+    .register-card
+    input:not([type="checkbox"]):not([type="radio"]) {
       min-height: 46px;
   
       font-size: 13px;
     }
+  
+  
+    /*
+       Vai trò chuyển thành 2 hàng
+       để dễ bấm trên điện thoại.
+    */
+  
+    .role-options {
+      grid-template-columns: 1fr;
+    }
+  
+  
+    .role-option {
+      min-height: 48px;
+    }
   }
   
   
-  /* ==================== MOBILE NHỎ ==================== */
+  /* =========================================================
+     24. RESPONSIVE - ĐIỆN THOẠI RẤT NHỎ
+  ========================================================= */
   
   @media (max-width: 360px) {
   
@@ -617,6 +973,11 @@
   
   
     .register-terms {
+      font-size: 12px !important;
+    }
+  
+  
+    .role-option {
       font-size: 12px !important;
     }
   }
