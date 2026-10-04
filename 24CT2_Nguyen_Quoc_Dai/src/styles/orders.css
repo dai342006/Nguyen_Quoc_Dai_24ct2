@@ -1,130 +1,846 @@
-/* ========================================
-   Đơn hàng
-======================================== */
+/* =========================================================
+   SKILLHUB - ĐƠN HÀNG
+   File: orders.css
 
-/* Khu vực chứa các nút thao tác của đơn hàng */
-.order-actions {
-  display: flex; /* Sắp xếp các nút theo hàng ngang */
-  gap: 8px; /* Khoảng cách giữa các nút */
-  margin-left: 10px; /* Tạo khoảng cách bên trái */
-}
+   Chức năng:
+   - Hiển thị danh sách đơn hàng
+   - Hiển thị thông tin dịch vụ
+   - Hiển thị giá tiền
+   - Hiển thị trạng thái
+   - Hiển thị các nút thao tác
+   - Responsive trên tablet và điện thoại
+========================================================= */
 
-/* Nút chính trong khu vực thao tác */
-.order-actions .primary-btn {
-  white-space: nowrap; /* Không cho nội dung nút xuống dòng */
-}
 
-/* Trạng thái đơn hàng đã hủy */
-.status.cancelled {
-  background: #ffe9e9; /* Nền màu đỏ nhạt */
-  color: #d83a3a; /* Chữ màu đỏ */
-}
+/* =========================================================
+   1. DANH SÁCH ĐƠN HÀNG
+========================================================= */
 
-/* Ngày đặt hàng */
-.order-main small {
-  display: block; /* Hiển thị thành một dòng riêng */
-  margin-top: 6px; /* Khoảng cách phía trên */
-  color: #8a90a0; /* Màu chữ xám */
-}
-
-/* Danh sách các đơn hàng */
+/*
+   Các đơn hàng được xếp theo chiều dọc.
+*/
 .order-list {
-  display: flex; /* Sử dụng Flexbox */
-  flex-direction: column; /* Xếp các đơn hàng theo chiều dọc */
-  gap: 16px; /* Khoảng cách giữa các đơn hàng */
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  width: 100%;
 }
 
-/* Một dòng/card đơn hàng */
+
+/* =========================================================
+   2. CARD ĐƠN HÀNG
+========================================================= */
+
+/*
+   Card được chia thành 5 phần:
+
+   1. Icon
+   2. Thông tin đơn hàng
+   3. Giá
+   4. Trạng thái
+   5. Nút thao tác
+*/
 .order-row {
-  display: grid; /* Sử dụng CSS Grid */
-  grid-template-columns: 50px 1fr auto auto auto; /* Chia thành 5 cột */
-  gap: 20px; /* Khoảng cách giữa các cột */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  background: #ffffff; /* Nền trắng */
-  border: 1px solid #edf0f6; /* Viền xám nhạt */
-  border-radius: 18px; /* Bo tròn góc */
-  padding: 20px; /* Khoảng cách bên trong */
-  box-shadow: 0 8px 25px rgba(30, 35, 80, 0.06); /* Tạo bóng đổ */
+  display: grid;
+
+  grid-template-columns:
+    54px
+    minmax(0, 1fr)
+    auto
+    auto
+    auto;
+
+  align-items: center;
+
+  gap: 20px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e9f0;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 5px 20px rgba(27, 39, 74, 0.04);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
 }
 
-/* Icon của đơn hàng */
+
+/* =========================================================
+   3. HIỆU ỨNG CARD
+========================================================= */
+
+.order-row:hover {
+  transform: translateY(-4px);
+
+  border-color: #dbd7ff;
+
+  box-shadow:
+    0 14px 35px rgba(27, 39, 74, 0.09);
+}
+
+
+/* =========================================================
+   4. ICON ĐƠN HÀNG
+========================================================= */
+
 .order-icon {
-  width: 48px; /* Chiều rộng */
-  height: 48px; /* Chiều cao */
-  display: grid; /* Sử dụng Grid */
-  place-items: center; /* Căn icon vào chính giữa */
-  background: #f0edff; /* Nền tím nhạt */
-  border-radius: 14px; /* Bo góc */
-  font-size: 23px; /* Kích thước icon */
+  width: 54px;
+
+  height: 54px;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0eeff,
+      #e7e4ff
+    );
+
+  border: 1px solid #dedaff;
+
+  border-radius: 16px;
+
+  font-size: 24px;
+
+  box-shadow:
+    0 5px 14px rgba(99, 91, 255, 0.08);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
-/* Thông tin phụ trong phần chính của đơn hàng */
+
+/*
+   Khi hover vào card,
+   icon cũng chuyển động nhẹ.
+*/
+.order-row:hover .order-icon {
+  transform:
+    scale(1.06)
+    rotate(-2deg);
+
+  box-shadow:
+    0 8px 18px rgba(99, 91, 255, 0.14);
+}
+
+
+/* =========================================================
+   5. PHẦN THÔNG TIN CHÍNH
+========================================================= */
+
+.order-main {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   6. THÔNG TIN PHỤ
+========================================================= */
+
+/*
+   Ví dụ:
+   Đơn hàng #001
+   Dịch vụ
+*/
 .order-main > span {
-  font-size: 13px; /* Kích thước chữ */
-  color: #8a90a0; /* Màu xám */
+  display: inline-block;
+
+  margin-bottom: 4px;
+
+  color: #8a90a0;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
 }
 
-/* Tiêu đề tên dịch vụ trong đơn hàng */
+
+/* =========================================================
+   7. TIÊU ĐỀ DỊCH VỤ
+========================================================= */
+
 .order-main h3 {
-  margin: 5px 0; /* Khoảng cách trên và dưới */
-  font-size: 18px; /* Kích thước tiêu đề */
+  margin: 0 0 7px;
+
+  color: #182238;
+
+  font-size: 18px;
+
+  font-weight: 750;
+
+  line-height: 1.4;
+
+  letter-spacing: -0.2px;
+
+  word-break: break-word;
+
+  transition: color 0.2s ease;
 }
 
-/* Mô tả đơn hàng */
+
+/*
+   Hover tiêu đề.
+*/
+.order-row:hover .order-main h3 {
+  color: #5c54e9;
+}
+
+
+/* =========================================================
+   8. MÔ TẢ
+========================================================= */
+
 .order-main p {
-  margin: 0; /* Xóa margin mặc định */
-  color: #687080; /* Màu chữ xám */
+  margin: 0;
+
+  color: #6d7587;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+
+  /*
+     Tối đa 2 dòng để card không quá cao.
+  */
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
 }
 
-/* Hiển thị giá đơn hàng */
+
+/* =========================================================
+   9. NGÀY ĐẶT HÀNG
+========================================================= */
+
+.order-main small {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #9299a8;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   10. GIÁ ĐƠN HÀNG
+========================================================= */
+
 .order-price {
-  font-size: 18px; /* Kích thước giá */
-  font-weight: 700; /* Chữ đậm */
-  color: #5d4bd8; /* Màu tím */
-  white-space: nowrap; /* Không cho giá xuống dòng */
+  padding: 8px 12px;
+
+  background: #f5f3ff;
+
+  border: 1px solid #e5e1ff;
+
+  border-radius: 10px;
+
+  color: #5d4bd8;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
 }
 
 
-/* ========================================
- RESPONSIVE - TABLET
-======================================== */
+/* =========================================================
+   11. TRẠNG THÁI ĐƠN HÀNG
+========================================================= */
 
-/* Khi màn hình có chiều rộng tối đa 900px */
-@media (max-width: 900px) {
+/*
+   Kiểu mặc định.
+*/
+.status {
+  display: inline-flex;
 
-  /* Chuyển bố cục đơn hàng thành 2 cột */
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 32px;
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  border: 1px solid transparent;
+
+  background: #f3f4f8;
+
+  color: #667084;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* Chấm tròn phía trước trạng thái */
+.status::before {
+  content: "";
+
+  width: 7px;
+
+  height: 7px;
+
+  margin-right: 7px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+
+/* =========================================================
+   12. TRẠNG THÁI CHỜ XỬ LÝ
+========================================================= */
+
+.status.pending,
+.status.waiting,
+.status.cho-xu-ly {
+  background: #fff8e7;
+
+  color: #a66c00;
+
+  border-color: #ffe7a8;
+}
+
+
+/* =========================================================
+   13. TRẠNG THÁI ĐANG THỰC HIỆN
+========================================================= */
+
+.status.processing,
+.status.in-progress,
+.status.dang-thuc-hien {
+  background: #eef3ff;
+
+  color: #4d6fbe;
+
+  border-color: #dce6ff;
+}
+
+
+/* =========================================================
+   14. TRẠNG THÁI HOÀN THÀNH
+========================================================= */
+
+.status.completed,
+.status.success,
+.status.hoan-thanh {
+  background: #eaf8f0;
+
+  color: #268052;
+
+  border-color: #cdeedb;
+}
+
+
+/* =========================================================
+   15. TRẠNG THÁI ĐÃ HỦY
+========================================================= */
+
+/*
+   Đây là trạng thái bạn đang có:
+   .status.cancelled
+*/
+.status.cancelled {
+  background: #fff0f0;
+
+  color: #d83a3a;
+
+  border-color: #ffd5d5;
+}
+
+
+/* =========================================================
+   16. KHU VỰC NÚT THAO TÁC
+========================================================= */
+
+.order-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-left: 0;
+}
+
+
+/* =========================================================
+   17. NÚT TRONG KHU VỰC ĐƠN HÀNG
+========================================================= */
+
+.order-actions button {
+  min-height: 42px;
+
+  padding: 10px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   18. NÚT CHÍNH
+========================================================= */
+
+.order-actions .primary-btn {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #635bff,
+      #786fff
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 6px 15px rgba(99, 91, 255, 0.18);
+}
+
+
+/* Hover nút chính */
+
+.order-actions .primary-btn:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #554be8,
+      #6961ee
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 22px rgba(99, 91, 255, 0.26);
+}
+
+
+/* =========================================================
+   19. NÚT PHỤ
+========================================================= */
+
+.order-actions .secondary-btn {
+  border: 1px solid #dfe3eb;
+
+  background: #f7f8fb;
+
+  color: #4f596b;
+}
+
+
+/* Hover nút phụ */
+
+.order-actions .secondary-btn:hover {
+  background: #eef0f5;
+
+  border-color: #cfd4df;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   20. NÚT BỊ DISABLED
+========================================================= */
+
+.order-actions button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none !important;
+
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   21. NÚT ĐÁNH GIÁ
+========================================================= */
+
+/*
+   Dùng cho nút:
+   ⭐ Đánh giá
+*/
+.order-actions .review-btn {
+  border: 1px solid #f0d477;
+
+  background: #fff9e8;
+
+  color: #9a6a00;
+}
+
+
+/* Hover */
+
+.order-actions .review-btn:hover {
+  background: #fff3ce;
+
+  border-color: #e8c65f;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   22. NÚT ĐÃ ĐÁNH GIÁ
+========================================================= */
+
+.order-actions .reviewed-btn {
+  border: 1px solid #cfe9da;
+
+  background: #edf9f2;
+
+  color: #2b8054;
+
+  cursor: default;
+}
+
+
+/* =========================================================
+   23. ĐƠN HÀNG KHÔNG CÓ DỮ LIỆU
+========================================================= */
+
+.order-empty {
+  padding: 50px 30px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px dashed #dfe3eb;
+
+  border-radius: 18px;
+
+  color: #747d8d;
+}
+
+
+/* Icon */
+
+.order-empty-icon {
+  margin-bottom: 12px;
+
+  font-size: 46px;
+}
+
+
+/* Tiêu đề */
+
+.order-empty h3 {
+  margin: 0 0 8px;
+
+  color: #273042;
+
+  font-size: 20px;
+}
+
+
+/* Nội dung */
+
+.order-empty p {
+  margin: 0;
+
+  color: #7b8495;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   24. RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  /*
+     Thu gọn khoảng cách.
+  */
   .order-row {
-      grid-template-columns: 50px 1fr;
+    grid-template-columns:
+      54px
+      minmax(0, 1fr)
+      auto;
+
+    gap: 16px;
+
+    padding: 20px;
   }
 
-  /* Đưa giá, trạng thái và nút thao tác xuống cột thứ 2 */
-  .order-price,
-  .order-row > .status,
+
+  /*
+     Giá xuống cột thứ 2.
+  */
+  .order-price {
+    grid-column: 2;
+
+    justify-self: start;
+  }
+
+
+  /*
+     Trạng thái xuống cột thứ 2.
+  */
+  .order-row > .status {
+    grid-column: 2;
+
+    justify-self: start;
+  }
+
+
+  /*
+     Nút thao tác xuống cột thứ 2.
+  */
   .order-actions {
-      grid-column: 2; /* Nằm ở cột thứ 2 */
-      justify-self: start; /* Căn về bên trái */
-      margin-left: 0; /* Xóa khoảng cách bên trái */
+    grid-column: 2;
+
+    justify-self: start;
   }
 }
 
 
-/* ========================================
- RESPONSIVE - MOBILE
-======================================== */
+/* =========================================================
+   25. RESPONSIVE - MÀN HÌNH NHỎ
+========================================================= */
 
-/* Khi màn hình có chiều rộng tối đa 600px */
-@media (max-width: 600px) {
+@media (max-width: 650px) {
 
-  /* Chuyển đơn hàng thành một cột */
+  /*
+     Card thành một cột.
+  */
   .order-row {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+
+    padding: 18px;
+
+    border-radius: 17px;
+
+    align-items: start;
   }
 
-  /* Các phần tử trở về bố cục mặc định */
+
+  /*
+     Các phần tử trở về cột mặc định.
+  */
   .order-icon,
   .order-price,
   .order-row > .status,
   .order-actions {
-      grid-column: auto;
+    grid-column: auto;
+  }
+
+
+  /*
+     Giá và trạng thái căn trái.
+  */
+  .order-price,
+  .order-row > .status {
+    justify-self: start;
+  }
+
+
+  /*
+     Khu vực nút chiếm toàn bộ chiều rộng.
+  */
+  .order-actions {
+    width: 100%;
+
+    flex-wrap: wrap;
+  }
+
+
+  /*
+     Các nút có thể chia đều.
+  */
+  .order-actions button {
+    flex: 1;
+
+    min-width: 120px;
+  }
+}
+
+
+/* =========================================================
+   26. RESPONSIVE - ĐIỆN THOẠI
+========================================================= */
+
+@media (max-width: 480px) {
+
+  /*
+     Danh sách.
+  */
+  .order-list {
+    gap: 14px;
+  }
+
+
+  /*
+     Card.
+  */
+  .order-row {
+    padding: 16px;
+
+    border-radius: 16px;
+  }
+
+
+  /*
+     Icon.
+  */
+  .order-icon {
+    width: 48px;
+
+    height: 48px;
+
+    font-size: 21px;
+
+    border-radius: 14px;
+  }
+
+
+  /*
+     Tiêu đề.
+  */
+  .order-main h3 {
+    font-size: 17px;
+  }
+
+
+  /*
+     Mô tả.
+  */
+  .order-main p {
+    font-size: 13px;
+  }
+
+
+  /*
+     Giá.
+  */
+  .order-price {
+    font-size: 16px;
+
+    padding: 7px 10px;
+  }
+
+
+  /*
+     Trạng thái.
+  */
+  .status {
+    min-height: 30px;
+
+    padding: 6px 10px;
+
+    font-size: 11px;
+  }
+
+
+  /*
+     Nút.
+  */
+  .order-actions {
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 8px;
+  }
+
+
+  .order-actions button {
+    width: 100%;
+
+    flex: none;
+
+    min-width: 0;
+  }
+}
+
+
+/* =========================================================
+   27. ĐIỆN THOẠI RẤT NHỎ
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .order-row {
+    padding: 14px;
+  }
+
+
+  .order-main h3 {
+    font-size: 16px;
+  }
+
+
+  .order-main p {
+    font-size: 12px;
+  }
+
+
+  .order-main small {
+    font-size: 11px;
+  }
+
+
+  .order-price {
+    font-size: 15px;
   }
 }
