@@ -36,7 +36,8 @@ import "./styles/header.css";
 import "./styles/home.css";
 import "./styles/services.css";
 import "./styles/detail.css";
-
+import "./styles/login.css";
+import "./styles/register.css";
 import "./styles/freelancer.css";
 import "./styles/orders.css";
 import "./styles/payment.css";
