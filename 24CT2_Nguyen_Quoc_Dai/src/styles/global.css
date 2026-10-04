@@ -1,125 +1,1009 @@
-/*========================CSS chung toàn website========================*/
-/* Áp dụng cho tất cả các phần tử trên trang */
-*{
-    box-sizing:border-box; /* Tính padding và border vào kích thước phần tử */
-    margin:0; /* Xóa margin mặc định */
-    padding:0 /* Xóa padding mặc định */
-}
+/* =========================================================
+   SKILLHUB - CSS CHUNG TOÀN WEBSITE
+   File: global.css
 
-/* Thiết lập biến và font chữ chung */
-:root{
-    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; /* Font chữ sử dụng */
-    color:#172033; /* Màu chữ mặc định */
-    background:#fff; /* Màu nền mặc định */
-    font-synthesis:none; /* Không tự tạo kiểu chữ giả */
-    text-rendering:optimizeLegibility /* Tối ưu khả năng hiển thị chữ */
-}
+   Chức năng:
+   - Thiết lập CSS chung cho toàn bộ website
+   - Thiết lập font chữ và màu mặc định
+   - Chuẩn hóa button, input, select
+   - Tạo container dùng chung
+   - Thiết lập tiêu đề và section
+   - Thiết lập các button dùng chung
+   - Responsive cho tablet và điện thoại
+========================================================= */
 
-/* Thiết lập cho toàn bộ body */
-body{
-    min-width:320px; /* Chiều rộng tối thiểu của trang */
-    background:#fff /* Nền trắng */
-}
 
-/* Cho button, input và select sử dụng font giống font của trang */
-button,input,select{
-    font:inherit /* Kế thừa font từ phần tử cha */
-}
+/* =========================================================
+   1. RESET CSS
+========================================================= */
 
-/* Thiết lập chung cho button */
-button{
-    border:0; /* Xóa đường viền mặc định */
-    cursor:pointer /* Hiển thị con trỏ dạng bàn tay */
-}
-
-/* Container dùng để giới hạn chiều rộng nội dung */
-.container{
-    width:min(1120px,calc(100% - 40px)); /* Tối đa 1120px và chừa 40px hai bên */
-    margin:0 auto /* Căn giữa container */
-}
-
-/* Dòng chữ nhỏ phía trên tiêu đề */
-.eyebrow{
-    color:#635bff; /* Màu tím */
-    font-size:12px; /* Kích thước chữ */
-    font-weight:800; /* Chữ đậm */
-    letter-spacing:.13em; /* Khoảng cách giữa các chữ */
-    margin-bottom:7px /* Khoảng cách phía dưới */
-}
-
-/* Nút dạng text và nút quay lại */
-.text-btn,.back-btn{
-    background:transparent; /* Nền trong suốt */
-    color:#635bff; /* Màu chữ tím */
-    font-weight:700 /* Chữ đậm */
-}
-
-/* Khu vực nội dung của trang */
-.page{
-    min-height:70vh; /* Chiều cao tối thiểu bằng 70% chiều cao màn hình */
-    padding:56px 0 80px /* Khoảng cách trên và dưới */
-}
-
-/* Phần tiêu đề trang */
-.page-title{
-    margin-bottom:28px /* Khoảng cách phía dưới */
-}
-
-/* Tiêu đề h1 của trang */
-.page-title h1{
-    font-size:42px; /* Kích thước tiêu đề */
-    margin-bottom:8px; /* Khoảng cách phía dưới */
-    letter-spacing:-.03em /* Điều chỉnh khoảng cách chữ */
-}
-
-/* Đoạn paragraph cuối cùng trong page-title */
-.page-title>p:last-child{
-    color:#6a7384 /* Màu chữ xám */
-}
-
-/* Các section chính của website */
-.section{
-    padding:72px 0 /* Tạo khoảng cách trên và dưới */
-}
-
-/* Section có nền màu xám nhạt */
-.gray-section{
-    background:#f7f8fc /* Màu nền xám nhạt */
-}
-
-/* Phần tiêu đề của section */
-.section-head{
-    display:flex; /* Sử dụng Flexbox */
-    justify-content:space-between; /* Đẩy các phần tử ra hai phía */
-    align-items:end; /* Căn các phần tử xuống phía dưới */
-    margin-bottom:28px; /* Khoảng cách phía dưới */
-    gap:20px /* Khoảng cách giữa các phần tử */
-}
-
-/* Tiêu đề h2 trong section-head */
-.section-head h2{
-    font-size:34px; /* Kích thước tiêu đề */
-    letter-spacing:-.03em /* Điều chỉnh khoảng cách giữa các chữ */
-}
-
-/* Thiết lập chung cho nút chính và nút phụ */
-.primary-btn,.secondary-btn{
-    padding:13px 16px; /* Khoảng cách bên trong nút */
-    border-radius:10px; /* Bo tròn góc */
-    font-weight:800 /* Chữ đậm */
-}
-
-/* Thiết lập nút phụ */
-.secondary-btn{
-    background:#f1f2f7; /* Nền xám nhạt */
-    color:#273042 /* Màu chữ */
-}
-
-/* Responsive cho màn hình có chiều rộng tối đa 620px */
-@media(max-width:620px){
-
-    /* Điều chỉnh container trên điện thoại */
-    .container{
-        width:min(100% - 24px,1120px)
+/*
+   Áp dụng cho tất cả phần tử trên website.
+   Giúp xóa các khoảng cách mặc định của trình duyệt.
+*/
+* {
+    box-sizing: border-box;
+  
+    margin: 0;
+  
+    padding: 0;
+  }
+  
+  
+  /* =========================================================
+     2. BIẾN VÀ FONT CHỮ CHUNG
+  ========================================================= */
+  
+  :root {
+    /*
+       Font chính của SkillHub.
+       Ưu tiên Inter, sau đó dùng font hệ thống.
+    */
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+  
+    /*
+       Màu chữ mặc định.
+    */
+    color: #172033;
+  
+    /*
+       Nền mặc định.
+    */
+    background: #ffffff;
+  
+    /*
+       Không tự tạo kiểu chữ giả.
+    */
+    font-synthesis: none;
+  
+    /*
+       Tối ưu khả năng hiển thị chữ.
+    */
+    text-rendering: optimizeLegibility;
+  
+    /*
+       Giúp chữ trên màn hình mượt hơn.
+    */
+    -webkit-font-smoothing: antialiased;
+  
+    -moz-osx-font-smoothing: grayscale;
+  
+    /*
+       Màu thương hiệu chính của SkillHub.
+    */
+    --primary-color: #635bff;
+  
+    /*
+       Màu tím đậm khi hover.
+    */
+    --primary-dark: #554be8;
+  
+    /*
+       Màu tím nhạt.
+    */
+    --primary-light: #f0efff;
+  
+    /*
+       Màu chữ chính.
+    */
+    --text-dark: #172033;
+  
+    /*
+       Màu chữ phụ.
+    */
+    --text-gray: #6f7788;
+  
+    /*
+       Màu border.
+    */
+    --border-color: #e5e9f0;
+  
+    /*
+       Màu nền phụ.
+    */
+    --background-gray: #f7f8fc;
+  
+    /*
+       Màu trắng.
+    */
+    --white: #ffffff;
+  
+    /*
+       Bóng card dùng chung.
+    */
+    --shadow-sm:
+      0 5px 20px rgba(27, 39, 74, 0.04);
+  
+    --shadow-md:
+      0 12px 30px rgba(27, 39, 74, 0.08);
+  
+    /*
+       Bo góc dùng chung.
+    */
+    --radius-sm: 10px;
+  
+    --radius-md: 14px;
+  
+    --radius-lg: 20px;
+  }
+  
+  
+  /* =========================================================
+     3. BODY
+  ========================================================= */
+  
+  body {
+    /*
+       Chiều rộng tối thiểu để website
+       không bị vỡ giao diện.
+    */
+    min-width: 320px;
+  
+    /*
+       Nền trắng mặc định.
+    */
+    background: #ffffff;
+  
+    /*
+       Màu chữ mặc định.
+    */
+    color: #172033;
+  
+    /*
+       Khoảng cách giữa các dòng.
+    */
+    line-height: 1.5;
+  
+    /*
+       Không cho xuất hiện thanh cuộn ngang
+       do một số phần tử vượt kích thước.
+    */
+    overflow-x: hidden;
+  }
+  
+  
+  /* =========================================================
+     4. LINK
+  ========================================================= */
+  
+  a {
+    /*
+       Không gạch chân mặc định.
+    */
+    text-decoration: none;
+  
+    /*
+       Kế thừa màu từ phần tử cha.
+    */
+    color: inherit;
+  }
+  
+  
+  /* =========================================================
+     5. BUTTON / INPUT / SELECT / TEXTAREA
+  ========================================================= */
+  
+  button,
+  input,
+  select,
+  textarea {
+    /*
+       Sử dụng cùng font với website.
+    */
+    font: inherit;
+  }
+  
+  
+  /* =========================================================
+     6. BUTTON CHUNG
+  ========================================================= */
+  
+  button {
+    /*
+       Xóa border mặc định.
+    */
+    border: none;
+  
+    /*
+       Con trỏ dạng bàn tay.
+    */
+    cursor: pointer;
+  }
+  
+  
+  /*
+     Khi button bị disabled,
+     hiển thị trạng thái không thể click.
+  */
+  button:disabled {
+    cursor: not-allowed;
+  }
+  
+  
+  /* =========================================================
+     7. CONTAINER
+  ========================================================= */
+  
+  /*
+     Container được dùng ở nhiều trang.
+     Giới hạn chiều rộng để nội dung không bị quá rộng.
+  */
+  .container {
+    width: min(
+      1120px,
+      calc(100% - 40px)
+    );
+  
+    /*
+       Căn giữa.
+    */
+    margin: 0 auto;
+  }
+  
+  
+  /* =========================================================
+     8. NÚT DẠNG TEXT
+  ========================================================= */
+  
+  .text-btn,
+  .back-btn {
+    /*
+       Không có nền.
+    */
+    background: transparent;
+  
+    /*
+       Màu tím thương hiệu.
+    */
+    color: var(--primary-color);
+  
+    /*
+       Chữ đậm.
+    */
+    font-size: 14px;
+  
+    font-weight: 700;
+  
+    /*
+       Hiệu ứng.
+    */
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+  
+  
+  /*
+     Hiệu ứng hover.
+  */
+  .text-btn:hover,
+  .back-btn:hover {
+    color: var(--primary-dark);
+  
+    transform: translateX(-2px);
+  }
+  
+  
+  /* =========================================================
+     9. KHU VỰC TRANG
+  ========================================================= */
+  
+  /*
+     Đây là khoảng cách chung cho các trang.
+  */
+  .page {
+    /*
+       Chiều cao tối thiểu.
+    */
+    min-height: 70vh;
+  
+    /*
+       Khoảng cách trên và dưới.
+    */
+    padding: 56px 0 80px;
+  }
+  
+  
+  /* =========================================================
+     10. TIÊU ĐỀ TRANG
+  ========================================================= */
+  
+  .page-title {
+    /*
+       Khoảng cách giữa tiêu đề
+       và nội dung phía dưới.
+    */
+    margin-bottom: 30px;
+  }
+  
+  
+  /* =========================================================
+     11. DÒNG CHỮ NHỎ TRÊN TIÊU ĐỀ
+  ========================================================= */
+  
+  .eyebrow {
+    /*
+       Màu tím.
+    */
+    color: var(--primary-color);
+  
+    /*
+       Kích thước nhỏ.
+    */
+    font-size: 12px;
+  
+    /*
+       Chữ đậm.
+    */
+    font-weight: 800;
+  
+    /*
+       Tạo khoảng cách giữa các ký tự.
+    */
+    letter-spacing: 0.13em;
+  
+    /*
+       Viết hoa.
+    */
+    text-transform: uppercase;
+  
+    /*
+       Khoảng cách phía dưới.
+    */
+    margin-bottom: 8px;
+  }
+  
+  
+  /* =========================================================
+     12. TIÊU ĐỀ H1
+  ========================================================= */
+  
+  .page-title h1 {
+    /*
+       Kích thước lớn.
+    */
+    font-size: 42px;
+  
+    /*
+       Chữ đậm.
+    */
+    font-weight: 800;
+  
+    /*
+       Khoảng cách dưới.
+    */
+    margin-bottom: 9px;
+  
+    /*
+       Làm tiêu đề gọn hơn.
+    */
+    letter-spacing: -0.8px;
+  
+    /*
+       Chiều cao dòng.
+    */
+    line-height: 1.2;
+  
+    /*
+       Màu.
+    */
+    color: var(--text-dark);
+  }
+  
+  
+  /* =========================================================
+     13. MÔ TẢ DƯỚI TIÊU ĐỀ
+  ========================================================= */
+  
+  .page-title > p:last-child {
+    /*
+       Màu xám.
+    */
+    color: var(--text-gray);
+  
+    /*
+       Kích thước.
+    */
+    font-size: 15px;
+  
+    /*
+       Chiều cao dòng.
+    */
+    line-height: 1.7;
+  
+    /*
+       Giới hạn chiều rộng để câu dễ đọc.
+    */
+    max-width: 700px;
+  }
+  
+  
+  /* =========================================================
+     14. SECTION CHUNG
+  ========================================================= */
+  
+  .section {
+    /*
+       Khoảng cách trên và dưới.
+    */
+    padding: 72px 0;
+  }
+  
+  
+  /* =========================================================
+     15. SECTION NỀN XÁM
+  ========================================================= */
+  
+  .gray-section {
+    /*
+       Nền xám rất nhẹ.
+    */
+    background: var(--background-gray);
+  
+    /*
+       Viền để phân biệt section.
+    */
+    border-top: 1px solid #f0f1f5;
+  
+    border-bottom: 1px solid #f0f1f5;
+  }
+  
+  
+  /* =========================================================
+     16. HEADER CỦA SECTION
+  ========================================================= */
+  
+  .section-head {
+    /*
+       Sử dụng Flexbox.
+    */
+    display: flex;
+  
+    /*
+       Đẩy nội dung sang hai phía.
+    */
+    justify-content: space-between;
+  
+    /*
+       Căn theo phía dưới.
+    */
+    align-items: flex-end;
+  
+    /*
+       Khoảng cách giữa các phần tử.
+    */
+    gap: 20px;
+  
+    /*
+       Khoảng cách phía dưới.
+    */
+    margin-bottom: 30px;
+  }
+  
+  
+  /* =========================================================
+     17. H2 TRONG SECTION
+  ========================================================= */
+  
+  .section-head h2 {
+    /*
+       Kích thước tiêu đề.
+    */
+    font-size: 34px;
+  
+    /*
+       Chữ đậm.
+    */
+    font-weight: 800;
+  
+    /*
+       Làm tiêu đề gọn.
+    */
+    letter-spacing: -0.6px;
+  
+    /*
+       Chiều cao.
+    */
+    line-height: 1.2;
+  
+    /*
+       Màu.
+    */
+    color: var(--text-dark);
+  }
+  
+  
+  /* =========================================================
+     18. NÚT CHÍNH VÀ NÚT PHỤ
+  ========================================================= */
+  
+  .primary-btn,
+  .secondary-btn {
+    /*
+       Chiều cao và khoảng cách bên trong.
+    */
+    min-height: 44px;
+  
+    padding: 12px 17px;
+  
+    /*
+       Bo góc.
+    */
+    border-radius: 11px;
+  
+    /*
+       Chữ đậm.
+    */
+    font-size: 14px;
+  
+    font-weight: 800;
+  
+    /*
+       Căn nội dung.
+    */
+    display: inline-flex;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    gap: 7px;
+  
+    /*
+       Hiệu ứng chung.
+    */
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+  }
+  
+  
+  /* =========================================================
+     19. NÚT CHÍNH
+  ========================================================= */
+  
+  .primary-btn {
+    /*
+       Màu tím SkillHub.
+    */
+    background:
+      linear-gradient(
+        135deg,
+        #635bff,
+        #786fff
+      );
+  
+    /*
+       Chữ trắng.
+    */
+    color: #ffffff;
+  
+    /*
+       Bóng tím nhẹ.
+    */
+    box-shadow:
+      0 7px 16px rgba(99, 91, 255, 0.18);
+  }
+  
+  
+  /* Hover */
+  
+  .primary-btn:hover {
+    background:
+      linear-gradient(
+        135deg,
+        #554be8,
+        #6960ed
+      );
+  
+    /*
+       Nút nổi lên.
+    */
+    transform: translateY(-2px);
+  
+    /*
+       Bóng lớn hơn.
+    */
+    box-shadow:
+      0 10px 24px rgba(99, 91, 255, 0.25);
+  }
+  
+  
+  /* Khi click */
+  
+  .primary-btn:active {
+    transform: translateY(0);
+  }
+  
+  
+  /* Disabled */
+  
+  .primary-btn:disabled {
+    opacity: 0.6;
+  
+    box-shadow: none;
+  
+    transform: none;
+  }
+  
+  
+  /* =========================================================
+     20. NÚT PHỤ
+  ========================================================= */
+  
+  .secondary-btn {
+    /*
+       Nền xám nhạt.
+    */
+    background: #f3f4f8;
+  
+    /*
+       Màu chữ.
+    */
+    color: #273042;
+  
+    /*
+       Border nhẹ.
+    */
+    border: 1px solid #e1e4eb;
+  }
+  
+  
+  /* Hover */
+  
+  .secondary-btn:hover {
+    background: #eaecf2;
+  
+    border-color: #d5d9e2;
+  
+    transform: translateY(-1px);
+  }
+  
+  
+  /* Khi click */
+  
+  .secondary-btn:active {
+    transform: translateY(0);
+  }
+  
+  
+  /* =========================================================
+     21. INPUT / SELECT / TEXTAREA CHUNG
+  ========================================================= */
+  
+  input,
+  select,
+  textarea {
+    /*
+       Không để outline mặc định quá xấu.
+    */
+    outline: none;
+  
+    /*
+       Màu chữ.
+    */
+    color: var(--text-dark);
+  
+    /*
+       Nền trắng.
+    */
+    background: #ffffff;
+  }
+  
+  
+  /*
+     Hiệu ứng khi người dùng chọn ô nhập.
+  */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #8a85ff;
+  }
+  
+  
+  /* =========================================================
+     22. ẢNH CHUNG
+  ========================================================= */
+  
+  img {
+    /*
+       Không để ảnh vượt quá container.
+    */
+    max-width: 100%;
+  
+    /*
+       Loại bỏ khoảng trắng dư bên dưới ảnh.
+    */
+    vertical-align: middle;
+  }
+  
+  
+  /* =========================================================
+     23. DANH SÁCH
+  ========================================================= */
+  
+  ul,
+  ol {
+    /*
+       Loại bỏ padding mặc định.
+    */
+    padding-left: 0;
+  }
+  
+  
+  /* =========================================================
+     24. SELECTION
+  ========================================================= */
+  
+  /*
+     Khi người dùng bôi đen chữ,
+     sử dụng màu tím của SkillHub.
+  */
+  ::selection {
+    background: #dedbff;
+  
+    color: #2d277e;
+  }
+  
+  
+  /* =========================================================
+     25. SCROLLBAR
+  ========================================================= */
+  
+  /*
+     Thanh cuộn trình duyệt nhỏ gọn hơn.
+  */
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  
+    height: 8px;
+  }
+  
+  
+  /* Phần thanh nền */
+  
+  ::-webkit-scrollbar-track {
+    background: #f3f4f7;
+  }
+  
+  
+  /* Thanh kéo */
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c9cbd5;
+  
+    border-radius: 999px;
+  }
+  
+  
+  /* Hover thanh kéo */
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aeb1bf;
+  }
+  
+  
+  /* =========================================================
+     26. RESPONSIVE - TABLET
+  ========================================================= */
+  
+  @media (max-width: 900px) {
+  
+    /*
+       Container nhỏ lại.
+    */
+    .container {
+      width:
+        min(
+          100% - 32px,
+          1120px
+        );
     }
-}
+  
+  
+    /*
+       Trang nhỏ khoảng cách.
+    */
+    .page {
+      padding: 48px 0 65px;
+    }
+  
+  
+    /*
+       Section nhỏ lại.
+    */
+    .section {
+      padding: 58px 0;
+    }
+  
+  
+    /*
+       Tiêu đề nhỏ hơn.
+    */
+    .page-title h1 {
+      font-size: 36px;
+    }
+  
+  
+    .section-head h2 {
+      font-size: 30px;
+    }
+  }
+  
+  
+  /* =========================================================
+     27. RESPONSIVE - ĐIỆN THOẠI
+  ========================================================= */
+  
+  @media (max-width: 620px) {
+  
+    /*
+       Container sát màn hình hơn.
+    */
+    .container {
+      width:
+        min(
+          calc(100% - 24px),
+          1120px
+        );
+    }
+  
+  
+    /*
+       Trang.
+    */
+    .page {
+      min-height: 70vh;
+  
+      padding: 40px 0 55px;
+    }
+  
+  
+    /*
+       Section.
+    */
+    .section {
+      padding: 48px 0;
+    }
+  
+  
+    /*
+       Tiêu đề trang.
+    */
+    .page-title {
+      margin-bottom: 24px;
+    }
+  
+  
+    /*
+       H1 nhỏ hơn trên điện thoại.
+    */
+    .page-title h1 {
+      font-size: 30px;
+  
+      letter-spacing: -0.5px;
+    }
+  
+  
+    /*
+       Mô tả.
+    */
+    .page-title > p:last-child {
+      font-size: 14px;
+    }
+  
+  
+    /*
+       Header section chuyển thành cột.
+    */
+    .section-head {
+      align-items: flex-start;
+  
+      flex-direction: column;
+  
+      gap: 14px;
+  
+      margin-bottom: 24px;
+    }
+  
+  
+    /*
+       H2.
+    */
+    .section-head h2 {
+      font-size: 27px;
+    }
+  
+  
+    /*
+       Button.
+    */
+    .primary-btn,
+    .secondary-btn {
+      min-height: 42px;
+  
+      padding: 10px 14px;
+  
+      font-size: 13px;
+    }
+  }
+  
+  
+  /* =========================================================
+     28. RESPONSIVE - ĐIỆN THOẠI NHỎ
+  ========================================================= */
+  
+  @media (max-width: 400px) {
+  
+    /*
+       Container.
+    */
+    .container {
+      width:
+        calc(100% - 20px);
+    }
+  
+  
+    /*
+       Trang.
+    */
+    .page {
+      padding-top: 32px;
+  
+      padding-bottom: 45px;
+    }
+  
+  
+    /*
+       Section.
+    */
+    .section {
+      padding: 40px 0;
+    }
+  
+  
+    /*
+       H1.
+    */
+    .page-title h1 {
+      font-size: 27px;
+    }
+  
+  
+    /*
+       H2.
+    */
+    .section-head h2 {
+      font-size: 24px;
+    }
+  
+  
+    /*
+       Eyebrow.
+    */
+    .eyebrow {
+      font-size: 11px;
+  
+      letter-spacing: 0.10em;
+    }
+  
+  
+    /*
+       Button chiếm chiều rộng nếu cần.
+    */
+    .section-head .primary-btn,
+    .section-head .secondary-btn {
+      width: 100%;
+    }
+  }
