@@ -1,93 +1,107 @@
-// ========================================
+// =========================================================
+// LOGIN
+// Trang đăng nhập tài khoản SkillHub
+// =========================================================
+
+// CSS riêng cho trang đăng nhập
+import "../styles/login.css";
+
 // React
-// useState: dùng để lưu và thay đổi dữ liệu
-// trong giao diện đăng nhập
-// ========================================
 import { useState } from "react";
 
 
-// ========================================
+// =========================================================
 // COMPONENT LOGIN
-// Trang đăng nhập tài khoản
-// ========================================
+// =========================================================
+
 function Login({
   setPage,
   onLoginSuccess
 }) {
 
-  // ======================================
-  // Dữ liệu Email
-  // ======================================
+  // =======================================================
+  // STATE EMAIL
+  // Lưu email người dùng nhập
+  // =======================================================
+
   const [email, setEmail] = useState("");
 
 
-  // ======================================
-  // Dữ liệu Mật khẩu
-  // ======================================
-  const [password, setPassword] =
-    useState("");
+  // =======================================================
+  // STATE MẬT KHẨU
+  // Lưu mật khẩu người dùng nhập
+  // =======================================================
+
+  const [password, setPassword] = useState("");
 
 
-  // ======================================
-  // Hiển thị / ẩn mật khẩu
-  // false: đang ẩn
-  // true: đang hiện
-  // ======================================
+  // =======================================================
+  // HIỂN THỊ / ẨN MẬT KHẨU
+  //
+  // false = đang ẩn
+  // true  = đang hiện
+  // =======================================================
+
   const [showPassword, setShowPassword] =
     useState(false);
 
 
-  // ======================================
-  // Ghi nhớ đăng nhập
-  // true: lưu Local Storage
-  // false: lưu Session Storage
-  // ======================================
+  // =======================================================
+  // GHI NHỚ ĐĂNG NHẬP
+  //
+  // true  = lưu localStorage
+  // false = lưu sessionStorage
+  // =======================================================
+
   const [remember, setRemember] =
     useState(true);
 
 
-  // ======================================
-  // Lưu các lỗi của form
-  // ======================================
+  // =======================================================
+  // LƯU LỖI CỦA FORM
+  // =======================================================
+
   const [errors, setErrors] =
     useState({});
 
 
-  // ======================================
-  // Thông báo lỗi từ Server
-  // ======================================
+  // =======================================================
+  // THÔNG BÁO TỪ SERVER
+  // =======================================================
+
   const [serverMessage, setServerMessage] =
     useState("");
 
 
-  // ======================================
-  // Trạng thái đang đăng nhập
-  // true: đang gửi dữ liệu
-  // false: bình thường
-  // ======================================
+  // =======================================================
+  // TRẠNG THÁI ĐĂNG NHẬP
+  //
+  // true  = đang gửi dữ liệu
+  // false = bình thường
+  // =======================================================
+
   const [isLoading, setIsLoading] =
     useState(false);
 
 
-  // ========================================
+  // =======================================================
   // KIỂM TRA DỮ LIỆU FORM
-  // ========================================
+  // =======================================================
 
   function validate() {
 
-    // Tạo object để lưu lỗi
+    // Object dùng để lưu lỗi
     const e = {};
 
 
-    // ======================================
-    // Kiểm tra Email
-    // ======================================
+    // =====================================================
+    // KIỂM TRA EMAIL
+    // =====================================================
 
-    const cleanEmail =
-      email.trim();
+    const cleanEmail = email.trim();
 
 
-    // Email không được để trống
+    // Email bỏ trống
     if (!cleanEmail) {
 
       e.email =
@@ -95,7 +109,7 @@ function Login({
 
     }
 
-    // Kiểm tra định dạng Email
+    // Email sai định dạng
     else if (
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
         cleanEmail
@@ -108,9 +122,9 @@ function Login({
     }
 
 
-    // ======================================
-    // Kiểm tra Mật khẩu
-    // ======================================
+    // =====================================================
+    // KIỂM TRA MẬT KHẨU
+    // =====================================================
 
     if (!password) {
 
@@ -129,13 +143,13 @@ function Login({
   }
 
 
-  // ========================================
+  // =======================================================
   // XỬ LÝ ĐĂNG NHẬP
-  // ========================================
+  // =======================================================
 
   async function handleSubmit(e) {
 
-    // Không cho form tự reload trang
+    // Không cho form reload trang
     e.preventDefault();
 
 
@@ -144,7 +158,9 @@ function Login({
 
 
     // Kiểm tra dữ liệu
-    if (!validate()) return;
+    if (!validate()) {
+      return;
+    }
 
 
     // Bật trạng thái loading
@@ -153,60 +169,62 @@ function Login({
 
     try {
 
-      // ====================================
-      // Gửi dữ liệu đăng nhập đến Backend
-      // ====================================
+      // ===================================================
+      // GỬI DỮ LIỆU ĐĂNG NHẬP ĐẾN BACKEND
+      // ===================================================
 
-      const response =
-        await fetch(
-          "https://nguyen-quoc-dai-24ct2.onrender.com/api/login",
-          {
-            method: "POST",
+      const response = await fetch(
+        "https://nguyen-quoc-dai-24ct2.onrender.com/api/login",
+        {
+          method: "POST",
 
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-            body: JSON.stringify({
-              // Gửi Email
-              Email:
-                email
-                  .trim()
-                  .toLowerCase(),
+          body: JSON.stringify({
 
-              // Gửi Mật khẩu
-              MatKhau:
-                password,
-            }),
-          }
-        );
+            // Email
+            Email:
+              email
+                .trim()
+                .toLowerCase(),
+
+            // Mật khẩu
+            MatKhau:
+              password,
+          }),
+        }
+      );
 
 
-      // Đọc dữ liệu Server trả về
+      // ===================================================
+      // ĐỌC DỮ LIỆU BACKEND TRẢ VỀ
+      // ===================================================
+
       const data =
         await response.json();
 
 
-      // ====================================
-      // Kiểm tra đăng nhập có thành công
-      // hay không
-      // ====================================
+      // ===================================================
+      // KIỂM TRA KẾT QUẢ ĐĂNG NHẬP
+      // ===================================================
 
       if (!response.ok) {
 
         setServerMessage(
           data.message ||
-            "Đăng nhập thất bại."
+          "Đăng nhập thất bại."
         );
 
         return;
       }
 
 
-      // ====================================
-      // Xóa thông tin đăng nhập cũ
-      // ====================================
+      // ===================================================
+      // XÓA THÔNG TIN ĐĂNG NHẬP CŨ
+      // ===================================================
 
       localStorage.removeItem(
         "skillhub_current_user"
@@ -217,9 +235,9 @@ function Login({
       );
 
 
-      // ====================================
-      // Chọn nơi lưu tài khoản
-      // ====================================
+      // ===================================================
+      // CHỌN NƠI LƯU TÀI KHOẢN
+      // ===================================================
 
       const storage =
         remember
@@ -227,29 +245,38 @@ function Login({
           : sessionStorage;
 
 
-      // Lưu thông tin người dùng
+      // ===================================================
+      // LƯU NGƯỜI DÙNG
+      // ===================================================
+
       storage.setItem(
         "skillhub_current_user",
         JSON.stringify(data.user)
       );
 
 
-      // ====================================
-      // Thông báo cho App biết đăng nhập
-      // thành công
-      // ====================================
+      // ===================================================
+      // BÁO CHO APP BIẾT ĐĂNG NHẬP THÀNH CÔNG
+      // ===================================================
 
       onLoginSuccess(data.user);
 
 
-      // Hiển thị thông báo
+      // ===================================================
+      // THÔNG BÁO
+      // ===================================================
+
       alert(
         `Đăng nhập thành công! Xin chào ${data.user.name}.`
       );
 
 
-      // Chuyển về trang chủ
+      // ===================================================
+      // CHUYỂN VỀ TRANG CHỦ
+      // ===================================================
+
       setPage("home");
+
 
     } catch (error) {
 
@@ -262,6 +289,7 @@ function Login({
         "Không thể kết nối đến máy chủ. Hãy kiểm tra backend có đang chạy không."
       );
 
+
     } finally {
 
       // Tắt loading
@@ -270,39 +298,43 @@ function Login({
   }
 
 
-  // ========================================
-  // GIAO DIỆN TRANG ĐĂNG NHẬP
-  // ========================================
+  // =======================================================
+  // GIAO DIỆN
+  // =======================================================
 
   return (
 
-    <main className="auth-page">
+    <main className="login-page">
 
-      <div className="auth-card">
+      {/* =================================================
+          CARD ĐĂNG NHẬP
+      ================================================= */}
+
+      <div className="login-card">
 
 
-        {/* ==================================
+        {/* =================================================
             LOGO SKILLHUB
-        ================================== */}
+        ================================================= */}
 
-        <div className="auth-brand">
+        <div className="login-brand">
           Skill<span>Hub</span>
         </div>
 
 
-        {/* ==================================
+        {/* =================================================
             TIÊU ĐỀ
-        ================================== */}
+        ================================================= */}
 
-        <div className="auth-heading">
+        <div className="login-heading">
 
-          {/* Dòng chữ nhỏ phía trên */}
-          <p className="auth-eyebrow">
+          {/* Chữ nhỏ */}
+          <p className="login-eyebrow">
             DIGITAL SKILL MARKETPLACE
           </p>
 
 
-          {/* Tiêu đề chính */}
+          {/* Tiêu đề */}
           <h1>
             Chào mừng trở lại
           </h1>
@@ -310,16 +342,15 @@ function Login({
 
           {/* Mô tả */}
           <p>
-            Đăng nhập để tiếp tục sử dụng
-            SkillHub.
+            Đăng nhập để tiếp tục sử dụng SkillHub.
           </p>
 
         </div>
 
 
-        {/* ==================================
-            FORM ĐĂNG NHẬP
-        ================================== */}
+        {/* =================================================
+            FORM
+        ================================================= */}
 
         <form
           onSubmit={handleSubmit}
@@ -327,9 +358,9 @@ function Login({
         >
 
 
-          {/* ==================================
+          {/* =================================================
               EMAIL
-          ================================== */}
+          ================================================= */}
 
           <label htmlFor="login-email">
             Email
@@ -345,21 +376,26 @@ function Login({
 
             onChange={(e) => {
 
-              // Cập nhật Email
+              // Cập nhật email
               setEmail(
                 e.target.value
               );
 
-              // Xóa lỗi Email
+              // Xóa lỗi email
               setErrors((old) => ({
                 ...old,
                 email: "",
               }));
 
-              // Xóa thông báo Server
+              // Xóa thông báo server
               setServerMessage("");
+
             }}
 
+            /*
+               Nếu có lỗi:
+               input sẽ có class input-error
+            */
             className={
               errors.email
                 ? "input-error"
@@ -372,36 +408,37 @@ function Login({
           />
 
 
-          {/* Hiển thị lỗi Email */}
+          {/* Hiển thị lỗi email */}
+
           {errors.email && (
 
-            <small className="field-error">
-
+            <small className="login-field-error">
               {errors.email}
-
             </small>
 
           )}
 
 
-          {/* ==================================
+          {/* =================================================
               MẬT KHẨU
-          ================================== */}
+          ================================================= */}
 
           <label htmlFor="login-password">
             Mật khẩu
           </label>
 
 
-          <div className="password-field">
+          <div className="login-password-field">
 
 
             <input
               id="login-password"
 
-              // Nếu showPassword = true
-              // thì hiện text
-              // Ngược lại là password
+              /*
+                 Nếu showPassword = true
+                 thì hiện mật khẩu.
+                 Ngược lại che mật khẩu.
+              */
               type={
                 showPassword
                   ? "text"
@@ -423,8 +460,9 @@ function Login({
                   password: "",
                 }));
 
-                // Xóa thông báo Server
+                // Xóa thông báo server
                 setServerMessage("");
+
               }}
 
               className={
@@ -439,14 +477,14 @@ function Login({
             />
 
 
-            {/* ==================================
+            {/* =================================================
                 NÚT HIỆN / ẨN MẬT KHẨU
-            ================================== */}
+            ================================================= */}
 
             <button
               type="button"
 
-              className="password-toggle"
+              className="login-password-toggle"
 
               onClick={() =>
                 setShowPassword(
@@ -454,38 +492,36 @@ function Login({
                 )
               }
             >
-
               {showPassword
                 ? "Ẩn"
                 : "Hiện"}
-
             </button>
+
 
           </div>
 
 
-          {/* Hiển thị lỗi Mật khẩu */}
+          {/* Hiển thị lỗi mật khẩu */}
+
           {errors.password && (
 
-            <small className="field-error">
-
+            <small className="login-field-error">
               {errors.password}
-
             </small>
 
           )}
 
 
-          {/* ==================================
+          {/* =================================================
               TÙY CHỌN ĐĂNG NHẬP
-          ================================== */}
+          ================================================= */}
 
           <div className="login-options">
 
 
             {/* Ghi nhớ đăng nhập */}
 
-            <label className="terms-row remember-row">
+            <label className="login-remember">
 
               <input
                 type="checkbox"
@@ -511,7 +547,7 @@ function Login({
             <button
               type="button"
 
-              className="link-btn"
+              className="login-link"
 
               onClick={() =>
                 setServerMessage(
@@ -522,60 +558,58 @@ function Login({
               Quên mật khẩu?
             </button>
 
+
           </div>
 
 
-          {/* ==================================
+          {/* =================================================
               THÔNG BÁO SERVER
-          ================================== */}
+          ================================================= */}
 
           {serverMessage && (
 
-            <div className="form-message error">
-
+            <div className="login-message">
               {serverMessage}
-
             </div>
 
           )}
 
 
-          {/* ==================================
+          {/* =================================================
               NÚT ĐĂNG NHẬP
-          ================================== */}
+          ================================================= */}
 
           <button
             type="submit"
 
-            className="primary-btn full"
+            className="login-submit"
 
             disabled={isLoading}
           >
-
             {isLoading
               ? "Đang đăng nhập..."
               : "Đăng nhập"}
-
           </button>
+
 
         </form>
 
 
-        {/* ==================================
-            CHUYỂN SANG TRANG ĐĂNG KÝ
-        ================================== */}
+        {/* =================================================
+            CHUYỂN SANG ĐĂNG KÝ
+        ================================================= */}
 
-        <div className="auth-divider">
-
+        <div className="login-divider">
           <span>
             Chưa có tài khoản?
           </span>
-
         </div>
 
 
         <button
-          className="auth-outline-btn"
+          type="button"
+
+          className="login-register-btn"
 
           onClick={() =>
             setPage("register")
@@ -588,14 +622,12 @@ function Login({
       </div>
 
     </main>
-
   );
 }
 
 
-// ========================================
-// EXPORT COMPONENT
-// Cho phép App.jsx sử dụng Login
-// ========================================
+// =========================================================
+// EXPORT
+// =========================================================
 
 export default Login;
