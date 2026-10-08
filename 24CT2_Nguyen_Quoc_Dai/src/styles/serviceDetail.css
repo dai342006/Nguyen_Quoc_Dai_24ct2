@@ -1,0 +1,345 @@
+/* ========================================
+   TRANG CHI TIẾT DỊCH VỤ
+======================================== */
+
+/* Khung chính */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+    align-items: start;
+  }
+  
+  
+  /* ========================================
+     NÚT QUAY LẠI
+  ======================================== */
+  
+  .back-btn {
+    border: none;
+    background: transparent;
+    color: #635bff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 25px;
+  }
+  
+  .back-btn:hover {
+    text-decoration: underline;
+  }
+  
+  
+  /* ========================================
+     BÊN TRÁI
+  ======================================== */
+  
+  .detail-left {
+    min-width: 0;
+  }
+  
+  
+  /* Ảnh / icon dịch vụ */
+  .detail-cover {
+    width: 100%;
+    min-height: 280px;
+    border-radius: 20px;
+    background: linear-gradient(
+      135deg,
+      #635bff,
+      #8b5cf6
+    );
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    font-size: 80px;
+    margin-bottom: 30px;
+  }
+  
+  
+  /* Nội dung chi tiết */
+  .detail-section {
+    padding: 0 5px;
+  }
+  
+  
+  /* Danh mục */
+  .eyebrow {
+    color: #635bff;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  
+  
+  /* Tiêu đề */
+  .detail-section h2 {
+    font-size: 32px;
+    margin: 0 0 15px;
+    color: #111827;
+  }
+  
+  
+  /* Mô tả */
+  .detail-section p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #4b5563;
+    margin-bottom: 15px;
+  }
+  
+  
+  /* ========================================
+     SELLER / FREELANCER
+  ======================================== */
+  
+  .seller-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  
+    margin-top: 25px;
+    padding: 18px;
+  
+    background: #f8f9ff;
+    border-radius: 16px;
+  }
+  
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    background: #eeeaff;
+    border-radius: 50%;
+  
+    font-size: 25px;
+  }
+  
+  
+  .seller-box strong {
+    display: block;
+    font-size: 17px;
+    color: #111827;
+    margin-bottom: 4px;
+  }
+  
+  
+  .seller-box span {
+    display: block;
+    color: #6b7280;
+    font-size: 14px;
+  }
+  
+  
+  /* ========================================
+     KHUNG GIÁ / THANH TOÁN
+  ======================================== */
+  
+  .price-box {
+    position: sticky;
+    top: 25px;
+  
+    background: white;
+  
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+  
+    padding: 25px;
+  
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+  
+  
+  /* Danh mục */
+  .service-category {
+    display: inline-block;
+  
+    padding: 7px 14px;
+  
+    border-radius: 20px;
+  
+    background: #eeeaff;
+    color: #635bff;
+  
+    font-size: 13px;
+    font-weight: 700;
+  
+    margin-bottom: 15px;
+  }
+  
+  
+  /* Tên dịch vụ */
+  .price-box h2 {
+    font-size: 25px;
+    color: #111827;
+  
+    margin: 0 0 18px;
+  }
+  
+  
+  /* ========================================
+     ĐÁNH GIÁ
+  ======================================== */
+  
+  .rating-big {
+    font-size: 18px;
+    font-weight: 700;
+  
+    color: #111827;
+  
+    margin-bottom: 15px;
+  }
+  
+  
+  .rating-big span {
+    color: #6b7280;
+    font-weight: 400;
+  }
+  
+  
+  /* ========================================
+     GIÁ
+  ======================================== */
+  
+  .big-price {
+    font-size: 28px;
+    font-weight: 800;
+  
+    color: #111827;
+  
+    margin-bottom: 22px;
+  }
+  
+  
+  /* ========================================
+     BUTTON
+  ======================================== */
+  
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  
+    min-height: 54px;
+  
+    border-radius: 12px;
+  
+    font-size: 16px;
+    font-weight: 700;
+  
+    cursor: pointer;
+  
+    transition: 0.2s;
+  
+    margin-bottom: 12px;
+  }
+  
+  
+  /* Thanh toán */
+  .primary-btn {
+    border: none;
+  
+    background: #635bff;
+    color: white;
+  }
+  
+  
+  .primary-btn:hover {
+    background: #5148e5;
+    transform: translateY(-1px);
+  }
+  
+  
+  /* Liên hệ */
+  .secondary-btn {
+    border: 1px solid #d1d5db;
+  
+    background: #f3f4f6;
+    color: #1f2937;
+  }
+  
+  
+  .secondary-btn:hover {
+    background: #e5e7eb;
+  }
+  
+  
+  /* ========================================
+     SELLER TRONG PRICE BOX
+  ======================================== */
+  
+  .price-box .seller-box {
+    margin-top: 20px;
+    padding: 15px;
+  
+    border-top: 1px solid #e5e7eb;
+  
+    border-radius: 0;
+    background: transparent;
+  }
+  
+  
+  /* ========================================
+     KHÔNG TÌM THẤY DỊCH VỤ
+  ======================================== */
+  
+  .empty-services {
+    text-align: center;
+  
+    padding: 80px 20px;
+  }
+  
+  
+  .empty-services > div {
+    font-size: 50px;
+    margin-bottom: 15px;
+  }
+  
+  
+  .empty-services h3 {
+    font-size: 24px;
+    color: #111827;
+    margin-bottom: 20px;
+  }
+  
+  
+  /* ========================================
+     RESPONSIVE
+  ======================================== */
+  
+  @media (max-width: 900px) {
+  
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .price-box {
+      position: static;
+    }
+  
+  }
+  
+  
+  @media (max-width: 600px) {
+  
+    .detail-cover {
+      min-height: 200px;
+    }
+  
+    .detail-section h2 {
+      font-size: 26px;
+    }
+  
+    .price-box {
+      padding: 20px;
+    }
+  
+  }
