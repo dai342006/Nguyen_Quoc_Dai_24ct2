@@ -1,345 +1,674 @@
-/* ========================================
-   TRANG CHI TIẾT DỊCH VỤ
-======================================== */
+/* =========================================================
+   SERVICE DETAIL - SKILLHUB
+   Giao diện chi tiết dịch vụ
+========================================================= */
 
-/* Khung chính */
+
+/* =========================================================
+   KHUNG CHÍNH
+========================================================= */
+
 .detail-grid {
     display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 32px;
+  
     align-items: start;
+  
+    margin-top: 10px;
   }
   
   
-  /* ========================================
+  /* =========================================================
      NÚT QUAY LẠI
-  ======================================== */
+  ========================================================= */
   
   .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  
     border: none;
     background: transparent;
+  
     color: #635bff;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
+  
+    padding: 8px 0;
+    margin-bottom: 24px;
+  
     cursor: pointer;
-    padding: 0;
-    margin-bottom: 25px;
+  
+    transition: 0.2s ease;
   }
   
   .back-btn:hover {
-    text-decoration: underline;
+    color: #5148e5;
+    transform: translateX(-3px);
   }
   
   
-  /* ========================================
-     BÊN TRÁI
-  ======================================== */
+  /* =========================================================
+     PHẦN BÊN TRÁI
+  ========================================================= */
   
   .detail-left {
     min-width: 0;
+  
+    background: #ffffff;
+  
+    border: 1px solid #e8eaf0;
+    border-radius: 24px;
+  
+    overflow: hidden;
+  
+    box-shadow:
+      0 10px 35px rgba(15, 23, 42, 0.06);
   }
   
   
-  /* Ảnh / icon dịch vụ */
+  /* =========================================================
+     KHUNG ẢNH / ICON DỊCH VỤ
+  ========================================================= */
+  
   .detail-cover {
+    position: relative;
+  
     width: 100%;
-    min-height: 280px;
-    border-radius: 20px;
-    background: linear-gradient(
-      135deg,
-      #635bff,
-      #8b5cf6
-    );
+    height: 300px;
   
     display: flex;
     align-items: center;
     justify-content: center;
   
-    font-size: 80px;
-    margin-bottom: 30px;
+    overflow: hidden;
+  
+    background:
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(255, 255, 255, 0.2),
+        transparent 30%
+      ),
+      linear-gradient(
+        135deg,
+        #5b5bf7 0%,
+        #6d5dfc 45%,
+        #8b5cf6 100%
+      );
+  
+    color: #ffffff;
+  
+    font-size: 82px;
+  
+    margin-bottom: 0;
   }
   
   
-  /* Nội dung chi tiết */
+  /* Trang trí nền */
+  .detail-cover::before {
+    content: "";
+  
+    position: absolute;
+  
+    width: 220px;
+    height: 220px;
+  
+    right: -60px;
+    top: -80px;
+  
+    border-radius: 50%;
+  
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  
+  /* Trang trí nền */
+  .detail-cover::after {
+    content: "";
+  
+    position: absolute;
+  
+    width: 160px;
+    height: 160px;
+  
+    left: -50px;
+    bottom: -70px;
+  
+    border-radius: 50%;
+  
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  
+  /* Đảm bảo icon nằm trên nền */
+  .detail-cover {
+    isolation: isolate;
+  }
+  
+  
+  /* =========================================================
+     NỘI DUNG DỊCH VỤ
+  ========================================================= */
+  
   .detail-section {
-    padding: 0 5px;
+    padding: 32px 34px 34px;
   }
   
   
-  /* Danh mục */
+  /* =========================================================
+     DANH MỤC
+  ========================================================= */
+  
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+  
+    width: fit-content;
+  
+    background: #f0eeff;
     color: #635bff;
-    font-size: 14px;
+  
+    border: 1px solid #e3dfff;
+    border-radius: 999px;
+  
+    padding: 7px 13px;
+  
+    font-size: 12px;
     font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  
+    margin: 0 0 14px;
   }
   
   
-  /* Tiêu đề */
+  /* =========================================================
+     TIÊU ĐỀ DỊCH VỤ
+  ========================================================= */
+  
   .detail-section h2 {
-    font-size: 32px;
-    margin: 0 0 15px;
     color: #111827;
+  
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 800;
+  
+    letter-spacing: -0.5px;
+  
+    margin: 0 0 16px;
   }
   
   
-  /* Mô tả */
+  /* =========================================================
+     MÔ TẢ
+  ========================================================= */
+  
   .detail-section p {
+    color: #667085;
+  
     font-size: 16px;
-    line-height: 1.7;
-    color: #4b5563;
-    margin-bottom: 15px;
+    line-height: 1.8;
+  
+    margin: 0 0 16px;
   }
   
   
-  /* ========================================
-     SELLER / FREELANCER
-  ======================================== */
+  /* Đoạn có tên freelancer */
+  .detail-section p strong {
+    color: #111827;
+    font-weight: 700;
+  }
+  
+  
+  /* =========================================================
+     THÔNG TIN FREELANCER
+  ========================================================= */
   
   .seller-box {
     display: flex;
     align-items: center;
-    gap: 12px;
   
-    margin-top: 25px;
-    padding: 18px;
+    gap: 14px;
   
-    background: #f8f9ff;
+    padding: 16px 18px;
+  
+    background: #f8f9fc;
+  
+    border: 1px solid #eceef3;
     border-radius: 16px;
+  
+    margin-top: 24px;
+  
+    transition: 0.2s ease;
+  }
+  
+  .seller-box:hover {
+    border-color: #ddd9ff;
+  
+    background: #fafaff;
+  
+    transform: translateY(-1px);
   }
   
   
+  /* =========================================================
+     AVATAR
+  ========================================================= */
+  
   .avatar {
-    width: 50px;
-    height: 50px;
+    flex: 0 0 auto;
+  
+    width: 52px;
+    height: 52px;
   
     display: flex;
     align-items: center;
     justify-content: center;
   
-    background: #eeeaff;
+    background: linear-gradient(
+      135deg,
+      #eeeaff,
+      #e5e1ff
+    );
+  
+    border: 1px solid #ddd8ff;
     border-radius: 50%;
   
-    font-size: 25px;
+    font-size: 24px;
+  
+    box-shadow:
+      0 4px 12px rgba(99, 91, 255, 0.12);
   }
   
   
+  /* Tên freelancer */
   .seller-box strong {
     display: block;
-    font-size: 17px;
+  
     color: #111827;
-    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 750;
+  
+    margin-bottom: 5px;
   }
   
   
+  /* Mô tả freelancer */
   .seller-box span {
     display: block;
-    color: #6b7280;
+  
+    color: #98a2b3;
     font-size: 14px;
   }
   
   
-  /* ========================================
-     KHUNG GIÁ / THANH TOÁN
-  ======================================== */
+  /* =========================================================
+     KHUNG ĐẶT DỊCH VỤ BÊN PHẢI
+  ========================================================= */
   
   .price-box {
     position: sticky;
-    top: 25px;
+    top: 24px;
   
-    background: white;
+    background: #ffffff;
   
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
+    border: 1px solid #e7e9ef;
+    border-radius: 24px;
   
-    padding: 25px;
+    padding: 28px;
   
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 14px 40px rgba(15, 23, 42, 0.08);
   }
   
   
-  /* Danh mục */
+  /* =========================================================
+     DANH MỤC BÊN PHẢI
+  ========================================================= */
+  
   .service-category {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
   
-    padding: 7px 14px;
-  
-    border-radius: 20px;
-  
-    background: #eeeaff;
+    background: #f0eeff;
     color: #635bff;
   
-    font-size: 13px;
-    font-weight: 700;
+    border: 1px solid #e4e0ff;
+    border-radius: 999px;
   
-    margin-bottom: 15px;
+    padding: 7px 13px;
+  
+    font-size: 12px;
+    font-weight: 800;
+  
+    margin-bottom: 16px;
   }
   
   
-  /* Tên dịch vụ */
+  /* =========================================================
+     TÊN DỊCH VỤ BÊN PHẢI
+  ========================================================= */
+  
   .price-box h2 {
-    font-size: 25px;
     color: #111827;
+  
+    font-size: 24px;
+    line-height: 1.35;
+    font-weight: 800;
+  
+    letter-spacing: -0.3px;
   
     margin: 0 0 18px;
   }
   
   
-  /* ========================================
+  /* =========================================================
      ĐÁNH GIÁ
-  ======================================== */
+  ========================================================= */
   
   .rating-big {
-    font-size: 18px;
-    font-weight: 700;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  
+    gap: 5px;
   
     color: #111827;
   
-    margin-bottom: 15px;
+    font-size: 17px;
+    font-weight: 750;
+  
+    margin-bottom: 18px;
   }
   
   
+  /* Chữ đánh giá */
   .rating-big span {
-    color: #6b7280;
+    color: #98a2b3;
+    font-size: 15px;
     font-weight: 400;
   }
   
   
-  /* ========================================
-     GIÁ
-  ======================================== */
+  /* =========================================================
+     GIÁ DỊCH VỤ
+  ========================================================= */
   
   .big-price {
-    font-size: 28px;
-    font-weight: 800;
-  
     color: #111827;
   
-    margin-bottom: 22px;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 850;
+  
+    letter-spacing: -0.6px;
+  
+    margin-bottom: 24px;
   }
   
   
-  /* ========================================
-     BUTTON
-  ======================================== */
+  /* =========================================================
+     KHU VỰC NÚT
+  ========================================================= */
   
   .primary-btn,
   .secondary-btn {
     width: 100%;
+    min-height: 52px;
   
-    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   
     border-radius: 12px;
   
-    font-size: 16px;
-    font-weight: 700;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 750;
   
     cursor: pointer;
   
-    transition: 0.2s;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
   
     margin-bottom: 12px;
   }
   
   
-  /* Thanh toán */
+  /* =========================================================
+     NÚT THANH TOÁN
+  ========================================================= */
+  
   .primary-btn {
     border: none;
   
-    background: #635bff;
-    color: white;
+    background: linear-gradient(
+      135deg,
+      #635bff,
+      #705cff
+    );
+  
+    color: #ffffff;
+  
+    box-shadow:
+      0 8px 20px rgba(99, 91, 255, 0.25);
+  }
+  
+  .primary-btn:hover {
+    background: linear-gradient(
+      135deg,
+      #574ff0,
+      #644ff2
+    );
+  
+    transform: translateY(-2px);
+  
+    box-shadow:
+      0 12px 25px rgba(99, 91, 255, 0.3);
+  }
+  
+  .primary-btn:active {
+    transform: translateY(0);
   }
   
   
-  .primary-btn:hover {
-    background: #5148e5;
+  /* =========================================================
+     NÚT LIÊN HỆ
+  ========================================================= */
+  
+  .secondary-btn {
+    border: 1px solid #dfe2e8;
+  
+    background: #ffffff;
+  
+    color: #344054;
+  }
+  
+  .secondary-btn:hover {
+    background: #f8f9fc;
+  
+    border-color: #cfd3dc;
+  
     transform: translateY(-1px);
   }
   
   
-  /* Liên hệ */
-  .secondary-btn {
-    border: 1px solid #d1d5db;
-  
-    background: #f3f4f6;
-    color: #1f2937;
-  }
-  
-  
-  .secondary-btn:hover {
-    background: #e5e7eb;
-  }
-  
-  
-  /* ========================================
-     SELLER TRONG PRICE BOX
-  ======================================== */
+  /* =========================================================
+     FREELANCER BÊN PHẢI
+  ========================================================= */
   
   .price-box .seller-box {
-    margin-top: 20px;
-    padding: 15px;
+    display: flex;
   
-    border-top: 1px solid #e5e7eb;
+    margin-top: 22px;
+    padding: 20px 0 0;
+  
+    border-top: 1px solid #eceef2;
   
     border-radius: 0;
+  
     background: transparent;
+  
+    box-shadow: none;
   }
   
   
-  /* ========================================
-     KHÔNG TÌM THẤY DỊCH VỤ
-  ======================================== */
+  /* Không hiệu ứng hover cho seller trong price-box */
+  .price-box .seller-box:hover {
+    background: transparent;
+    border-color: #eceef2;
+    transform: none;
+  }
+  
+  
+  /* =========================================================
+     TRƯỜNG HỢP KHÔNG CÓ DỊCH VỤ
+  ========================================================= */
   
   .empty-services {
+    max-width: 600px;
+  
+    margin: 60px auto;
+  
+    padding: 55px 30px;
+  
     text-align: center;
   
-    padding: 80px 20px;
+    background: #ffffff;
+  
+    border: 1px solid #e8eaf0;
+    border-radius: 20px;
+  
+    box-shadow:
+      0 10px 30px rgba(15, 23, 42, 0.06);
   }
   
   
+  /* Icon cảnh báo */
   .empty-services > div {
-    font-size: 50px;
+    font-size: 48px;
+  
     margin-bottom: 15px;
   }
   
   
+  /* Tiêu đề */
   .empty-services h3 {
-    font-size: 24px;
     color: #111827;
-    margin-bottom: 20px;
+  
+    font-size: 24px;
+    font-weight: 800;
+  
+    margin: 0 0 22px;
   }
   
   
-  /* ========================================
-     RESPONSIVE
-  ======================================== */
+  /* Nút trong trạng thái trống */
+  .empty-services .primary-btn {
+    width: auto;
   
-  @media (max-width: 900px) {
+    display: inline-flex;
+  
+    padding: 0 24px;
+  }
+  
+  
+  /* =========================================================
+     RESPONSIVE - TABLET
+  ========================================================= */
+  
+  @media (max-width: 1000px) {
+  
+    .detail-grid {
+      grid-template-columns: minmax(0, 1fr) 340px;
+  
+      gap: 24px;
+    }
+  
+    .price-box {
+      padding: 24px;
+    }
+  
+    .detail-section {
+      padding: 28px;
+    }
+  
+  }
+  
+  
+  /* =========================================================
+     RESPONSIVE - MOBILE
+  ========================================================= */
+  
+  @media (max-width: 800px) {
   
     .detail-grid {
       grid-template-columns: 1fr;
+  
+      gap: 24px;
     }
   
     .price-box {
       position: static;
     }
   
+    .detail-cover {
+      height: 250px;
+    }
+  
   }
   
   
-  @media (max-width: 600px) {
+  /* =========================================================
+     MOBILE NHỎ
+  ========================================================= */
+  
+  @media (max-width: 500px) {
+  
+    .back-btn {
+      margin-bottom: 18px;
+    }
+  
+    .detail-left,
+    .price-box {
+      border-radius: 18px;
+    }
   
     .detail-cover {
-      min-height: 200px;
+      height: 210px;
+  
+      font-size: 65px;
+    }
+  
+    .detail-section {
+      padding: 24px 20px;
     }
   
     .detail-section h2 {
       font-size: 26px;
     }
   
+    .detail-section p {
+      font-size: 15px;
+      line-height: 1.7;
+    }
+  
     .price-box {
       padding: 20px;
+    }
+  
+    .price-box h2 {
+      font-size: 22px;
+    }
+  
+    .big-price {
+      font-size: 27px;
+    }
+  
+    .seller-box {
+      padding: 14px;
     }
   
   }
